@@ -3197,6 +3197,60 @@ body{
     }
   }
 </style>
+<!-- === V38 SHARED PHASE HEADER LOGIC === -->
+<style id="v38-shared-phase-header-logic">
+  #site-nav .phase-header-links a.home-phase-link,
+  #site-nav .phase-nav a.home-phase-link,
+  .top .hub-links a.home-phase-link{
+    color:#f6d75c!important;
+    border-color:rgba(240,208,96,.62)!important;
+    background:linear-gradient(180deg,rgba(240,208,96,.18),rgba(240,208,96,.08))!important;
+    box-shadow:0 0 18px rgba(240,208,96,.12)!important;
+  }
+  #site-nav .phase-header-links a.is-active-phase,
+  #site-nav .phase-nav a.is-active-phase,
+  .top .hub-links a.is-active-phase{
+    color:#f6d75c!important;
+    border-color:rgba(240,208,96,.46)!important;
+    background:rgba(240,208,96,.1)!important;
+  }
+  #site-nav .phase-header-links a.is-phase-locked,
+  #site-nav .phase-nav a.is-phase-locked,
+  .top .hub-links a.is-phase-locked{
+    color:#8e8aa8!important;
+    opacity:.62!important;
+    border-color:rgba(255,255,255,.1)!important;
+    background:rgba(255,255,255,.035)!important;
+  }
+</style>
+<script id="v38-shared-phase-header-logic-script">
+(function(){
+  var phases=[
+    {name:'Guild Pride',url:'phase-1.html',status:'done'},
+    {name:'Dungeon Pride',url:'phase-2.html',status:'active'},
+    {name:'Grinding Pride',url:'phase-3.html',status:'upcoming'}
+  ];
+  function pageName(){var p=String(location.pathname||'').split('/').pop();return p||'index.html';}
+  function navRoot(){return document.querySelector('#site-nav .phase-header-links,#site-nav .phase-nav,.top .hub-links.phase-name-links,.top .hub-links');}
+  function linkHtml(p,isMain,current){
+    var label=p.name,href=p.url,cls=[],attrs='';
+    if(!isMain&&p.url===current){label='CABAL PRIDE';href='index.html';cls.push('home-phase-link');attrs+=' aria-label="Back to CABAL PRIDE main page"';}
+    else if(p.status==='upcoming'){cls.push('is-phase-locked');attrs+=' data-phase-locked="1" aria-label="'+p.name+' is upcoming"';}
+    else if(isMain&&p.status==='active'){attrs+=' aria-current="true"';}
+    else if(!isMain&&p.status==='active'){cls.push('is-active-phase');}
+    return '<a href="'+href+'"'+(cls.length?' class="'+cls.join(' ')+'"':'')+attrs+'>'+label+'</a>';
+  }
+  function normalizeHeader(){
+    var nav=navRoot();if(!nav)return;
+    var current=pageName(),isMain=current==='index.html';
+    var nation=nav.querySelector('.nation-nav-button');
+    var nationHtml=isMain&&nation?nation.outerHTML:'';
+    nav.innerHTML=phases.map(function(p){return linkHtml(p,isMain,current);}).join('')+nationHtml;
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',normalizeHeader);else normalizeHeader();
+  window.addEventListener('load',normalizeHeader,{once:true});
+})();
+</script>
 </body>
 </html>
 
