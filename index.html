@@ -2978,6 +2978,225 @@ body{
 })();
 </script>
 
+<!-- === V31 SHEET-DRIVEN PHASE 2 HALL OF PRIDE === -->
+<style id="v31-sheet-driven-rank-hall">
+  .leaderboard.rank-hall .rank-leader-card .avatar{background:radial-gradient(circle at 35% 25%,rgba(255,255,255,.16),transparent 28%),rgba(8,16,38,.86)}
+  .leaderboard.rank-hall .rank-leader-card .avatar img{width:100%;height:100%;object-fit:cover;padding:0}
+  .leaderboard.rank-hall .rank-leader-card .rank-letter{font-size:1.15rem}
+  .leaderboard.rank-hall .rank-leader-card .time{font-size:.86rem}
+  .leaderboard.rank-hall .rank-leader-card .platform-mini{margin-top:5px;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#9fd8ff;font-weight:1000}
+  .leaderboard.rank-hall .rank-leader-card.pc .platform-mini{color:#8ff2bd}
+  .leaderboard.rank-hall .rank-leader-card.pc .avatar{border-color:rgba(39,210,127,.72);box-shadow:0 0 22px rgba(39,210,127,.18)}
+</style>
+<script id="v31-sheet-driven-rank-hall-script">
+(function(){
+  var SHEET_ID='1JqHItiPR19qyFj71VRp7IxTfTWv7ztScPgIpRe_746w';
+  var SHEET_NAME='Phase 2 Leaderboard';
+  var fallback=[
+    {rank:'S',avatar:'rank-s.png',player:'Bloodfang',time:'03:58',platform:'PC (CBPC)'},
+    {rank:'A',avatar:'rank-a.png',player:'Winterlace',time:'04:10',platform:'PC (CBPC)'},
+    {rank:'B',avatar:'rank-b.png',player:'NightFang',time:'04:19',platform:'PC (CBPC)'},
+    {rank:'C',avatar:'rank-c.png',player:'Glacialis',time:'04:26',platform:'PC (CBPC)'},
+    {rank:'D',avatar:'rank-d.png',player:'Ravenmourn',time:'04:33',platform:'PC (CBPC)'},
+    {rank:'E',avatar:'rank-e.png',player:'Starfrost',time:'04:40',platform:'PC (CBPC)'},
+    {rank:'F',avatar:'rank-f.png',player:'Ashborn',time:'04:47',platform:'PC (CBPC)'}
+  ];
+  function html(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function key(v){return String(v||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');}
+  function pick(row,names){for(var i=0;i<names.length;i++){var k=key(names[i]);if(row[k]!=null&&row[k]!=='')return row[k];}return '';}
+  function rankWeight(r){return {S:0,A:1,B:2,C:3,D:4,E:5,F:6}[String(r||'').toUpperCase()]??9;}
+  function timeValue(t){var p=String(t||'99:99').split(':').map(Number);return (p[0]||99)*60+(p[1]||99);}
+  function platform(v){v=String(v||'').toLowerCase();return v.indexOf('pc')>-1||v.indexOf('cbpc')>-1?'PC (CBPC)':'Mobile (CBM)';}
+  function sheetRows(sheet){
+    return new Promise(function(resolve,reject){
+      var cb='__hallSheet'+Date.now()+Math.floor(Math.random()*9999),done=false;
+      var timer=setTimeout(function(){cleanup();reject(new Error('Sheet timeout'));},9000);
+      function cleanup(){done=true;clearTimeout(timer);delete window[cb];if(script.parentNode)script.parentNode.removeChild(script);}
+      window[cb]=function(res){if(done)return;cleanup();if(!res||res.status==='error')return reject(new Error('Sheet error'));var headers=((res.table&&res.table.cols)||[]).map(function(col){return col.label||col.id||'';});var rows=(res.table&&res.table.rows)||[];resolve(rows.map(function(r){var obj={};(r.c||[]).forEach(function(cell,i){obj[key(headers[i]||('col_'+i))]=cell?(cell.f||cell.v||''):'';});return obj;}));};
+      var script=document.createElement('script');
+      script.src='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?sheet='+encodeURIComponent(sheet)+'&tqx=responseHandler:'+cb+'&cacheBust='+Date.now();
+      script.onerror=function(){cleanup();reject(new Error('Sheet script failed'));};
+      document.head.appendChild(script);
+    });
+  }
+  function mapRow(row){
+    return {
+      rank:String(pick(row,['rank','dungeon_rank','dungeon rank'])||'S').toUpperCase(),
+      avatar:pick(row,['avatar_url','avatar url','in_game_avatar_url','in-game avatar url','image_url','image url'])||('rank-'+String(pick(row,['rank','dungeon_rank'])||'s').toLowerCase()+'.png'),
+      player:pick(row,['ign','in_game_name','in-game name','player_name','player name','name']),
+      time:pick(row,['time_beat','time beat','clear_time','clear time','time']),
+      platform:platform(pick(row,['platform','game_version','game version','version']))
+    };
+  }
+  function renderHallFromRows(rows){
+    var board=document.getElementById('leaderboard');if(!board)return;
+    var best={};
+    rows.filter(function(r){return r.player&&r.time&&/[SABCDEF]/.test(r.rank);}).sort(function(a,b){return rankWeight(a.rank)-rankWeight(b.rank)||timeValue(a.time)-timeValue(b.time);}).forEach(function(r){if(!best[r.rank])best[r.rank]=r;});
+    var list=['S','A','B','C','D','E','F'].map(function(rank){return best[rank]||fallback.find(function(f){return f.rank===rank;});}).filter(Boolean);
+    board.classList.add('rank-hall');
+    board.setAttribute('aria-label','Current phase fastest clear leaders by rank');
+    board.innerHTML=list.map(function(r){
+      var isPc=String(r.platform||'').indexOf('PC')>-1;
+      return '<article class="rank-leader-card '+(isPc?'pc':'mobile')+'"><div class="rank-letter">'+html(r.rank)+'</div><div class="avatar"><img src="'+html(r.avatar)+'" alt="'+html(r.player)+' avatar"></div><div class="player">'+html(r.player)+'</div><div class="time">'+html(r.time)+'</div><div class="platform-mini">'+html(r.platform||'')+'</div></article>';
+    }).join('');
+    var head=document.querySelector('.hall-head');if(head)head.innerHTML='<h2>Hall of Pride</h2><p>Current Phase Leaders</p>';
+  }
+  function run(){
+    sheetRows(SHEET_NAME).then(function(rows){var mapped=rows.map(mapRow);renderHallFromRows(mapped);}).catch(function(){renderHallFromRows(fallback);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+  window.addEventListener('load',function(){setTimeout(run,80);},{once:true});
+})();
+</script>
+
+<!-- === V32 HALL OF PRIDE BOX PROPORTION FIX === -->
+<style id="v32-hall-of-pride-box-fix">
+  .spotlight-row{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    width:min(1180px,calc(100vw - 40px))!important;
+    max-width:1180px!important;
+    margin:clamp(18px,3vw,34px) auto 0!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+  .spotlight-row .spotlight{
+    order:2!important;
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    width:100%!important;
+    min-height:0!important;
+    aspect-ratio:auto!important;
+    margin:16px auto 0!important;
+    padding:0!important;
+    border:0!important;
+    background:none!important;
+    box-shadow:none!important;
+    overflow:visible!important;
+  }
+  .spotlight-row .spotlight .spot-kicker,
+  .spotlight-row .spotlight .spot-title,
+  .spotlight-row .spotlight .spot-meta,
+  .spotlight-row .spotlight .spot-desc{
+    display:none!important;
+  }
+  .spotlight-row .spotlight .spot-cta{
+    display:inline-flex!important;
+    min-width:220px!important;
+    justify-content:center!important;
+    margin:0!important;
+  }
+  .spotlight-row .hall{
+    order:1!important;
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    margin:0 auto!important;
+    padding:clamp(18px,2.4vw,28px)!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+    border-radius:0!important;
+    background:
+      linear-gradient(180deg,rgba(18,12,35,.78),rgba(5,6,18,.92))!important;
+    backdrop-filter:blur(5px);
+  }
+  .spotlight-row .hall-head{
+    width:100%!important;
+    margin:0 auto 18px!important;
+    padding:0 0 12px!important;
+    text-align:center!important;
+  }
+  .spotlight-row .hall-head h2{
+    max-width:none!important;
+    margin:0!important;
+    font-size:clamp(1.9rem,3.4vw,3rem)!important;
+    line-height:1!important;
+    letter-spacing:.06em!important;
+    white-space:normal!important;
+    text-wrap:balance;
+  }
+  .spotlight-row .hall-head p{
+    margin-top:8px!important;
+    font-size:.68rem!important;
+    letter-spacing:.16em!important;
+  }
+  .spotlight-row .leaderboard.rank-hall{
+    width:100%!important;
+    max-width:100%!important;
+    display:grid!important;
+    grid-template-columns:repeat(7,minmax(0,1fr))!important;
+    gap:clamp(8px,1.2vw,14px)!important;
+    overflow:visible!important;
+    padding:0!important;
+    justify-items:stretch!important;
+  }
+  .spotlight-row .rank-leader-card{
+    width:auto!important;
+    min-width:0!important;
+    min-height:176px!important;
+    padding:12px 7px 10px!important;
+    box-sizing:border-box!important;
+  }
+  .spotlight-row .rank-leader-card .rank-letter{
+    font-size:clamp(1rem,1.45vw,1.35rem)!important;
+    line-height:1!important;
+  }
+  .spotlight-row .rank-leader-card .avatar{
+    width:clamp(46px,5vw,58px)!important;
+    height:clamp(46px,5vw,58px)!important;
+  }
+  .spotlight-row .rank-leader-card .player{
+    max-width:100%!important;
+    font-size:clamp(.68rem,.9vw,.82rem)!important;
+    line-height:1.12!important;
+    overflow-wrap:anywhere!important;
+  }
+  .spotlight-row .rank-leader-card .time{
+    font-size:.82rem!important;
+    line-height:1!important;
+  }
+  @media(max-width:900px){
+    .spotlight-row{
+      width:min(100%,calc(100vw - 28px))!important;
+      margin-top:18px!important;
+    }
+    .spotlight-row .leaderboard.rank-hall{
+      display:flex!important;
+      overflow-x:auto!important;
+      scroll-snap-type:x mandatory!important;
+      padding:2px 4px 10px!important;
+      gap:12px!important;
+      scrollbar-width:thin;
+    }
+    .spotlight-row .rank-leader-card{
+      flex:0 0 128px!important;
+      width:128px!important;
+      min-height:170px!important;
+      scroll-snap-align:center!important;
+    }
+  }
+  @media(max-width:520px){
+    .spotlight-row{
+      width:calc(100vw - 20px)!important;
+    }
+    .spotlight-row .hall{
+      padding:16px 10px!important;
+    }
+    .spotlight-row .hall-head h2{
+      font-size:1.65rem!important;
+      letter-spacing:.045em!important;
+    }
+    .spotlight-row .leaderboard.rank-hall{
+      gap:10px!important;
+    }
+    .spotlight-row .rank-leader-card{
+      flex-basis:118px!important;
+      width:118px!important;
+    }
+  }
+</style>
 </body>
 </html>
 

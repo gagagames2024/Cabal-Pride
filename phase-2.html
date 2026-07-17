@@ -519,6 +519,320 @@ document.querySelectorAll('.tabs').forEach(function(group){var buttons=group.que
 (function(){var locked={'phase-3.html':{phase:'Phase 3',name:'Grinding Pride',startLabel:'25 Jul',start:'2026-07-25T00:00:00+07:00'}};function key(h){return String(h||'').split('#')[0].split('?')[0].replace(/^.*\//,'');}function meta(h){return locked[key(h)]||null;}function modal(){var m=document.getElementById('phase-lock-modal');if(m)return m;m=document.createElement('div');m.id='phase-lock-modal';m.className='phase-lock-modal';m.innerHTML='<div class="phase-lock-box" role="dialog" aria-modal="true" aria-labelledby="phase-lock-title"><span class="phase-lock-kicker">Upcoming activity</span><h2 id="phase-lock-title">Grinding Pride</h2><p id="phase-lock-copy">This phase has not started yet.</p><div class="phase-lock-count"><span><b id="phase-lock-days">--</b><small>Days</small></span><span><b id="phase-lock-hours">--</b><small>Hours</small></span><span><b id="phase-lock-mins">--</b><small>Mins</small></span></div><button class="phase-lock-close" type="button">Back to campaign</button></div>';document.body.appendChild(m);m.addEventListener('click',function(e){if(e.target===m||e.target.closest('.phase-lock-close'))m.classList.remove('open');});document.addEventListener('keydown',function(e){if(e.key==='Escape')m.classList.remove('open');});return m;}function countdown(x){var diff=Math.max(0,new Date(x.start).getTime()-Date.now()),mins=Math.floor(diff/60000),d=Math.floor(mins/1440),h=Math.floor((mins%1440)/60),mm=mins%60;['days','hours','mins'].forEach(function(id,i){var el=document.getElementById('phase-lock-'+id);if(el)el.textContent=[d,h,mm][i];});}function show(x){var m=modal(),t=document.getElementById('phase-lock-title'),c=document.getElementById('phase-lock-copy');if(t)t.textContent=x.name;if(c)c.textContent=x.phase+' - '+x.name+' starts on '+x.startLabel+'. Please come back when the phase opens.';countdown(x);m.classList.add('open');}function mark(){document.querySelectorAll('a[href]').forEach(function(a){if(meta(a.getAttribute('href'))){a.dataset.phaseLocked='1';a.classList.add('is-phase-locked');a.setAttribute('aria-label','Grinding Pride is upcoming');}});}document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-phase-locked="1"],[data-locked-phase],.phase-card.is-locked');if(!a)return;e.preventDefault();e.stopPropagation();show(meta(a.getAttribute('href'))||locked['phase-3.html']);},true);if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mark);else mark();window.addEventListener('load',mark);if(meta(location.pathname)){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){show(meta(location.pathname));});else show(meta(location.pathname));}})();
 </script>
 
+<!-- === V36 SHEET-DRIVEN PHASE 2 LEADERBOARD === -->
+<style id="v36-sheet-driven-phase2">
+  #leaderboard .rank-leader-table th:nth-child(1),
+  #leaderboard .rank-leader-table td:nth-child(1){width:86px!important;text-align:center!important}
+  #leaderboard .rank-leader-table th:nth-child(2),
+  #leaderboard .rank-leader-table td:nth-child(2){width:92px!important;text-align:center!important}
+  #leaderboard .rank-leader-table th:nth-child(4),
+  #leaderboard .rank-leader-table td:nth-child(4){width:auto!important;text-align:left!important}
+  #leaderboard .clean-rank{display:inline-grid!important;place-items:center!important}
+  #leaderboard .clean-rank span{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
+  #leaderboard .sheet-avatar{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;margin:0 auto;border:1px solid rgba(240,208,96,.58);background:radial-gradient(circle at 35% 20%,rgba(255,255,255,.2),transparent 24%),linear-gradient(145deg,rgba(90,184,255,.18),rgba(240,208,96,.08));box-shadow:0 0 0 3px rgba(240,208,96,.08),0 10px 22px rgba(0,0,0,.34);overflow:hidden;color:#fff6c8;font-size:.55rem;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;line-height:1.05}
+  #leaderboard .sheet-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  #leaderboard[data-platform="pc"] .sheet-avatar{border-color:rgba(39,210,127,.62);box-shadow:0 0 0 3px rgba(39,210,127,.1),0 10px 22px rgba(0,0,0,.34)}
+  @media(max-width:760px){
+    #leaderboard .rank-leader-table tr{grid-template-columns:52px 64px minmax(0,1fr) auto!important}
+    #leaderboard .sheet-avatar{width:54px;height:54px}
+  }
+  @media(max-width:420px){
+    #leaderboard .rank-leader-table tr{grid-template-columns:46px 54px minmax(0,1fr)!important}
+    #leaderboard .sheet-avatar{width:48px;height:48px}
+  }
+</style>
+<script id="v36-sheet-driven-phase2-script">
+(function(){
+  var SHEET_ID='1JqHItiPR19qyFj71VRp7IxTfTWv7ztScPgIpRe_746w';
+  var SHEET_NAME='Phase 2 Leaderboard';
+  var rankImages={S:'rank-s.png',A:'rank-a.png',B:'rank-b.png',C:'rank-c.png',D:'rank-d.png',E:'rank-e.png',F:'rank-f.png'};
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function norm(v){return String(v||'').trim();}
+  function key(v){return norm(v).toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');}
+  function pick(row,names){for(var i=0;i<names.length;i++){var k=key(names[i]);if(row[k]!=null&&row[k]!=='')return row[k];}return '';}
+  function rankWeight(r){return {S:0,A:1,B:2,C:3,D:4,E:5,F:6}[String(r||'').toUpperCase()]??9;}
+  function timeValue(t){var p=String(t||'99:99').split(':').map(Number);return (p[0]||99)*60+(p[1]||99);}
+  function normalizePlatform(v){v=String(v||'').toLowerCase();return v.indexOf('pc')>-1||v.indexOf('cbpc')>-1?'PC (CBPC)':'Mobile (CBM)';}
+  function normalizeClass(v){return String(v||'').replace('Bladder','Blader').replace('Warior','Warrior');}
+  function sheetRows(sheet){
+    return new Promise(function(resolve,reject){
+      var cb='__phase2Sheet'+Date.now()+Math.floor(Math.random()*9999),done=false;
+      var timer=setTimeout(function(){cleanup();reject(new Error('Sheet timeout'));},9000);
+      function cleanup(){done=true;clearTimeout(timer);delete window[cb];if(script.parentNode)script.parentNode.removeChild(script);}
+      window[cb]=function(res){
+        if(done)return;cleanup();
+        if(!res||res.status==='error')return reject(new Error('Sheet response error'));
+        var headers=((res.table&&res.table.cols)||[]).map(function(col){return col.label||col.id||'';});
+        var rows=(res.table&&res.table.rows)||[];
+        resolve(rows.map(function(r){var obj={};(r.c||[]).forEach(function(cell,i){var h=key(headers[i]||('col_'+i));obj[h]=cell?(cell.f||cell.v||''):'';});return obj;}));
+      };
+      var script=document.createElement('script');
+      script.src='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?sheet='+encodeURIComponent(sheet)+'&tqx=responseHandler:'+cb+'&cacheBust='+Date.now();
+      script.onerror=function(){cleanup();reject(new Error('Sheet script failed'));};
+      document.head.appendChild(script);
+    });
+  }
+  function mapRow(row){
+    return {
+      platform:normalizePlatform(pick(row,['platform','game_version','game version','version'])),
+      rank:String(pick(row,['rank','dungeon_rank','dungeon rank'])||'S').toUpperCase(),
+      avatarUrl:pick(row,['avatar_url','avatar url','in_game_avatar_url','in-game avatar url','image_url','image url']),
+      ign:pick(row,['ign','in_game_name','in-game name','player_name','player name','name']),
+      cls:normalizeClass(pick(row,['class','character_class','character class'])),
+      region:String(pick(row,['region','country'])||'').toUpperCase(),
+      nation:pick(row,['nation']),
+      time:pick(row,['time_beat','time beat','clear_time','clear time','time'])
+    };
+  }
+  function usable(row){return row.ign&&row.time&&/[SABCDEF]/.test(row.rank);}
+  function mergeSheetRows(rows){
+    var mapped=rows.map(mapRow).filter(usable);
+    if(mapped.length)window.ALL_LEADERS=mapped;
+  }
+  window.renderPhase2Leaderboard=function(){
+    var body=document.getElementById('lb-all-body');if(!body)return;
+    var q=(document.getElementById('leader-search')||{}).value||'';q=q.toLowerCase();
+    var fr=(document.getElementById('filter-rank')||{}).value||'',fc=(document.getElementById('filter-class')||{}).value||'',fg=(document.getElementById('filter-region')||{}).value||'',fn=(document.getElementById('filter-nation')||{}).value||'';
+    var platform=(window.__phase2Platform||'Mobile (CBM)');
+    document.getElementById('leaderboard')?.setAttribute('data-platform',platform.indexOf('PC')>-1?'pc':'mobile');
+    var rows=(window.ALL_LEADERS||[]).filter(function(e){
+      var hay=[e.ign,e.cls,e.region,e.nation,e.platform,e.rank].join(' ').toLowerCase();
+      return e.platform===platform&&(!q||hay.indexOf(q)>-1)&&(!fr||e.rank===fr)&&(!fc||normalizeClass(e.cls)===fc)&&(!fg||e.region===fg)&&(!fn||e.nation===fn);
+    }).sort(function(a,b){return rankWeight(a.rank)-rankWeight(b.rank)||timeValue(a.time)-timeValue(b.time);});
+    body.innerHTML=rows.length?rows.map(function(e){
+      var icon=rankImages[e.rank]||'',avatar=e.avatarUrl?'<img src="'+esc(e.avatarUrl)+'" alt="'+esc(e.ign)+' avatar">':'Avatar';
+      return '<tr><td class="rank-icon-cell"><span class="clean-rank">'+(icon?'<img src="'+esc(icon)+'" alt="Rank '+esc(e.rank)+'">':'')+'<span>'+esc(e.rank)+'</span></span></td><td><span class="sheet-avatar">'+avatar+'</span></td><td class="ign-cell">'+esc(e.ign)+'</td><td><span class="class-tag">'+esc(normalizeClass(e.cls)||'Class TBD')+'</span></td><td><span class="region-tag">'+esc(e.region||'--')+'</span></td><td><span class="nation-tag '+String(e.nation).toLowerCase()+'">'+esc(e.nation||'Nation TBD')+'</span></td><td class="time-cell">'+esc(e.time)+'</td></tr>';
+    }).join(''):'<tr><td class="empty-row" colspan="7">No fastest clear entries match this filter.</td></tr>';
+    var count=document.getElementById('leader-count');if(count)count.textContent=rows.length+' '+platform+' Rank '+(fr||'S')+' entr'+(rows.length===1?'y':'ies')+' shown';
+  };
+  function setup(){
+    var table=document.querySelector('#leaderboard .rank-leader-table');
+    if(table){var head=table.querySelector('thead tr');if(head)head.innerHTML='<th>Rank</th><th>In-Game Avatar</th><th>In-Game Name</th><th>Class</th><th>Region</th><th>Nation</th><th>Time Beat</th>';}
+    ['leader-search','filter-rank','filter-class','filter-region','filter-nation'].forEach(function(id){var el=document.getElementById(id);if(el&&!el.dataset.v36){el.dataset.v36='1';el.addEventListener('input',window.renderPhase2Leaderboard);el.addEventListener('change',window.renderPhase2Leaderboard);}});
+    sheetRows(SHEET_NAME).then(function(rows){mergeSheetRows(rows);window.renderPhase2Leaderboard();}).catch(function(){window.renderPhase2Leaderboard();});
+  }
+  setup();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setTimeout(setup,0);
+  window.addEventListener('load',function(){setTimeout(setup,60);},{once:true});
+})();
+</script>
+
+<!-- === V37 AUTHORITATIVE LEADERBOARD COLUMNS === -->
+<style id="v37-authoritative-leaderboard-columns">
+  #leaderboard .rank-leader-table{
+    width:100%!important;
+    table-layout:auto!important;
+  }
+  #leaderboard .rank-leader-table th,
+  #leaderboard .rank-leader-table td{
+    padding:12px 10px!important;
+    vertical-align:middle!important;
+  }
+  #leaderboard .rank-leader-table th:nth-child(1),
+  #leaderboard .rank-leader-table td:nth-child(1){width:72px!important;text-align:center!important;}
+  #leaderboard .rank-leader-table th:nth-child(2),
+  #leaderboard .rank-leader-table td:nth-child(2){width:96px!important;text-align:center!important;}
+  #leaderboard .rank-leader-table th:nth-child(3),
+  #leaderboard .rank-leader-table td:nth-child(3){min-width:150px!important;text-align:left!important;}
+  #leaderboard .rank-leader-table th:nth-child(4),
+  #leaderboard .rank-leader-table td:nth-child(4),
+  #leaderboard .rank-leader-table th:nth-child(5),
+  #leaderboard .rank-leader-table td:nth-child(5),
+  #leaderboard .rank-leader-table th:nth-child(6),
+  #leaderboard .rank-leader-table td:nth-child(6){width:118px!important;text-align:center!important;}
+  #leaderboard .rank-leader-table th:nth-child(7),
+  #leaderboard .rank-leader-table td:nth-child(7){width:110px!important;text-align:right!important;}
+  #leaderboard .class-tag,
+  #leaderboard .region-tag,
+  #leaderboard .nation-tag{
+    display:inline-flex!important;
+    min-height:28px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:5px 10px!important;
+    border-radius:999px!important;
+    white-space:nowrap!important;
+    font-size:.72rem!important;
+    line-height:1!important;
+    font-weight:1000!important;
+    letter-spacing:.02em!important;
+  }
+  #leaderboard .class-tag{
+    border:1px solid rgba(240,208,96,.34)!important;
+    color:#fff3b0!important;
+    background:rgba(240,208,96,.08)!important;
+  }
+  #leaderboard .region-tag{
+    border:1px solid rgba(151,139,255,.34)!important;
+    color:#d8d2ff!important;
+    background:rgba(151,139,255,.09)!important;
+  }
+  #leaderboard .nation-tag{
+    border:1px solid rgba(255,100,112,.4)!important;
+    color:#ff9ca5!important;
+    background:rgba(255,72,92,.12)!important;
+  }
+  #leaderboard .nation-tag.capella{
+    border-color:rgba(90,184,255,.44)!important;
+    color:#9fdcff!important;
+    background:rgba(90,184,255,.12)!important;
+  }
+  @media(max-width:760px){
+    #leaderboard .rank-leader-table,
+    #leaderboard .rank-leader-table tbody{
+      display:grid!important;
+      width:100%!important;
+      min-width:0!important;
+    }
+    #leaderboard .rank-leader-table thead{display:none!important;}
+    #leaderboard .rank-leader-table tbody{gap:12px!important;}
+    #leaderboard .rank-leader-table tr{
+      display:grid!important;
+      grid-template-columns:52px minmax(0,1fr) auto!important;
+      gap:10px 12px!important;
+      align-items:center!important;
+      padding:14px!important;
+      border-radius:16px!important;
+      border:1px solid rgba(90,184,255,.28)!important;
+      background:linear-gradient(135deg,rgba(9,28,58,.9),rgba(5,7,22,.96))!important;
+    }
+    #leaderboard[data-platform="pc"] .rank-leader-table tr{
+      border-color:rgba(39,210,127,.28)!important;
+      background:linear-gradient(135deg,rgba(8,48,31,.86),rgba(5,7,22,.96))!important;
+    }
+    #leaderboard .rank-leader-table td{
+      width:auto!important;
+      min-width:0!important;
+      padding:0!important;
+      border:0!important;
+      text-align:left!important;
+    }
+    #leaderboard .rank-leader-table td:nth-child(1){
+      grid-column:1;
+      grid-row:1 / span 2;
+      align-self:start;
+      text-align:center!important;
+    }
+    #leaderboard .rank-leader-table td:nth-child(2){
+      grid-column:1;
+      grid-row:2 / span 3;
+      text-align:center!important;
+    }
+    #leaderboard .rank-leader-table td:nth-child(3){
+      grid-column:2 / 4;
+      grid-row:1;
+    }
+    #leaderboard .rank-leader-table td:nth-child(4),
+    #leaderboard .rank-leader-table td:nth-child(5),
+    #leaderboard .rank-leader-table td:nth-child(6){
+      display:flex!important;
+      align-items:center!important;
+      gap:8px!important;
+    }
+    #leaderboard .rank-leader-table td:nth-child(4){grid-column:2 / 4;grid-row:2;}
+    #leaderboard .rank-leader-table td:nth-child(5){grid-column:2;grid-row:3;}
+    #leaderboard .rank-leader-table td:nth-child(6){grid-column:3;grid-row:3;justify-self:end;}
+    #leaderboard .rank-leader-table td:nth-child(7){
+      grid-column:2 / 4;
+      grid-row:4;
+      justify-self:start!important;
+      text-align:left!important;
+    }
+    #leaderboard .rank-leader-table td:nth-child(4)::before{content:"Class";color:#9f9ae6;font-size:.62rem;font-weight:1000;letter-spacing:.12em;text-transform:uppercase;}
+    #leaderboard .rank-leader-table td:nth-child(5)::before{content:"Region";color:#9f9ae6;font-size:.62rem;font-weight:1000;letter-spacing:.12em;text-transform:uppercase;}
+    #leaderboard .rank-leader-table td:nth-child(6)::before{content:"Nation";color:#9f9ae6;font-size:.62rem;font-weight:1000;letter-spacing:.12em;text-transform:uppercase;}
+    #leaderboard .rank-leader-table td:nth-child(7)::before{content:"Time Beat";margin-right:8px;color:#9f9ae6;font-size:.62rem;font-weight:1000;letter-spacing:.12em;text-transform:uppercase;}
+    #leaderboard .class-tag,
+    #leaderboard .region-tag,
+    #leaderboard .nation-tag{font-size:.68rem!important;padding:5px 8px!important;}
+  }
+  @media(max-width:430px){
+    #leaderboard .rank-leader-table tr{
+      grid-template-columns:48px minmax(0,1fr)!important;
+    }
+    #leaderboard .rank-leader-table td:nth-child(3),
+    #leaderboard .rank-leader-table td:nth-child(4),
+    #leaderboard .rank-leader-table td:nth-child(7){grid-column:2!important;}
+    #leaderboard .rank-leader-table td:nth-child(5),
+    #leaderboard .rank-leader-table td:nth-child(6){
+      grid-column:2!important;
+      justify-self:start!important;
+    }
+    #leaderboard .rank-leader-table td:nth-child(5){grid-row:3;}
+    #leaderboard .rank-leader-table td:nth-child(6){grid-row:4;}
+    #leaderboard .rank-leader-table td:nth-child(7){grid-row:5;}
+  }
+</style>
+<script id="v37-authoritative-leaderboard-columns-script">
+(function(){
+  var rankImages={S:'rank-s.png',A:'rank-a.png',B:'rank-b.png',C:'rank-c.png',D:'rank-d.png',E:'rank-e.png',F:'rank-f.png'};
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function normalizeClass(v){return String(v||'').replace('Bladder','Blader').replace('Warior','Warrior');}
+  function rankWeight(r){return {S:0,A:1,B:2,C:3,D:4,E:5,F:6}[String(r||'').toUpperCase()]??9;}
+  function timeValue(t){var p=String(t||'99:99').split(':').map(Number);return (p[0]||99)*60+(p[1]||99);}
+  function nationClass(v){return String(v||'').toLowerCase().indexOf('capella')>-1?'capella':'procyon';}
+  function currentPlatform(){return window.__phase2Platform||'Mobile (CBM)';}
+  function ensureShell(){
+    var section=document.getElementById('leaderboard');if(!section)return;
+    var table=section.querySelector('.rank-leader-table');
+    if(!table){
+      var grid=section.querySelector('.leader-grid');
+      if(grid)grid.outerHTML='<div class="leader-grid"><div class="leader-card"><div class="leader-title" id="platform-leader-title">Mobile (CBM) - Fastest Rank S Clear</div><div class="leader-scroll"><table class="rank-leader-table"><thead><tr></tr></thead><tbody id="lb-all-body"></tbody></table></div></div></div><p class="leader-count" id="leader-count"></p>';
+      table=section.querySelector('.rank-leader-table');
+    }
+    var head=table&&table.querySelector('thead tr');
+    if(head)head.innerHTML='<th>Rank</th><th>In-Game Avatar</th><th>In-Game Name</th><th>Class</th><th>Region</th><th>Nation</th><th>Time Beat</th>';
+  }
+  window.renderPhase2Leaderboard=function(){
+    ensureShell();
+    var body=document.getElementById('lb-all-body');if(!body)return;
+    var q=(document.getElementById('leader-search')||{}).value||'';q=q.toLowerCase();
+    var fr=(document.getElementById('filter-rank')||{}).value||'S';
+    var fc=(document.getElementById('filter-class')||{}).value||'';
+    var fg=(document.getElementById('filter-region')||{}).value||'';
+    var fn=(document.getElementById('filter-nation')||{}).value||'';
+    var platform=currentPlatform();
+    var section=document.getElementById('leaderboard');
+    if(section)section.setAttribute('data-platform',platform.indexOf('PC')>-1?'pc':'mobile');
+    var title=document.getElementById('platform-leader-title');
+    if(title)title.textContent=platform+' - Fastest Rank '+fr+' Clear';
+    var rows=(window.ALL_LEADERS||[]).filter(function(e){
+      var hay=[e.ign,e.cls,e.region,e.nation,e.platform,e.rank].join(' ').toLowerCase();
+      return e.platform===platform&&(!q||hay.indexOf(q)>-1)&&(!fr||e.rank===fr)&&(!fc||normalizeClass(e.cls)===fc)&&(!fg||e.region===fg)&&(!fn||e.nation===fn);
+    }).sort(function(a,b){return rankWeight(a.rank)-rankWeight(b.rank)||timeValue(a.time)-timeValue(b.time);});
+    body.innerHTML=rows.length?rows.map(function(e){
+      var icon=rankImages[e.rank]||'';
+      var avatar=e.avatarUrl?'<img src="'+esc(e.avatarUrl)+'" alt="'+esc(e.ign)+' avatar">':'Avatar';
+      return '<tr>'+
+        '<td class="rank-icon-cell"><span class="clean-rank">'+(icon?'<img src="'+esc(icon)+'" alt="Rank '+esc(e.rank)+'">':'')+'<span>'+esc(e.rank)+'</span></span></td>'+
+        '<td><span class="sheet-avatar">'+avatar+'</span></td>'+
+        '<td class="ign-cell">'+esc(e.ign||'IGN TBD')+'</td>'+
+        '<td><span class="class-tag">'+esc(normalizeClass(e.cls)||'Class TBD')+'</span></td>'+
+        '<td><span class="region-tag">'+esc(e.region||'Region TBD')+'</span></td>'+
+        '<td><span class="nation-tag '+nationClass(e.nation)+'">'+esc(e.nation||'Nation TBD')+'</span></td>'+
+        '<td class="time-cell">'+esc(e.time||'--:--')+'</td>'+
+      '</tr>';
+    }).join(''):'<tr><td class="empty-row" colspan="7">No fastest clear entries match this filter.</td></tr>';
+    var count=document.getElementById('leader-count');
+    if(count)count.textContent=rows.length+' '+platform+' Rank '+fr+' entr'+(rows.length===1?'y':'ies')+' shown';
+  };
+  function bind(){
+    ensureShell();
+    ['leader-search','filter-rank','filter-class','filter-region','filter-nation'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el&&!el.dataset.v37){el.dataset.v37='1';el.addEventListener('input',window.renderPhase2Leaderboard);el.addEventListener('change',window.renderPhase2Leaderboard);}
+    });
+    document.querySelectorAll('#leaderboard .platform-choice').forEach(function(btn){
+      if(btn.dataset.v37)return;
+      btn.dataset.v37='1';
+      btn.addEventListener('click',function(){setTimeout(window.renderPhase2Leaderboard,0);});
+    });
+    window.renderPhase2Leaderboard();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+  window.addEventListener('load',function(){setTimeout(bind,120);},{once:true});
+})();
+</script>
 </body>
 </html>
 
