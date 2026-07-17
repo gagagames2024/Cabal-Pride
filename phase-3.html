@@ -597,5 +597,68 @@ if (!reduce) {
   else ensureOfficialButton();
 })();
 </script>
+<style id="v48-shared-mobile-open-sections-final">
+  @media (max-width: 760px){
+    html,body{width:100%;max-width:100%;overflow-x:hidden!important}
+    img,video{max-width:100%;height:auto}
+    .container,.wrap,.shell,.phase-community-inner,.detail-grid,.p0-grid,.p1-grid,.score-card,.card,.activity-card{
+      width:min(100% - 24px,1120px)!important;
+      max-width:100%!important;
+      margin-left:auto!important;
+      margin-right:auto!important;
+    }
+    .top,.topbar,.site-header{
+      height:auto!important;
+      min-height:0!important;
+      padding:10px max(12px,env(safe-area-inset-left)) 12px max(12px,env(safe-area-inset-right))!important;
+      flex-direction:column!important;
+      align-items:center!important;
+      justify-content:center!important;
+      gap:10px!important;
+    }
+    .brand{justify-content:center!important;text-align:center!important}
+    .phase-nav,.phase-name-links,.hub-links,.nav{
+      width:100%!important;
+      display:flex!important;
+      flex-wrap:wrap!important;
+      justify-content:center!important;
+      gap:8px!important;
+      overflow:visible!important;
+    }
+    .phase-nav a,.phase-name-links a,.hub-links a,.nav a,.cta,.btn,.phase-lock-close{
+      min-height:44px!important;
+      touch-action:manipulation;
+    }
+    .p0-grid,.p1-grid,.detail-grid,.p2-strip,.phase-community-grid{
+      grid-template-columns:1fr!important;
+    }
+    .score-top{
+      grid-template-columns:1fr!important;
+      gap:10px!important;
+      text-align:center!important;
+    }
+    .actions{grid-template-columns:1fr!important}
+    .performer-row,.phase-link{
+      grid-template-columns:auto minmax(0,1fr)!important;
+      align-items:center!important;
+    }
+    .utility{min-height:64px!important}
+    .phase-lock-box{
+      width:calc(100vw - 28px)!important;
+      max-width:420px!important;
+      padding:22px 16px!important;
+    }
+    .phase-lock-count{
+      grid-template-columns:repeat(3,1fr)!important;
+      gap:8px!important;
+    }
+    .official-floating-btn{
+      left:max(14px,env(safe-area-inset-left))!important;
+      bottom:max(14px,env(safe-area-inset-bottom))!important;
+      max-width:calc(100vw - 28px)!important;
+      z-index:70!important;
+    }
+  }
+</style>
 </body>
 </html>

@@ -2116,6 +2116,151 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
   setInterval(loadOfficialSheet,30000);
 })();
 </script>
+<style id="v48-shared-mobile-open-sections-final">
+  @media (max-width: 760px){
+    html,body{width:100%;max-width:100%;overflow-x:hidden!important}
+    img,video{max-width:100%;height:auto}
+    .page,.shell,.hero,.dropdowns,.lore-stage,.submissions,.info-panel,.reward-layout,.foot,.footer-inner{
+      width:min(100% - 24px,1180px)!important;
+      max-width:100%!important;
+      margin-left:auto!important;
+      margin-right:auto!important;
+    }
+    .topbar,.top,.site-header{
+      height:auto!important;
+      min-height:0!important;
+      padding:10px max(12px,env(safe-area-inset-left)) 12px max(12px,env(safe-area-inset-right))!important;
+      flex-direction:column!important;
+      align-items:center!important;
+      justify-content:center!important;
+      gap:10px!important;
+    }
+    .brand{justify-content:center!important;text-align:center!important}
+    .phase-nav,.phase-name-links,.hub-links,.nav{
+      width:100%!important;
+      display:flex!important;
+      flex-wrap:wrap!important;
+      justify-content:center!important;
+      gap:8px!important;
+      overflow:visible!important;
+    }
+    .phase-nav a,.phase-name-links a,.hub-links a,.nav a,.cta,.btn,summary,.reward-tabs button,.filter-top button{
+      min-height:44px!important;
+      touch-action:manipulation;
+    }
+    .info-panel{overflow:visible!important}
+    .info-panel summary{
+      min-height:60px!important;
+      padding:16px!important;
+      align-items:center!important;
+      text-align:left!important;
+    }
+    .panel-body,.info-panel[open] .panel-body{
+      overflow:visible!important;
+      padding-left:16px!important;
+      padding-right:16px!important;
+    }
+    .reward-layout{
+      display:grid!important;
+      grid-template-columns:1fr!important;
+      gap:16px!important;
+    }
+    .reward-art{
+      width:100%!important;
+      max-width:100%!important;
+      min-height:220px!important;
+      aspect-ratio:16/9!important;
+      object-fit:cover!important;
+    }
+    .reward-tabs{
+      display:grid!important;
+      grid-template-columns:1fr 1fr!important;
+      gap:10px!important;
+      width:100%!important;
+    }
+    .reward-list{
+      max-height:360px!important;
+      overflow:auto!important;
+      padding-right:8px!important;
+    }
+    .lore-track,.lore-stage,.lore-viewport{
+      width:100%!important;
+      max-width:100%!important;
+      overflow:hidden!important;
+    }
+    .lore-card{
+      width:100%!important;
+      min-width:0!important;
+      min-height:560px!important;
+      padding:18px!important;
+    }
+    .lore-scroll{
+      max-height:260px!important;
+      overflow:auto!important;
+      padding:16px!important;
+    }
+    #submission-list .submission-entry{min-width:0!important;width:100%!important;overflow:hidden!important}
+    #submission-list .submission-row{
+      position:relative!important;
+      display:grid!important;
+      grid-template-columns:1fr!important;
+      gap:12px!important;
+      align-items:start!important;
+      padding:16px!important;
+      text-align:left!important;
+    }
+    #submission-list .submission-row::after{
+      position:absolute!important;
+      right:14px!important;
+      top:14px!important;
+    }
+    #submission-list .submission-guild{
+      display:grid!important;
+      grid-template-columns:58px minmax(0,1fr)!important;
+      align-items:center!important;
+      gap:12px!important;
+      padding-right:34px!important;
+    }
+    #submission-list .submission-logo{
+      width:54px!important;
+      height:54px!important;
+      min-width:54px!important;
+    }
+    #submission-list .submission-name{
+      font-size:clamp(1rem,5.4vw,1.35rem)!important;
+      line-height:1.08!important;
+      overflow-wrap:anywhere!important;
+    }
+    #submission-list .submission-label{
+      display:block!important;
+      margin-bottom:5px!important;
+      font-size:.68rem!important;
+      line-height:1!important;
+    }
+    #submission-list .submission-pill{
+      display:inline-flex!important;
+      align-items:center!important;
+      min-height:34px!important;
+      max-width:100%!important;
+      white-space:normal!important;
+      line-height:1.1!important;
+      text-align:center!important;
+    }
+    .official-floating-btn{
+      left:max(14px,env(safe-area-inset-left))!important;
+      bottom:max(14px,env(safe-area-inset-bottom))!important;
+      max-width:calc(100vw - 28px)!important;
+      z-index:70!important;
+    }
+  }
+  @media (max-width: 430px){
+    .hero .title{font-size:clamp(2.25rem,15vw,3.5rem)!important}
+    .lore-card{min-height:530px!important}
+    .lore-scroll{max-height:240px!important}
+    #submission-list .submission-guild{grid-template-columns:50px minmax(0,1fr)!important}
+    #submission-list .submission-logo{width:48px!important;height:48px!important;min-width:48px!important}
+  }
+</style>
 </body>
 </html>
 
