@@ -3867,6 +3867,120 @@ body{
   else ensureOfficialButton();
 })();
 </script>
+<style id="v46-center-active-learn-more-final">
+  .spotlight-row > #current-phase-learnmore,
+  #current-phase-learnmore.hall-learn-wrap{
+    grid-column:1 / -1!important;
+    width:100%!important;
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    margin:14px auto 0!important;
+    padding:0!important;
+    position:relative!important;
+    z-index:8!important;
+    pointer-events:auto!important;
+  }
+  #current-phase-learnmore .hall-learn-more,
+  #current-phase-learnmore .spot-cta{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:min(320px,92vw)!important;
+    min-height:46px!important;
+    margin:0 auto!important;
+    text-align:center!important;
+    transform:none!important;
+  }
+  .spotlight-row .spotlight .spot-content:empty{
+    display:none!important;
+  }
+  .spotlight-row .spotlight .spot-content .spot-cta{
+    display:none!important;
+  }
+  @media(max-width:760px){
+    .spotlight-row > #current-phase-learnmore,
+    #current-phase-learnmore.hall-learn-wrap{
+      margin-top:10px!important;
+    }
+    #current-phase-learnmore .hall-learn-more,
+    #current-phase-learnmore .spot-cta{
+      width:min(300px,88vw)!important;
+    }
+  }
+</style>
+<script id="v46-center-active-learn-more-final-script">
+(function(){
+  function clean(v){return String(v == null ? '' : v).trim();}
+  function activeUrl(){
+    try{
+      var cfg = window.CONFIG || {};
+      var phases = Array.isArray(cfg.phases) ? cfg.phases : [];
+      var active = phases.find(function(phase){return /^active$/i.test(clean(phase.status));});
+      if(active && clean(active.url) && clean(active.url) !== '#') return clean(active.url);
+      if(clean(cfg.currentPhaseUrl) && clean(cfg.currentPhaseUrl) !== '#') return clean(cfg.currentPhaseUrl);
+    }catch(e){}
+    var activeLink = document.querySelector('#site-nav a[aria-current="true"][href], #phase-grid .phase-card.active[href]');
+    if(activeLink && clean(activeLink.getAttribute('href')) && clean(activeLink.getAttribute('href')) !== '#') {
+      return clean(activeLink.getAttribute('href'));
+    }
+    return 'phase-2.html';
+  }
+  var running = false;
+  function centerActiveLearnMore(){
+    if(running) return;
+    running = true;
+    try{
+      var row = document.querySelector('.spotlight-row');
+      if(!row) return;
+      var href = activeUrl();
+      var wrap = document.getElementById('current-phase-learnmore');
+      if(!wrap){
+        wrap = document.createElement('div');
+        wrap.id = 'current-phase-learnmore';
+        wrap.className = 'hall-learn-wrap';
+      }
+      var button = wrap.querySelector('a');
+      if(!button){
+        button = document.createElement('a');
+        button.className = 'hall-learn-more spot-cta';
+        button.textContent = 'Learn More';
+        wrap.appendChild(button);
+      }
+      button.href = href;
+      button.textContent = 'Learn More';
+      button.removeAttribute('target');
+      button.removeAttribute('rel');
+      button.setAttribute('aria-label','Open the current active phase');
+      document.querySelectorAll('.spotlight .spot-cta, .hall-learn-wrap:not(#current-phase-learnmore)').forEach(function(el){
+        if(el !== button && el !== wrap) el.remove();
+      });
+      if(wrap.parentNode !== row || row.lastElementChild !== wrap) row.appendChild(wrap);
+    }finally{
+      running = false;
+    }
+  }
+  document.addEventListener('click', function(event){
+    var link = event.target.closest && event.target.closest('#current-phase-learnmore a');
+    if(!link) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if(event.stopImmediatePropagation) event.stopImmediatePropagation();
+    window.location.href = activeUrl();
+  }, true);
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', centerActiveLearnMore);
+  else centerActiveLearnMore();
+  window.addEventListener('load', function(){setTimeout(centerActiveLearnMore, 180);}, {once:true});
+  setTimeout(centerActiveLearnMore, 500);
+  setTimeout(centerActiveLearnMore, 1400);
+  if(window.MutationObserver){
+    new MutationObserver(function(){setTimeout(centerActiveLearnMore, 0);}).observe(document.querySelector('.spotlight-row') || document.documentElement, {
+      childList:true,
+      subtree:true
+    });
+  }
+})();
+</script>
 </body>
 </html>
 
