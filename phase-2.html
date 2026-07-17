@@ -334,7 +334,35 @@ document.querySelectorAll('.tabs').forEach(function(group){var buttons=group.que
     }
   };
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-  function normalizeClass(v){return String(v||'').replace('Bladder','Blader').replace('Warior','Warrior');}
+  function normalizeClass(v){
+    return String(v||'')
+      .replace(/Bladder/gi,'Blader')
+      .replace(/Warior/gi,'Warrior')
+      .replace(/Dark Make/gi,'Dark Mage')
+      .replace(/Force Shield\b/gi,'Force Shielder')
+      .trim();
+  }
+  function classKey(v){
+    return normalizeClass(v).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  }
+  function classAvatarFor(entry){
+    var isPc=String((entry&&entry.platform)||'').toLowerCase().indexOf('pc')>-1 || String((entry&&entry.platform)||'').toLowerCase().indexOf('cbpc')>-1;
+    var prefix=isPc?'CBPC':'CBM';
+    var map={
+      'blader':'Blader',
+      'force gunner':'Force Gunner',
+      'force shielder':isPc?'Force Shielder':'Force Shield',
+      'force shield':isPc?'Force Shielder':'Force Shield',
+      'gladiator':'Gladiator',
+      'warrior':'Warrior',
+      'wizard':'Wizard',
+      'dark mage':'Dark Mage',
+      'force archer':'Force Archer',
+      'force blader':'Force Blader'
+    };
+    var name=map[classKey(entry&&entry.cls)];
+    return name?prefix+'-'+name+'.png':'';
+  }
   function platformKey(v){return String(v||'').toLowerCase().indexOf('pc')>-1?'pc':'mobile';}
   function avatarFor(entry){
     var cls=normalizeClass(entry&&entry.cls);
@@ -802,7 +830,8 @@ document.querySelectorAll('.tabs').forEach(function(group){var buttons=group.que
     }).sort(function(a,b){return rankWeight(a.rank)-rankWeight(b.rank)||timeValue(a.time)-timeValue(b.time);});
     body.innerHTML=rows.length?rows.map(function(e){
       var icon=rankImages[e.rank]||'';
-      var avatar=e.avatarUrl?'<img src="'+esc(e.avatarUrl)+'" alt="'+esc(e.ign)+' avatar">':'Avatar';
+      var avatarSrc=classAvatarFor(e)||e.avatarUrl||'';
+      var avatar=avatarSrc?'<img src="'+esc(avatarSrc)+'" alt="'+esc(e.ign)+' '+esc(normalizeClass(e.cls)||'class')+' avatar">':'Avatar';
       return '<tr>'+
         '<td class="rank-icon-cell"><span class="clean-rank">'+(icon?'<img src="'+esc(icon)+'" alt="Rank '+esc(e.rank)+'">':'')+'<span>'+esc(e.rank)+'</span></span></td>'+
         '<td><span class="sheet-avatar">'+avatar+'</span></td>'+
@@ -831,6 +860,60 @@ document.querySelectorAll('.tabs').forEach(function(group){var buttons=group.que
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
   window.addEventListener('load',function(){setTimeout(bind,120);},{once:true});
+})();
+</script>
+<!-- === V38 SHARED PHASE HEADER LOGIC === -->
+<style id="v38-shared-phase-header-logic">
+  #site-nav .phase-header-links a.home-phase-link,
+  #site-nav .phase-nav a.home-phase-link,
+  .top .hub-links a.home-phase-link{
+    color:#f6d75c!important;
+    border-color:rgba(240,208,96,.62)!important;
+    background:linear-gradient(180deg,rgba(240,208,96,.18),rgba(240,208,96,.08))!important;
+    box-shadow:0 0 18px rgba(240,208,96,.12)!important;
+  }
+  #site-nav .phase-header-links a.is-active-phase,
+  #site-nav .phase-nav a.is-active-phase,
+  .top .hub-links a.is-active-phase{
+    color:#f6d75c!important;
+    border-color:rgba(240,208,96,.46)!important;
+    background:rgba(240,208,96,.1)!important;
+  }
+  #site-nav .phase-header-links a.is-phase-locked,
+  #site-nav .phase-nav a.is-phase-locked,
+  .top .hub-links a.is-phase-locked{
+    color:#8e8aa8!important;
+    opacity:.62!important;
+    border-color:rgba(255,255,255,.1)!important;
+    background:rgba(255,255,255,.035)!important;
+  }
+</style>
+<script id="v38-shared-phase-header-logic-script">
+(function(){
+  var phases=[
+    {name:'Guild Pride',url:'phase-1.html',status:'done'},
+    {name:'Dungeon Pride',url:'phase-2.html',status:'active'},
+    {name:'Grinding Pride',url:'phase-3.html',status:'upcoming'}
+  ];
+  function pageName(){var p=String(location.pathname||'').split('/').pop();return p||'index.html';}
+  function navRoot(){return document.querySelector('#site-nav .phase-header-links,#site-nav .phase-nav,.top .hub-links.phase-name-links,.top .hub-links');}
+  function linkHtml(p,isMain,current){
+    var label=p.name,href=p.url,cls=[],attrs='';
+    if(!isMain&&p.url===current){label='CABAL PRIDE';href='index.html';cls.push('home-phase-link');attrs+=' aria-label="Back to CABAL PRIDE main page"';}
+    else if(p.status==='upcoming'){cls.push('is-phase-locked');attrs+=' data-phase-locked="1" aria-label="'+p.name+' is upcoming"';}
+    else if(isMain&&p.status==='active'){attrs+=' aria-current="true"';}
+    else if(!isMain&&p.status==='active'){cls.push('is-active-phase');}
+    return '<a href="'+href+'"'+(cls.length?' class="'+cls.join(' ')+'"':'')+attrs+'>'+label+'</a>';
+  }
+  function normalizeHeader(){
+    var nav=navRoot();if(!nav)return;
+    var current=pageName(),isMain=current==='index.html';
+    var nation=nav.querySelector('.nation-nav-button');
+    var nationHtml=isMain&&nation?nation.outerHTML:'';
+    nav.innerHTML=phases.map(function(p){return linkHtml(p,isMain,current);}).join('')+nationHtml;
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',normalizeHeader);else normalizeHeader();
+  window.addEventListener('load',normalizeHeader,{once:true});
 })();
 </script>
 </body>
