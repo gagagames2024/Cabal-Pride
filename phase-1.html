@@ -1921,6 +1921,201 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
     .section-head h2{font-size:clamp(1.55rem,9vw,2.3rem)!important}
   }
 </style>
+<style id="v44-phase1-official-sheet-only">
+  #submission-list.is-loading::before{
+    content:"Loading official guild lore data...";
+    display:block;
+    padding:18px;
+    border:1px solid rgba(240,208,96,.28);
+    border-radius:10px;
+    background:rgba(8,8,26,.72);
+    color:#f6d75c;
+    font-weight:900;
+    letter-spacing:.04em;
+    text-align:center;
+  }
+</style>
+<script id="v44-phase1-official-sheet-only-script">
+(function(){
+  var SHEET_ID = '1JqHItiPR19qyFj71VRp7IxTfTWv7ztScPgIpRe_746w';
+  var GUILD_LORE_GID = '220720001';
+  function clean(v){return String(v == null ? '' : v).trim();}
+  function key(v){
+    return clean(v)
+      .toLowerCase()
+      .replace(/[\uFEFF]/g,'')
+      .replace(/&/g,' and ')
+      .replace(/[()]/g,' ')
+      .replace(/[^a-z0-9]+/g,'_')
+      .replace(/^_+|_+$/g,'');
+  }
+  function num(v){return Number(clean(v).replace(/,/g,'')) || 0;}
+  function html(v){return clean(v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function pick(row,names){
+    for(var i=0;i<names.length;i++){
+      var k=key(names[i]);
+      if(row[k] != null && clean(row[k]) !== '') return row[k];
+    }
+    return '';
+  }
+  function initials(name){
+    return clean(name).split(/\s+/).filter(Boolean).map(function(part){return part.charAt(0);}).join('').slice(0,3).toUpperCase() || 'GL';
+  }
+  function normalizePlatform(v){
+    v = clean(v);
+    if(/cbpc|cabal\s*pc|\bpc\b/i.test(v)) return 'Cabal PC';
+    if(/cbm|cabal\s*mobile|mobile/i.test(v)) return 'Cabal Mobile';
+    return v || 'Cabal Mobile';
+  }
+  function normalizeRegion(v){
+    v = clean(v).toUpperCase();
+    if(/\bID\b|INDONESIA/.test(v)) return 'ID';
+    if(/\bPH\b|PHILIPPINES|PILIPINAS/.test(v)) return 'PH';
+    return v || 'TBD';
+  }
+  function headerScore(row){
+    var h=(row||[]).map(key);
+    var wanted=['guild_name','guild_title','guild','platform','guild_leader','leader_name','region','guild_logo_url','logo_url','lore_story','guild_lore','social_post_url','final_score','total_score','status'];
+    return wanted.reduce(function(total,name){return total + (h.indexOf(name) > -1 ? 1 : 0);},0);
+  }
+  function objectsFromMatrix(matrix){
+    var start=0,best=-1;
+    for(var i=0;i<matrix.length;i++){
+      var score=headerScore(matrix[i]);
+      if(score>best){best=score;start=i;}
+    }
+    var headers=(matrix[start]||[]).map(function(h,i){return key(h || ('col_'+i));});
+    window.__phase1OfficialSheetHeaders = headers;
+    return matrix.slice(start+1).filter(function(row){
+      return (row||[]).some(function(v){return clean(v) !== '';});
+    }).map(function(row){
+      var obj={};
+      headers.forEach(function(h,i){obj[h]=row[i] || '';});
+      return obj;
+    });
+  }
+  function loadGvizByGid(){
+    return new Promise(function(resolve,reject){
+      var cb='__phase1OfficialSheet_'+Date.now()+'_'+Math.floor(Math.random()*99999);
+      var done=false;
+      var script=document.createElement('script');
+      var timer=setTimeout(function(){cleanup();reject(new Error('Sheet timeout'));},14000);
+      function cleanup(){
+        done=true;
+        clearTimeout(timer);
+        try{delete window[cb];}catch(e){window[cb]=undefined;}
+        if(script && script.parentNode) script.parentNode.removeChild(script);
+      }
+      window[cb]=function(res){
+        if(done) return;
+        cleanup();
+        if(!res || res.status === 'error') return reject(new Error('Sheet response error'));
+        var headers=((res.table&&res.table.cols)||[]).map(function(col){return col.label || col.id || '';});
+        var rows=(res.table&&res.table.rows)||[];
+        resolve([headers].concat(rows.map(function(r){
+          return (r.c||[]).map(function(cell){return cell ? (cell.f || cell.v || '') : '';});
+        })));
+      };
+      script.src='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?gid='+encodeURIComponent(GUILD_LORE_GID)+'&range=A1:Z1000&tqx=responseHandler:'+cb+'&cacheBust='+Date.now();
+      script.onerror=function(){cleanup();reject(new Error('Sheet script failed'));};
+      document.head.appendChild(script);
+    });
+  }
+  function mapGuild(row,index){
+    var name=pick(row,['guild_name','guild title','guild_title','guild','team_name','name']);
+    var platform=normalizePlatform(pick(row,['platform','game_version','game version','version','game','server_platform','cabal_version']));
+    var region=normalizeRegion(pick(row,['region','country','country_region','server_region','ph_id','region_ph_id']));
+    return {
+      id:clean(pick(row,['guild_id','id','submission_id','entry_id','no','number'])) || ('guild_'+index+'_'+key(name)),
+      name:name,
+      category:pick(row,['category','theme','lore_category','story_category']) || 'Legacy',
+      initials:initials(name),
+      leader:pick(row,['guild_leader','guild leader','leader','leader_name','guild_master','representative','representative_name','pic']),
+      region:region,
+      platform:platform,
+      logo:pick(row,['guild_logo_url','guild logo url','logo_url','logo url','guild_logo','logo','image','image_url']),
+      score:num(pick(row,['final_score','final score','total_score','total score','score','points','manual_score','manual score','page_score','page score'])),
+      socialUrl:pick(row,['social_post_url','social post url','post_url','post url','facebook_url','fb_post_url','social_url','social link','social_post_link']),
+      lore:pick(row,['lore_story','lore story','guild_lore','guild lore','lore','story','submission','description','guild_story']),
+      status:pick(row,['status','visibility','approval','publish','published'])
+    };
+  }
+  function applyOfficialRows(matrix){
+    var rows=objectsFromMatrix(matrix).map(mapGuild).filter(function(g){
+      var status=clean(g.status).toLowerCase();
+      return clean(g.name) !== '' && !/(hidden|hide|reject|rejected|draft|disabled)/.test(status);
+    }).sort(function(a,b){return b.score-a.score || clean(a.name).localeCompare(clean(b.name));});
+    var list=document.getElementById('submission-list');
+    if(list) list.classList.remove('is-loading');
+    if(!rows.length){
+      if(list) list.innerHTML='<div class="empty">No official guild lore rows found in the connected sheet tab.</div>';
+      return false;
+    }
+    window.__phase1UsingOfficialSheet = true;
+    window.__phase1SheetRows = rows;
+    if(window.CONFIG) CONFIG.guilds = rows;
+    try{featuredGuilds=[];lastLoreRandomizedAt=0;}catch(e){}
+    if(typeof renderAlphabet === 'function') renderAlphabet();
+    if(typeof randomizeFeaturedLore === 'function') randomizeFeaturedLore(true);
+    if(typeof renderSubmissions === 'function') renderSubmissions();
+    return true;
+  }
+  window.platformIsPc=function(value){return /pc|cbpc/i.test(clean(value));};
+  window.platformLabel=function(value){return window.platformIsPc(value)?'CBPC-SEA':'CBM-SEA';};
+  window.platformClass=function(value){return window.platformIsPc(value)?'platform-pc':'platform-mobile';};
+  window.platformIcon=function(){return '';};
+  window.guildRegion=function(g){return normalizeRegion(g && g.region);};
+  window.regionName=function(r){
+    r=normalizeRegion(r);
+    return r==='ID'?'Indonesia':(r==='PH'?'Philippines':(r || 'TBD'));
+  };
+  window.flagMark=function(){return '';};
+  window.renderSubmissions=function(){
+    var list=document.getElementById('submission-list');
+    if(!list) return;
+    var search=document.getElementById('submission-search');
+    var q=clean(search && search.value).toLowerCase();
+    var rows=(CONFIG && CONFIG.guilds ? CONFIG.guilds : []).filter(function(g){
+      var first=clean(g && g.name).charAt(0).toUpperCase();
+      var pLabel=platformLabel(g && g.platform);
+      var hay=[g&&g.name,g&&g.leader,pLabel,g&&g.platform,g&&g.lore,guildRegion(g),regionName(guildRegion(g))].map(clean).join(' ').toLowerCase();
+      return (region==='All'||guildRegion(g)===region) && (letter==='All'||first===letter) && hay.indexOf(q)>-1;
+    });
+    if(sortMode==='az') rows.sort(function(a,b){return clean(a.name).localeCompare(clean(b.name));});
+    else rows.sort(function(a,b){return num(b.score)-num(a.score) || clean(a.name).localeCompare(clean(b.name));});
+    list.innerHTML=rows.length?rows.map(function(g){
+      var name=html(g.name||'Guild Title Placeholder');
+      var leader=html(g.leader||'Leader Name Placeholder');
+      var pLabel=platformLabel(g.platform);
+      var pClass=platformClass(g.platform);
+      var lore=(clean(g.lore)||'Guild lore placeholder. This area will show the full story submitted by the guild once the data is available.').split(/\n\s*\n/).map(function(p){return '<p>'+html(p)+'</p>';}).join('');
+      return '<details class="submission-entry '+(platformIsPc(g.platform)?'is-pc':'is-mobile')+'" style="'+categoryStyle(g)+'"><summary class="submission-row"><div class="submission-guild">'+logoMark(g,'submission-logo')+'<div><div class="submission-name">'+name+'</div></div></div><div class="submission-meta"><span class="submission-label">Guild Leader</span>'+leader+'</div><div><span class="submission-label">Region</span><span class="submission-pill">'+regionName(guildRegion(g))+'</span></div><div><span class="submission-label">Platform</span><span class="submission-pill '+pClass+'">'+pLabel+'</span></div><div class="submission-score"><span class="submission-label">Final Score</span>'+scoreText(g.score)+'</div></summary><div class="submission-lore"><div class="submission-lore-inner">'+lore+'<div class="submission-social">'+socialButton(g,'View Guild Post')+'</div></div></div></details>';
+    }).join(''):'<div class="empty">No guild lore submissions found.</div>';
+  };
+  window.loreCard=function(g,id){
+    g=g||{};
+    var name=html(g.name||'Guild Title Placeholder');
+    var lore=clean(g.lore)||'Guild lore placeholder. This area will show the full story submitted by the guild once the data is available.';
+    var paragraphs=lore.split(/\n\s*\n/).map(function(p){return '<p>'+html(p)+'</p>';}).join('');
+    return '<div class="lore-item" id="'+id+'" style="'+categoryStyle(g)+'"><article class="lore-card">'+logoMark(g,'guild-logo')+'<h2 class="guild-name">'+name+'</h2><div class="lore-scroll"><div class="lore-text">'+paragraphs+'</div></div>'+socialButton(g,'View Guild Post')+'</article></div>';
+  };
+  function loadOfficialSheet(){
+    var list=document.getElementById('submission-list');
+    if(list && !window.__phase1UsingOfficialSheet) list.classList.add('is-loading');
+    loadGvizByGid().then(applyOfficialRows).catch(function(){
+      if(list){
+        list.classList.remove('is-loading');
+        list.innerHTML='<div class="empty">Official sheet data could not load. Check that the Google Sheet is shared as view-only/public for web visitors.</div>';
+      }
+    });
+  }
+  if(window.CONFIG) CONFIG.guilds = [];
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', loadOfficialSheet);
+  else loadOfficialSheet();
+  window.addEventListener('load',function(){setTimeout(loadOfficialSheet,500);},{once:true});
+  setInterval(loadOfficialSheet,30000);
+})();
+</script>
 </body>
 </html>
 
