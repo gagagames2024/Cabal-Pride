@@ -488,5 +488,114 @@ if (!reduce) {
   window.addEventListener('load',normalizeHeader,{once:true});
 })();
 </script>
+<style id="v42-final-text-alignment-guard">
+  *,*::before,*::after{box-sizing:border-box}
+  body{overflow-x:hidden}
+  .top,#site-nav{align-items:center}
+  .top .brand{min-width:0}
+  .top .brand span{overflow-wrap:anywhere}
+  .hub-links,.phase-name-links{min-width:0}
+  .hub-links a,.phase-name-links a{text-align:center;line-height:1}
+  .container,.phase-head,.p0-grid,.detail-grid,.card,.score-card,.activity-card,.phase-community-footer{max-width:100%}
+  .phase-hero,.phase-title,.phase-community-footer,footer{text-align:center}
+  .phase-head{align-items:center}
+  .phase-no{justify-self:center}
+  .phase-title h1{line-height:1.05;text-wrap:balance}
+  .phase-title p,.activity-card p,.card p,.mechanics li{text-wrap:pretty;overflow-wrap:anywhere}
+  .priority{align-items:center}
+  .priority span:first-child{line-height:1.1}
+  .score-top{align-items:center}
+  .nation{text-align:center}
+  .actions,.bottom-tabs,.phase-community-actions{align-items:center;justify-content:center}
+  .btn,.utility,.phase-link{text-align:center;justify-content:center}
+  .performer-row{align-items:center;text-align:left}
+  .mechanics{align-items:stretch}
+  .mechanics li{text-align:left}
+  .phase-community-inner{text-align:center}
+  .phase-comm-wrap{align-items:center;text-align:center}
+  .phase-comm-label,.phase-popup-title,.phase-popup-list{text-align:center}
+  @media(max-width:760px){
+    .top{align-items:center!important}
+    .top .brand{width:100%;justify-content:center}
+    .hub-links,.phase-name-links{width:100%;justify-content:flex-start!important;overflow-x:auto;scroll-snap-type:x proximity}
+    .hub-links a,.phase-name-links a{flex:0 0 auto;scroll-snap-align:center}
+    .container{padding-left:14px!important;padding-right:14px!important}
+    .phase-head{grid-template-columns:1fr!important;text-align:center}
+    .p0-grid,.detail-grid{grid-template-columns:1fr!important}
+    .score-top{grid-template-columns:1fr!important;gap:10px}
+    .actions{grid-template-columns:1fr!important}
+    .performer-row{grid-template-columns:auto minmax(0,1fr)!important}
+    .performer-row .score-num{grid-column:2;justify-self:start}
+    .p2-strip{grid-template-columns:1fr!important}
+    .phase-community-actions{gap:28px!important}
+  }
+</style>
+<style id="shared-official-floating-button">
+  .official-floating-btn{
+    position:fixed!important;
+    left:18px!important;
+    bottom:18px!important;
+    z-index:9999!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    gap:10px!important;
+    min-height:48px!important;
+    padding:11px 18px!important;
+    border-radius:999px!important;
+    border:1px solid rgba(240,208,96,.58)!important;
+    background:linear-gradient(180deg,rgba(18,18,46,.94),rgba(5,5,18,.96))!important;
+    color:#fff7c7!important;
+    font-family:'Exo 2',Segoe UI,system-ui,sans-serif!important;
+    font-size:.86rem!important;
+    font-weight:1000!important;
+    letter-spacing:.06em!important;
+    text-transform:uppercase!important;
+    text-decoration:none!important;
+    box-shadow:0 14px 34px rgba(0,0,0,.48),0 0 20px rgba(240,208,96,.18)!important;
+    backdrop-filter:blur(10px)!important;
+    transition:transform .18s ease,border-color .18s ease,filter .18s ease!important;
+  }
+  .official-floating-btn::before{
+    content:""!important;
+    width:22px!important;
+    height:22px!important;
+    flex:0 0 22px!important;
+    border-radius:50%!important;
+    background:radial-gradient(circle,#f7df70 0 35%,rgba(240,208,96,.18) 38% 100%)!important;
+    box-shadow:0 0 18px rgba(240,208,96,.38)!important;
+  }
+  .official-floating-btn:hover,
+  .official-floating-btn:focus-visible{
+    transform:translateY(-2px)!important;
+    border-color:#f0d060!important;
+    filter:brightness(1.08)!important;
+    outline:none!important;
+  }
+  @media(max-width:840px){
+    .official-floating-btn{
+      left:12px!important;
+      bottom:12px!important;
+      min-height:44px!important;
+      padding:10px 13px!important;
+      font-size:.68rem!important;
+    }
+    .official-floating-btn::before{
+      width:18px!important;
+      height:18px!important;
+      flex-basis:18px!important;
+    }
+  }
+</style>
+<script id="shared-official-floating-button-script">
+(function(){
+  var OFFICIAL_URL='https://combocabalm.com/sea/';
+  function ensureOfficialButton(){
+    if(document.querySelector('.official-floating-btn'))return;
+    document.body.insertAdjacentHTML('beforeend','<a class="official-floating-btn" href="'+OFFICIAL_URL+'" target="_blank" rel="noopener" aria-label="Open official CABAL website">Official Website</a>');
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensureOfficialButton);
+  else ensureOfficialButton();
+})();
+</script>
 </body>
 </html>

@@ -559,7 +559,7 @@ body::after{background:
     }
     function parsePhaseRange(text){
       text=String(text||''); var y=(new Date()).getFullYear();
-      var m=text.match(/(\d{1,2})\s*(?:-|â€“|to)\s*(\d{1,2})\s*([A-Za-z]+)/);
+      var m=text.match(/(\d{1,2})\s*(?:-|to)\s*(\d{1,2})\s*([A-Za-z]+)/);
       if(!m)return null;
       var months={jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
       var mo=months[m[3].slice(0,3).toLowerCase()]; if(mo==null)return null;
@@ -573,7 +573,7 @@ body::after{background:
       var rem=left<=0?'This phase has ended':(days>0?days+'d '+hrs+'h left':hrs+'h '+mins+'m left');
       return {activeIndex:activeIndex,percent:pct,remaining:rem};
     }
-    function updateToday(){var el=document.getElementById('road-today');if(!el)return;var p=getPhaseProgress(CONFIG.phases||[]);el.textContent='Guild Pride ends in: '+p.remaining+' Â· Progress '+p.percent+'%';var line=document.querySelector('.road-line.active-progress');if(line)line.style.setProperty('--phase-progress',p.percent+'%');}
+    function updateToday(){var el=document.getElementById('road-today');if(!el)return;var p=getPhaseProgress(CONFIG.phases||[]);el.textContent='Guild Pride ends in: '+p.remaining+' - Progress '+p.percent+'%';var line=document.querySelector('.road-line.active-progress');if(line)line.style.setProperty('--phase-progress',p.percent+'%');}
     updateToday();setInterval(updateToday,30000);
     renderHub();
     loadLiveData();
@@ -680,7 +680,7 @@ body::after{background:
     document.getElementById('leaderboard').innerHTML = (CONFIG&&CONFIG.guilds||[]).map(function(guild,i){var logo = guild.logo ? '<img src="'+escHtml(guild.logo)+'" alt="'+escHtml(guild.name)+' logo">' : '<span class="logo-ph">'+initials(guild.name||'Guild')+'</span>';return '<article class="leader-card rank-'+(i+1)+'" style="--guild:'+escHtml(guild.color || '#f0d060')+'"><span class="rank-badge">'+(i+1)+'</span><div class="guild-logo">'+logo+'</div><div class="guild-frame"><div class="guild-title">'+escHtml(guild.name)+'</div></div><div class="guild-score">'+Number(guild.score || 0).toLocaleString()+' pts</div></article>';}).join('');
     applyCommunityLink();
   };
-  window.updateToday = function(){var el=document.getElementById('road-today');if(!el)return;var p=activePhaseProgress();var active=((CONFIG&&CONFIG.phases)||[]).find(isActive)||((CONFIG&&CONFIG.phases)||[])[0]||{};var phaseName=active.phaseName||'Guild Pride';el.innerHTML='<span class="road-highlight">'+escHtml(phaseName)+'</span> ends in: <span class="road-highlight">'+escHtml(p.remaining)+'</span> Â· Progress '+p.percent+'%';var line=document.querySelector('.road-line.active-progress');if(line)line.style.setProperty('--phase-progress',p.percent+'%');};
+  window.updateToday = function(){var el=document.getElementById('road-today');if(!el)return;var p=activePhaseProgress();var active=((CONFIG&&CONFIG.phases)||[]).find(isActive)||((CONFIG&&CONFIG.phases)||[])[0]||{};var phaseName=active.phaseName||'Guild Pride';el.innerHTML='<span class="road-highlight">'+escHtml(phaseName)+'</span> ends in: <span class="road-highlight">'+escHtml(p.remaining)+'</span> - Progress '+p.percent+'%';var line=document.querySelector('.road-line.active-progress');if(line)line.style.setProperty('--phase-progress',p.percent+'%');};
   renderHub(); updateToday(); setInterval(window.updateToday,30000);
 })();
 </script>
@@ -744,7 +744,7 @@ body::after{background:
     document.getElementById('leaderboard').innerHTML = (CONFIG&&CONFIG.guilds||[]).map(function(guild,i){var logo = guild.logo ? '<img src="'+escHtml(guild.logo)+'" alt="'+escHtml(guild.name)+' logo">' : '<span class="logo-ph">'+initials(guild.name||'Guild')+'</span>';return '<article class="leader-card rank-'+(i+1)+'" style="--guild:'+escHtml(guild.color || '#f0d060')+'"><span class="rank-badge">'+(i+1)+'</span><div class="guild-logo">'+logo+'</div><div class="guild-frame"><div class="guild-title">'+escHtml(guild.name)+'</div></div><div class="guild-score">'+Number(guild.score || 0).toLocaleString()+' pts</div></article>';}).join('');
     applyCommunityLink();
   };
-  window.updateToday = function(){var el=document.getElementById('road-today');if(!el)return;var p=activePhaseProgress();var active=((CONFIG&&CONFIG.phases)||[]).find(isActive)||((CONFIG&&CONFIG.phases)||[])[0]||{};var phaseName=active.phaseName||'Guild Pride';el.innerHTML='<span class="road-highlight">'+escHtml(phaseName)+'</span> ends in: <span class="road-highlight">'+escHtml(p.remaining)+'</span> Â· Progress '+p.percent+'%';var line=document.querySelector('.road-line.active-progress');if(line)line.style.setProperty('--phase-progress',p.percent+'%');};
+  window.updateToday = function(){var el=document.getElementById('road-today');if(!el)return;var p=activePhaseProgress();var active=((CONFIG&&CONFIG.phases)||[]).find(isActive)||((CONFIG&&CONFIG.phases)||[])[0]||{};var phaseName=active.phaseName||'Guild Pride';el.innerHTML='<span class="road-highlight">'+escHtml(phaseName)+'</span> ends in: <span class="road-highlight">'+escHtml(p.remaining)+'</span> - Progress '+p.percent+'%';var line=document.querySelector('.road-line.active-progress');if(line)line.style.setProperty('--phase-progress',p.percent+'%');};
   renderHub(); updateToday();
 })();
 </script>
@@ -857,7 +857,7 @@ body::after{background:
     document.getElementById('leaderboard').innerHTML = (CONFIG&&CONFIG.guilds||[]).map(function(guild,i){var logo = guild.logo ? '<img src="'+escHtml(guild.logo)+'" alt="'+escHtml(guild.name)+' logo">' : '<span class="logo-ph">'+initials(guild.name||'Guild')+'</span>';return '<article class="leader-card rank-'+(i+1)+'" style="--guild:'+escHtml(guild.color || '#f0d060')+'"><span class="rank-badge">'+(i+1)+'</span><div class="guild-logo">'+logo+'</div><div class="guild-frame"><div class="guild-title">'+escHtml(guild.name)+'</div></div><div class="guild-score">'+Number(guild.score || 0).toLocaleString()+' pts</div></article>';}).join('');
     applyCommunityLink();
   };
-  window.updateToday = function(){var el=document.getElementById('road-today');if(!el)return;var p=activeProgress();var active=((CONFIG&&CONFIG.phases)||[]).find(isActive)||((CONFIG&&CONFIG.phases)||[])[0]||{};var phaseName=active.phaseName||'Guild Pride';el.innerHTML='<span class="road-highlight">'+escHtml(phaseName)+'</span> ends in: <span class="road-highlight">'+escHtml(p.remaining)+'</span> Â· Progress '+p.percent+'%';};
+  window.updateToday = function(){var el=document.getElementById('road-today');if(!el)return;var p=activeProgress();var active=((CONFIG&&CONFIG.phases)||[]).find(isActive)||((CONFIG&&CONFIG.phases)||[])[0]||{};var phaseName=active.phaseName||'Guild Pride';el.innerHTML='<span class="road-highlight">'+escHtml(phaseName)+'</span> ends in: <span class="road-highlight">'+escHtml(p.remaining)+'</span> - Progress '+p.percent+'%';};
   renderHub(); updateToday();
 })();
 </script>
@@ -3478,6 +3478,393 @@ body{
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fixHallCta);else fixHallCta();
   window.addEventListener('load',function(){setTimeout(fixHallCta,120);},{once:true});
   setTimeout(fixHallCta,450);
+})();
+</script>
+<style id="v42-final-text-alignment-guard">
+  *,*::before,*::after{box-sizing:border-box}
+  body{overflow-x:hidden}
+  #site-nav{align-items:center}
+  #site-nav .nav-brand{min-width:0}
+  #site-nav .phase-header-links{min-width:0}
+  #site-nav .phase-header-links a{line-height:1;text-align:center}
+  .page,.shell,.hero,.timeline-card,.spotlight-row,.hall,.community{max-width:100%}
+  .hero,.timeline-card,.road,.hall-head,.community{text-align:center}
+  .brand-logo{display:block;margin-left:auto!important;margin-right:auto!important}
+  .timeline-card{margin-left:auto!important;margin-right:auto!important}
+  .phase-grid{align-items:stretch!important;justify-content:center!important}
+  .phase-card{display:flex!important;flex-direction:column!important;text-align:left!important}
+  .phase-cover{flex:0 0 auto}
+  .phase-head{width:100%;align-items:flex-start!important}
+  .phase-title{max-width:100%;line-height:1.12!important;text-wrap:balance;overflow-wrap:anywhere}
+  .phase-date,.phase-desc{max-width:34ch;line-height:1.38!important;overflow-wrap:anywhere}
+  .phase-link{align-self:stretch;text-align:center}
+  .spotlight-row{align-items:start!important;justify-items:center!important}
+  .spotlight-row .hall{width:100%!important;margin-inline:auto!important}
+  .spotlight-row .leaderboard.rank-hall{align-items:stretch!important;justify-content:center!important}
+  .spotlight-row .rank-leader-card{display:grid!important;grid-template-rows:auto auto minmax(2.4em,1fr) auto!important;justify-items:center!important;text-align:center!important}
+  .spotlight-row .rank-leader-card .player{display:flex;align-items:center;justify-content:center;min-height:2.4em;width:100%;line-height:1.12!important;text-align:center;overflow-wrap:anywhere}
+  .spotlight-row .rank-leader-card .time,.spotlight-row .rank-leader-card .platform-mini{text-align:center}
+  .spotlight .spot-content{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .spotlight .spot-cta{align-self:center;justify-content:center;text-align:center}
+  .community{display:block;text-align:center!important}
+  .community-action{justify-items:center;text-align:center}
+  .community-label,.source-note,.ci-foot{text-align:center!important}
+  @media(max-width:980px){
+    #site-nav{gap:10px}
+    .spotlight-row{grid-template-columns:1fr!important}
+    .spotlight-row .leaderboard.rank-hall{grid-template-columns:repeat(4,minmax(92px,1fr))!important}
+  }
+  @media(max-width:760px){
+    #site-nav{align-items:center!important}
+    #site-nav .nav-brand{width:100%;justify-content:center}
+    #site-nav .phase-header-links{width:100%;justify-content:flex-start!important;overflow-x:auto;scroll-snap-type:x proximity}
+    #site-nav .phase-header-links a{flex:0 0 auto;scroll-snap-align:center}
+    .page{padding-left:12px!important;padding-right:12px!important}
+    .hero{margin-bottom:16px!important}
+    .timeline-card{padding:12px!important}
+    .phase-card{text-align:left!important}
+    .phase-title{font-size:.98rem!important}
+    .phase-date,.phase-desc{max-width:100%;font-size:.78rem!important}
+    .spotlight-row .leaderboard.rank-hall{display:flex!important;overflow-x:auto!important;justify-content:flex-start!important;padding:2px 8px 10px!important;scroll-snap-type:x mandatory}
+    .spotlight-row .rank-leader-card{flex:0 0 120px!important;min-height:168px!important;scroll-snap-align:center}
+    .community{width:100%!important;margin-inline:auto!important}
+  }
+</style>
+<script id="v43-hall-learn-active-phase-link">
+(function(){
+  function text(v){return String(v == null ? '' : v).trim();}
+  function isActive(status){return /^active$/i.test(text(status));}
+  function getActivePhaseUrl(){
+    try{
+      var phases = [];
+      if (window.PHASES && Array.isArray(window.PHASES)) phases = window.PHASES;
+      if (!phases.length && window.CONFIG && Array.isArray(CONFIG.phases)) phases = CONFIG.phases;
+      var active = phases.find(function(phase){return isActive(phase.status);});
+      if (active && text(active.url) && text(active.url) !== '#') return text(active.url);
+      if (window.CONFIG && text(CONFIG.currentPhaseUrl) && text(CONFIG.currentPhaseUrl) !== '#') return text(CONFIG.currentPhaseUrl);
+    }catch(e){}
+    var activeNav = document.querySelector('#site-nav a[aria-current="true"][href], .phase-card.active[href]');
+    if (activeNav && text(activeNav.getAttribute('href')) && text(activeNav.getAttribute('href')) !== '#') {
+      return text(activeNav.getAttribute('href'));
+    }
+    return 'phase-2.html';
+  }
+  function fixHallLearnMore(){
+    var href = getActivePhaseUrl();
+    document.querySelectorAll('.hall-learn-more').forEach(function(link){
+      if (link.getAttribute('href') !== href) link.setAttribute('href', href);
+      if (link.hasAttribute('target')) link.removeAttribute('target');
+      if (link.hasAttribute('rel')) link.removeAttribute('rel');
+      link.setAttribute('aria-label', 'Open the current active phase');
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fixHallLearnMore);
+  else fixHallLearnMore();
+  window.addEventListener('load', function(){setTimeout(fixHallLearnMore, 160);}, {once:true});
+  setTimeout(fixHallLearnMore, 500);
+  setTimeout(fixHallLearnMore, 1200);
+  if (window.MutationObserver) {
+    new MutationObserver(function(){fixHallLearnMore();}).observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['href']
+    });
+  }
+})();
+</script>
+<style id="v44-timeline-cover-date-fix">
+  #phase-grid .phase-card{
+    text-align:left!important;
+  }
+  #phase-grid .phase-cover{
+    display:block!important;
+    width:100%!important;
+    height:clamp(112px, 12vw, 150px)!important;
+    flex:0 0 clamp(112px, 12vw, 150px)!important;
+    margin:0!important;
+    border-radius:0!important;
+    background-color:#090d19!important;
+    background-image:var(--cover)!important;
+    background-size:cover!important;
+    background-position:center top!important;
+    background-repeat:no-repeat!important;
+    opacity:1!important;
+    filter:saturate(1.04) contrast(1.02)!important;
+    box-shadow:inset 0 -48px 48px rgba(3,3,18,.72)!important;
+  }
+  #phase-grid .phase-cover::before,
+  #phase-grid .phase-cover::after{
+    content:none!important;
+  }
+  #phase-grid .phase-card .phase-head{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    gap:8px!important;
+    width:100%!important;
+    min-height:auto!important;
+    padding:18px 16px 0!important;
+    margin:0!important;
+    text-align:left!important;
+  }
+  #phase-grid .phase-card .phase-title,
+  #phase-grid .phase-card .phase-date,
+  #phase-grid .phase-card .phase-badge,
+  #phase-grid .phase-card .phase-desc{
+    position:relative!important;
+    left:auto!important;
+    right:auto!important;
+    transform:none!important;
+    text-align:left!important;
+  }
+  #phase-grid .phase-card .phase-date{
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    line-height:1.2!important;
+    color:#efe6c7!important;
+    font-size:.82rem!important;
+    font-weight:900!important;
+    letter-spacing:.01em!important;
+  }
+  #phase-grid .phase-card .phase-desc{
+    width:auto!important;
+    max-width:none!important;
+    margin:14px 16px 0!important;
+    padding:0!important;
+  }
+  @media(max-width:700px){
+    #phase-grid .phase-cover{
+      height:126px!important;
+      flex-basis:126px!important;
+    }
+    #phase-grid .phase-card .phase-head{
+      padding:15px 14px 0!important;
+    }
+  }
+</style>
+<script id="v44-timeline-cover-date-fix-script">
+(function(){
+  var coverMap = {
+    'guild': 'Guild_Pride-Cover.png',
+    'dungeon': 'Dungeon_Pride-Cover.png',
+    'grinding': 'Grinding_Pride-Cover.png'
+  };
+  function keyFromText(text){
+    text = String(text || '').toLowerCase();
+    if (text.indexOf('guild') > -1) return 'guild';
+    if (text.indexOf('dungeon') > -1) return 'dungeon';
+    if (text.indexOf('grinding') > -1) return 'grinding';
+    return '';
+  }
+  function fixTimelineCovers(){
+    document.querySelectorAll('#phase-grid .phase-card').forEach(function(card){
+      var title = card.querySelector('.phase-title');
+      var key = keyFromText(title && title.textContent);
+      var cover = coverMap[key];
+      if (!cover) return;
+      card.style.setProperty('--cover', 'url("' + cover + '")');
+      var coverEl = card.querySelector('.phase-cover');
+      if (!coverEl) {
+        coverEl = document.createElement('span');
+        coverEl.className = 'phase-cover';
+        coverEl.setAttribute('aria-hidden', 'true');
+        card.insertBefore(coverEl, card.firstChild);
+      }
+      coverEl.style.backgroundImage = 'url("' + cover + '")';
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fixTimelineCovers);
+  else fixTimelineCovers();
+  window.addEventListener('load', function(){setTimeout(fixTimelineCovers, 120);}, {once:true});
+  setTimeout(fixTimelineCovers, 500);
+  if (window.MutationObserver) {
+    new MutationObserver(fixTimelineCovers).observe(document.getElementById('phase-grid') || document.documentElement, {
+      childList:true,
+      subtree:true
+    });
+  }
+})();
+</script>
+<style id="v45-timeline-date-and-hall-link-final">
+  #phase-grid .phase-card .phase-status-line{
+    position:relative!important;
+    z-index:3!important;
+    width:100%!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:12px!important;
+    margin:2px 0 0!important;
+  }
+  #phase-grid .phase-card .phase-status-line .phase-badge{
+    flex:0 0 auto!important;
+    margin:0!important;
+  }
+  #phase-grid .phase-card .phase-status-line .phase-date{
+    flex:1 1 auto!important;
+    width:auto!important;
+    max-width:none!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    text-align:right!important;
+    white-space:nowrap!important;
+    color:#efe6c7!important;
+    font-size:.82rem!important;
+    font-weight:900!important;
+    line-height:1!important;
+  }
+  @media(max-width:760px){
+    #phase-grid .phase-card .phase-status-line{
+      gap:10px!important;
+    }
+    #phase-grid .phase-card .phase-status-line .phase-date{
+      font-size:.78rem!important;
+    }
+  }
+  @media(max-width:420px){
+    #phase-grid .phase-card .phase-status-line{
+      align-items:flex-start!important;
+      flex-direction:column!important;
+    }
+    #phase-grid .phase-card .phase-status-line .phase-date{
+      text-align:left!important;
+      white-space:normal!important;
+    }
+  }
+</style>
+<script id="v45-timeline-date-and-hall-link-final-script">
+(function(){
+  function clean(v){return String(v == null ? '' : v).trim();}
+  function getActivePhaseUrl(){
+    try{
+      var cfg = window.CONFIG || {};
+      var phases = Array.isArray(cfg.phases) ? cfg.phases : [];
+      var active = phases.find(function(phase){return /^active$/i.test(clean(phase.status));});
+      if(active && clean(active.url) && clean(active.url) !== '#') return clean(active.url);
+      if(clean(cfg.currentPhaseUrl) && clean(cfg.currentPhaseUrl) !== '#') return clean(cfg.currentPhaseUrl);
+    }catch(e){}
+    var current = document.querySelector('#site-nav a[aria-current="true"][href], #phase-grid .phase-card.active[href]');
+    if(current && clean(current.getAttribute('href')) && clean(current.getAttribute('href')) !== '#') return clean(current.getAttribute('href'));
+    return 'phase-2.html';
+  }
+  function normalizeTimelineDates(){
+    document.querySelectorAll('#phase-grid .phase-card').forEach(function(card){
+      var head = card.querySelector('.phase-head');
+      var badge = card.querySelector('.phase-badge');
+      var date = card.querySelector('.phase-date');
+      if(!head || !badge || !date) return;
+      var row = head.querySelector('.phase-status-line');
+      if(!row){
+        row = document.createElement('div');
+        row.className = 'phase-status-line';
+        if(badge.parentNode) badge.parentNode.insertBefore(row, badge);
+      }
+      if(badge.parentNode !== row) row.appendChild(badge);
+      if(date.parentNode !== row) row.appendChild(date);
+    });
+  }
+  function normalizeHallLinks(){
+    var href = getActivePhaseUrl();
+    document.querySelectorAll('.hall-learn-more,.spot-cta').forEach(function(link){
+      if(!link || link.tagName !== 'A') return;
+      link.setAttribute('href', href);
+      link.removeAttribute('target');
+      link.removeAttribute('rel');
+      link.setAttribute('aria-label','Open the current active phase');
+    });
+  }
+  function normalize(){normalizeTimelineDates();normalizeHallLinks();}
+  document.addEventListener('click', function(event){
+    var link = event.target.closest && event.target.closest('.hall-learn-more,.spot-cta');
+    if(!link) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if(event.stopImmediatePropagation) event.stopImmediatePropagation();
+    window.location.href = getActivePhaseUrl();
+  }, true);
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', normalize);
+  else normalize();
+  window.addEventListener('load', function(){setTimeout(normalize, 120);}, {once:true});
+  setTimeout(normalize, 400);
+  setTimeout(normalize, 1200);
+  if(window.MutationObserver){
+    new MutationObserver(function(){normalize();}).observe(document.getElementById('phase-grid') || document.documentElement, {
+      childList:true,
+      subtree:true
+    });
+  }
+})();
+</script>
+<style id="shared-official-floating-button">
+  .official-floating-btn{
+    position:fixed!important;
+    left:18px!important;
+    bottom:18px!important;
+    z-index:9999!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    gap:10px!important;
+    min-height:48px!important;
+    padding:11px 18px!important;
+    border-radius:999px!important;
+    border:1px solid rgba(240,208,96,.58)!important;
+    background:linear-gradient(180deg,rgba(18,18,46,.94),rgba(5,5,18,.96))!important;
+    color:#fff7c7!important;
+    font-family:'Exo 2',Segoe UI,system-ui,sans-serif!important;
+    font-size:.86rem!important;
+    font-weight:1000!important;
+    letter-spacing:.06em!important;
+    text-transform:uppercase!important;
+    text-decoration:none!important;
+    box-shadow:0 14px 34px rgba(0,0,0,.48),0 0 20px rgba(240,208,96,.18)!important;
+    backdrop-filter:blur(10px)!important;
+    transition:transform .18s ease,border-color .18s ease,filter .18s ease!important;
+  }
+  .official-floating-btn::before{
+    content:""!important;
+    width:22px!important;
+    height:22px!important;
+    flex:0 0 22px!important;
+    border-radius:50%!important;
+    background:radial-gradient(circle,#f7df70 0 35%,rgba(240,208,96,.18) 38% 100%)!important;
+    box-shadow:0 0 18px rgba(240,208,96,.38)!important;
+  }
+  .official-floating-btn:hover,
+  .official-floating-btn:focus-visible{
+    transform:translateY(-2px)!important;
+    border-color:#f0d060!important;
+    filter:brightness(1.08)!important;
+    outline:none!important;
+  }
+  @media(max-width:840px){
+    .official-floating-btn{
+      left:12px!important;
+      bottom:12px!important;
+      min-height:44px!important;
+      padding:10px 13px!important;
+      font-size:.68rem!important;
+    }
+    .official-floating-btn::before{
+      width:18px!important;
+      height:18px!important;
+      flex-basis:18px!important;
+    }
+  }
+</style>
+<script id="shared-official-floating-button-script">
+(function(){
+  var OFFICIAL_URL='https://combocabalm.com/sea/';
+  function ensureOfficialButton(){
+    if(document.querySelector('.official-floating-btn'))return;
+    document.body.insertAdjacentHTML('beforeend','<a class="official-floating-btn" href="'+OFFICIAL_URL+'" target="_blank" rel="noopener" aria-label="Open official CABAL website">Official Website</a>');
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensureOfficialButton);
+  else ensureOfficialButton();
 })();
 </script>
 </body>
