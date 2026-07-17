@@ -3251,6 +3251,106 @@ body{
   window.addEventListener('load',normalizeHeader,{once:true});
 })();
 </script>
+<!-- === V40 LIVE SHEET SOURCE OF TRUTH: Main Hall of Pride === -->
+<script id="v40-main-hall-live-sheet-source">
+(function(){
+  var SHEET_ID='1JqHItiPR19qyFj71VRp7IxTfTWv7ztScPgIpRe_746w';
+  var SHEET_NAME='Phase 2 Leaderboard';
+  var rankIcons={S:'rank-s.png',A:'rank-a.png',B:'rank-b.png',C:'rank-c.png',D:'rank-d.png',E:'rank-e.png',F:'rank-f.png'};
+  function clean(v){return String(v==null?'':v).trim();}
+  function esc(v){return clean(v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function key(v){return clean(v).toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');}
+  function pick(row,names){for(var i=0;i<names.length;i++){var k=key(names[i]);if(row[k]!=null&&clean(row[k])!=='')return row[k];}return '';}
+  function rankOf(v){var r=clean(v).toUpperCase().charAt(0);return /[SABCDEF]/.test(r)?r:'';}
+  function rankWeight(r){var weights={S:0,A:1,B:2,C:3,D:4,E:5,F:6};return weights[r]!=null?weights[r]:9;}
+  function timeValue(t){var p=clean(t||'99:99').split(':').map(Number);return (p[0]||99)*60+(p[1]||99);}
+  function platformKey(v){return /pc|cbpc/i.test(clean(v))?'pc':'mobile';}
+  function platformLabel(v){return platformKey(v)==='pc'?'PC (CBPC)':'Mobile (CBM)';}
+  function normalizeClass(v){
+    v=clean(v).replace(/Bladder/ig,'Blader').replace(/Dark Make/ig,'Dark Mage').replace(/Warior/ig,'Warrior').replace(/Force Shield$/i,'Force Shielder');
+    return v;
+  }
+  function avatarFor(entry){
+    if(clean(entry.avatarUrl))return entry.avatarUrl;
+    var prefix=platformKey(entry.platform)==='pc'?'CBPC':'CBM';
+    var map={
+      'blader':'Blader',
+      'force gunner':'Force Gunner',
+      'force shielder':prefix==='CBPC'?'Force Shielder':'Force Shield',
+      'force shield':prefix==='CBPC'?'Force Shielder':'Force Shield',
+      'gladiator':'Gladiator',
+      'warrior':'Warrior',
+      'wizard':'Wizard',
+      'dark mage':'Dark Mage',
+      'force archer':'Force Archer',
+      'force blader':'Force Blader'
+    };
+    var file=map[normalizeClass(entry.cls).toLowerCase()];
+    return file?prefix+'-'+file+'.png':(rankIcons[entry.rank]||'rank-s.png');
+  }
+  function headerScore(row){
+    var h=(row||[]).map(key);
+    return ['rank','platform','avatar_url','ign','class','region','nation','time_beat'].reduce(function(n,w){return n+(h.indexOf(w)>-1?1:0);},0);
+  }
+  function rowsToObjects(matrix){
+    var start=0,best=-1;
+    for(var i=0;i<matrix.length;i++){var score=headerScore(matrix[i]);if(score>best){best=score;start=i;}}
+    var headers=(matrix[start]||[]).map(function(h,i){return key(h||('col_'+i));});
+    return matrix.slice(start+1).filter(function(row){return (row||[]).some(function(v){return clean(v)!=='';});}).map(function(row){
+      var obj={};headers.forEach(function(h,i){obj[h]=row[i]||'';});return obj;
+    });
+  }
+  function sheetMatrix(){
+    return new Promise(function(resolve,reject){
+      var cb='__mainHallSheet'+Date.now()+Math.floor(Math.random()*9999),done=false,script;
+      var timer=setTimeout(function(){cleanup();reject(new Error('Sheet timeout'));},10000);
+      function cleanup(){done=true;clearTimeout(timer);delete window[cb];if(script&&script.parentNode)script.parentNode.removeChild(script);}
+      window[cb]=function(res){
+        if(done)return;cleanup();
+        if(!res||res.status==='error')return reject(new Error('Sheet response error'));
+        var headers=((res.table&&res.table.cols)||[]).map(function(col){return col.label||col.id||'';});
+        var rows=(res.table&&res.table.rows)||[];
+        resolve([headers].concat(rows.map(function(r){return (r.c||[]).map(function(cell){return cell?(cell.f||cell.v||''):'';});})));
+      };
+      script=document.createElement('script');
+      script.src='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?sheet='+encodeURIComponent(SHEET_NAME)+'&range=A1:Z600&tqx=responseHandler:'+cb+'&cacheBust='+Date.now();
+      script.onerror=function(){cleanup();reject(new Error('Sheet script failed'));};
+      document.head.appendChild(script);
+    });
+  }
+  function mapRow(row){
+    return {
+      rank:rankOf(pick(row,['rank','dungeon_rank','dungeon rank','top_rank','top rank'])),
+      platform:platformLabel(pick(row,['platform','game_version','game version','version'])),
+      avatarUrl:pick(row,['avatar_url','avatar url','in_game_avatar_url','in-game avatar url','image_url','image url']),
+      player:pick(row,['ign','in_game_name','in-game name','player_name','player name','name']),
+      cls:normalizeClass(pick(row,['class','character_class','character class','job'])),
+      region:clean(pick(row,['region','country'])).toUpperCase(),
+      nation:pick(row,['nation','faction']),
+      time:pick(row,['time_beat','time beat','clear_time','clear time','time'])
+    };
+  }
+  function renderHall(rows){
+    var board=document.getElementById('leaderboard');if(!board)return;
+    var best={};
+    rows.filter(function(r){return r.rank&&r.player&&r.time;}).sort(function(a,b){return rankWeight(a.rank)-rankWeight(b.rank)||timeValue(a.time)-timeValue(b.time)||a.player.localeCompare(b.player);}).forEach(function(r){if(!best[r.rank])best[r.rank]=r;});
+    var list=['S','A','B','C','D','E','F'].map(function(rank){return best[rank]||{rank:rank,player:'TBD',time:'--:--',platform:'',avatarUrl:rankIcons[rank]};});
+    board.classList.add('rank-hall');
+    board.setAttribute('aria-label','Current phase fastest clear leaders by rank from Google Sheets');
+    board.innerHTML=list.map(function(r){
+      var isPc=platformKey(r.platform)==='pc';
+      return '<article class="rank-leader-card '+(isPc?'pc':'mobile')+'"><div class="rank-letter">'+esc(r.rank)+'</div><div class="avatar"><img src="'+esc(avatarFor(r))+'" alt="'+esc(r.player)+' avatar" loading="lazy"></div><div class="player">'+esc(r.player)+'</div><div class="time">'+esc(r.time)+'</div></article>';
+    }).join('');
+    var head=document.querySelector('.hall-head');if(head)head.innerHTML='<h2>Hall of Pride</h2><p>Current Phase Leaders</p>';
+  }
+  function load(){
+    sheetMatrix().then(function(matrix){renderHall(rowsToObjects(matrix).map(mapRow));}).catch(function(){renderHall([]);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load);else load();
+  window.addEventListener('load',function(){setTimeout(load,300);},{once:true});
+  setInterval(load,60000);
+})();
+</script>
 </body>
 </html>
 
