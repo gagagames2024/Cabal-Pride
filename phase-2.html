@@ -1,0 +1,525 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CABAL PRIDE Phase 2 Dungeon Pride event page with ranked dungeons, rewards, nation score, and leaderboard preview.">
+<title>Dungeon Pride | CABAL PRIDE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Exo+2:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030312;--panel:rgba(12,12,34,.78);--panel2:rgba(20,18,48,.82);--line:rgba(240,208,96,.22);--line2:rgba(100,120,255,.22);--gold:#f0d060;--gold2:#b88b22;--red:#ff5360;--red2:#c91018;--blue:#5ab8ff;--blue2:#0c4ed1;--green:#27d27f;--text:#f7f1ff;--muted:#c1bbe8;--soft:#827db7;--black:#030312;--radius:18px;--nav-h:76px}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#030312;color:var(--text);font-family:'Exo 2',Segoe UI,system-ui,sans-serif;line-height:1.5;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;z-index:-3;background:linear-gradient(180deg,rgba(3,3,18,.14),rgba(3,3,18,.92)),url('Dungeon_Pride-HTML-Cover.png') center top/cover no-repeat}body:after{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 18% 20%,rgba(201,16,24,.28),transparent 32%),radial-gradient(circle at 80% 12%,rgba(12,78,209,.26),transparent 36%),linear-gradient(180deg,rgba(3,3,18,.38),rgba(3,3,18,.92) 72%,#030312)}a{color:inherit}.topbar{position:sticky;top:0;z-index:50;min-height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:10px clamp(14px,3vw,34px);background:rgba(3,3,18,.88);border-bottom:1px solid rgba(240,208,96,.18);backdrop-filter:blur(16px)}.brand{display:flex;align-items:center;gap:14px;text-decoration:none}.brand img{width:128px;max-width:30vw;filter:drop-shadow(0 10px 18px rgba(0,0,0,.55))}.brand span{font-family:Cinzel,serif;font-weight:900;color:var(--gold);letter-spacing:.08em;font-size:clamp(1rem,2vw,1.35rem);white-space:nowrap}.phase-nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.phase-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 18px;border:1px solid rgba(255,255,255,.13);border-radius:999px;background:rgba(255,255,255,.055);text-decoration:none;text-transform:uppercase;letter-spacing:.08em;font-size:.74rem;font-weight:900;color:#d8d2ff}.phase-nav a.active{border-color:rgba(240,208,96,.7);background:rgba(240,208,96,.13);color:var(--gold)}.wrap{width:min(1180px,calc(100% - 34px));margin:0 auto}.hero{position:relative;min-height:620px;display:flex;align-items:flex-start;justify-content:center;text-align:center;padding:42px 0 70px;overflow:hidden}.hero-shell{width:min(1020px,100%);margin:0 auto;padding-top:6px}.hero-logo{width:min(520px,76vw);display:block;margin:0 auto 12px;filter:drop-shadow(0 24px 38px rgba(0,0,0,.75))}.eyebrow{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 14px;border:1px solid rgba(240,208,96,.5);border-radius:999px;background:rgba(3,3,18,.62);color:var(--gold);font-size:.72rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase}.title{font-family:Cinzel,serif;font-size:clamp(3.1rem,9vw,7rem);line-height:.9;margin:14px 0 8px;color:#f7e486;text-shadow:0 8px 0 rgba(0,0,0,.22),0 18px 38px rgba(0,0,0,.58)}.subtitle{max-width:840px;margin:0 auto;color:#f1ecff;font-size:clamp(1rem,2.1vw,1.3rem);font-weight:800;text-shadow:0 4px 18px rgba(0,0,0,.8)}.hero-copy{max-width:900px;margin:16px auto 0;color:#d8d2ff;font-size:clamp(.95rem,1.7vw,1.08rem);font-weight:600}.cta-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:26px}.cta{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 30px;border:0;border-radius:10px;background:linear-gradient(180deg,#f3232d,#bc0711);box-shadow:0 18px 34px rgba(201,16,24,.42);color:#fff;text-decoration:none;font-family:Cinzel,serif;font-weight:900;letter-spacing:.05em;text-transform:uppercase}.cta.secondary{background:rgba(3,3,18,.72);border:1px solid rgba(240,208,96,.42);box-shadow:none;color:var(--gold)}.nation-score{width:min(980px,100%);margin:30px auto 0;padding:18px;border:1px solid rgba(240,208,96,.3);border-radius:18px;background:linear-gradient(90deg,rgba(180,12,28,.34),rgba(4,4,24,.55),rgba(20,78,198,.36));backdrop-filter:blur(12px)}.score-grid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px}.nation strong{display:block;font-family:Cinzel,serif;font-size:clamp(2.8rem,8vw,5.5rem);line-height:1;color:var(--red)}.nation.capella strong{color:var(--blue)}.nation span{display:block;margin-top:6px;font-weight:900;text-transform:uppercase;letter-spacing:.14em}.vs{font-family:Cinzel,serif;color:var(--gold);font-size:2rem;font-weight:900}.score-bar{height:12px;margin-top:18px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.12);display:flex}.score-bar i:first-child{width:56.15%;background:linear-gradient(90deg,var(--red2),var(--red))}.score-bar i:last-child{width:43.85%;background:linear-gradient(90deg,var(--blue2),var(--blue))}.score-labels{display:flex;justify-content:space-between;margin-top:8px;color:#fff;font-weight:900;font-size:.86rem}.section{padding:38px 0;border-top:1px solid rgba(255,255,255,.08)}.section-head{text-align:center;margin-bottom:20px}.section-kicker{color:var(--gold);font-size:.74rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase}.section h2{font-family:Cinzel,serif;font-size:clamp(1.8rem,4vw,3rem);line-height:1.05;margin:8px 0;color:#ffe985}.section-head p{max-width:760px;margin:0 auto;color:var(--muted);font-weight:700}.accordion{display:grid;gap:14px}.info-panel{border:1px solid rgba(240,208,96,.3);border-radius:16px;background:rgba(9,9,30,.72);overflow:hidden;backdrop-filter:blur(14px)}.info-panel summary{cursor:pointer;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 22px;list-style:none}.info-panel summary::-webkit-details-marker{display:none}.info-panel h3{margin:0;font-family:Cinzel,serif;color:#fff0a0;font-size:1.35rem}.toggle{width:34px;height:34px;border-radius:50%;border:1px solid rgba(240,208,96,.55);display:grid;place-items:center;color:var(--gold);font-weight:900}.info-panel[open] .toggle{transform:rotate(45deg)}.panel-body{padding:0 22px 22px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step{padding:18px;border-radius:14px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1)}.step b{display:block;color:var(--gold);font-family:Cinzel,serif;margin-bottom:8px}.unlock{margin-top:14px;padding:16px;border-radius:14px;background:rgba(240,208,96,.1);border:1px solid rgba(240,208,96,.24);color:#fff2ba;font-weight:800}.tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 18px}.tab-btn{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#d8d2ff;border-radius:999px;min-height:40px;padding:0 20px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;cursor:pointer}.tab-btn.active{border-color:rgba(240,208,96,.75);background:rgba(240,208,96,.16);color:#fff0a0}.tab-panel{display:none}.tab-panel.active{display:block}.dungeon-track{display:grid;grid-template-columns:repeat(7,minmax(210px,1fr));gap:14px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}.dungeon-card{scroll-snap-align:start;min-height:310px;border:1px solid rgba(90,184,255,.26);border-radius:16px;overflow:hidden;background:rgba(9,9,30,.76)}.dungeon-card.s-rank{border-color:rgba(240,208,96,.72);box-shadow:0 0 30px rgba(240,208,96,.13)}.dungeon-img{height:132px;background:#10102a center/cover no-repeat;position:relative}.rank-pill{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:32px;padding:0 12px;border-radius:999px;background:rgba(3,3,18,.82);border:1px solid rgba(240,208,96,.42);font-family:Cinzel,serif;font-weight:900;color:var(--gold)}.dungeon-img .rank-pill{position:absolute;left:12px;top:12px}.pts-badge{position:absolute;right:12px;top:12px;min-height:30px;padding:5px 10px;border-radius:999px;background:rgba(3,3,18,.82);border:1px solid rgba(90,184,255,.35);font-weight:900;color:#dff2ff}.dungeon-body{padding:14px}.dungeon-body h4{margin:0 0 10px;font-family:Cinzel,serif;font-size:1rem;color:#fff6c8}.meta{display:grid;gap:7px;color:#d8d2ff;font-size:.88rem;font-weight:700}.platform-note{margin:2px auto 16px;max-width:820px;text-align:center;color:#cfc8ff;font-weight:700}.reward-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.reward-card{border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.055);padding:14px}.reward-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.reward-head .pts{color:var(--gold);font-weight:900}.reward-card ul,.bonus-card ul{margin:0;padding-left:18px;color:#e5e0ff;font-weight:650}.reward-card li+li,.bonus-card li+li{margin-top:5px}.bonus-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.bonus-card{border:1px solid rgba(240,208,96,.32);border-radius:14px;background:rgba(240,208,96,.075);padding:16px}.bonus-card h4{margin:0 0 10px;font-family:Cinzel,serif;color:#fff0a0}.leader-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.leader-card{border:1px solid rgba(90,184,255,.24);border-radius:16px;overflow:hidden;background:rgba(9,9,30,.78)}.leader-title{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1);font-family:Cinzel,serif;color:#fff0a0;font-weight:900}table{width:100%;border-collapse:collapse}th,td{padding:11px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);font-weight:800}th{font-size:.72rem;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;background:rgba(255,255,255,.045)}td{font-size:.9rem;color:#efeaff}.nation-tag{display:inline-flex;min-height:24px;align-items:center;border-radius:999px;padding:3px 9px;font-size:.76rem;border:1px solid rgba(255,255,255,.14)}.nation-tag.procyon{color:#ff8990;background:rgba(255,83,96,.13)}.nation-tag.capella{color:#92d7ff;background:rgba(90,184,255,.13)}.sample-note{margin-top:16px;text-align:center;color:#aaa3d8;font-weight:700}.bottom-nav{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:32px 0 20px}.footer{padding:26px 0 34px;text-align:center;color:#817bb5;border-top:1px solid rgba(255,255,255,.08)}@media(max-width:900px){.topbar{align-items:center;flex-direction:column;height:auto}.brand{justify-content:center}.phase-nav{justify-content:center}.hero{min-height:auto;padding:34px 0 52px}.score-grid{grid-template-columns:1fr}.vs{font-size:1.5rem}.steps,.reward-grid,.bonus-grid,.leader-grid{grid-template-columns:1fr}.dungeon-track{grid-template-columns:repeat(7,78vw)}.nation-score{padding:14px}.section{padding:30px 0}.info-panel summary{min-height:64px;padding:0 16px}.panel-body{padding:0 16px 18px}}@media(max-width:520px){.wrap{width:min(100% - 22px,1180px)}.brand img{width:108px}.brand span{font-size:.98rem}.phase-nav a{font-size:.68rem;padding:0 12px;min-height:36px}.hero-logo{width:74vw}.title{font-size:clamp(2.7rem,18vw,4.2rem)}.cta{width:100%;padding:0 18px}.dungeon-track{grid-template-columns:repeat(7,86vw)}th,td{padding:9px 8px;font-size:.78rem}.leader-card{overflow-x:auto}}
+
+.leader-card table.rank-leader-table th:nth-child(1),.leader-card table.rank-leader-table td:nth-child(1){width:118px}.leader-card table.rank-leader-table th:nth-child(2),.leader-card table.rank-leader-table td:nth-child(2){width:92px;text-align:center}.avatar-placeholder{width:52px;height:52px;margin:0 auto;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(240,208,96,.58);background:radial-gradient(circle at 35% 20%,rgba(255,255,255,.22),transparent 24%),linear-gradient(145deg,rgba(90,184,255,.18),rgba(240,208,96,.08));box-shadow:0 0 0 3px rgba(240,208,96,.08),0 10px 22px rgba(0,0,0,.34);color:#fff6c8;font-size:.58rem;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;line-height:1.05}.rank-leader-table .rank-pill{min-width:42px}.rank-leader-table .ign-cell{font-size:1rem;color:#fff;font-weight:1000}.rank-leader-table .time-cell{font-size:1.04rem;color:#fff1a8;font-weight:1000;white-space:nowrap}@media(max-width:560px){.leader-card table.rank-leader-table th,.leader-card table.rank-leader-table td{padding:9px 7px}.avatar-placeholder{width:44px;height:44px;font-size:.52rem}.rank-leader-table .ign-cell{font-size:.86rem}.leader-card table.rank-leader-table th:nth-child(1),.leader-card table.rank-leader-table td:nth-child(1){width:82px}}
+</style>
+</head>
+<body>
+<nav class="topbar" id="site-nav"><a class="brand" href="index.html"><img src="cabal-pride-logo.png" alt="CABAL PRIDE"><span>CABAL PRIDE</span></a><div class="phase-nav"><a href="phase-1.html">Guild Pride</a><a class="active" href="phase-2.html" aria-current="true">Dungeon Pride</a><a href="phase-3.html">Grinding Pride</a></div></nav>
+<header class="hero"><div class="wrap hero-shell"><img class="hero-logo" src="cabal-pride-logo.png" alt="CABAL PRIDE logo"><div class="eyebrow">Phase 2 - Opens July 15 - Closes July 24</div><h1 class="title">Dungeon Pride</h1><div class="subtitle">Conquer ranked dungeons. Climb from F to S. Earn your rank.</div><p class="hero-copy">Clear one ranked dungeon solo, post your proof publicly, and submit it. The highest rank you clear earns that rank's rewards plus every reward below it. Every verified clear also adds points to your nation.</p><div class="cta-row"><a class="cta" href="https://forms.gle/ps65eZMkcCt1PqQw9" target="_blank" rel="noopener">Register Now</a><a class="cta secondary" href="#dungeons">View Dungeon List</a></div><div class="nation-score" aria-label="Sample nation score"><div class="score-grid"><div class="nation"><strong>812</strong><span>Procyon</span></div><div class="vs">VS</div><div class="nation capella"><strong>634</strong><span>Capella</span></div></div><div class="score-bar"><i></i><i></i></div><div class="score-labels"><span>Procyon 56%</span><span>Capella 44%</span></div></div></div></header>
+<main>
+<section class="section"><div class="wrap accordion"><details class="info-panel" id="rewards"><summary><h3>Rewards</h3><span class="toggle">+</span></summary><div class="panel-body"><div class="section-head"><div class="section-kicker">Rank reward logic</div><h2>Clear Higher, Claim More</h2><p>Clearing a rank gives you that rank's rewards plus every rank below it. Clear S and you claim the full F to S reward set.</p></div><div class="tabs"><button class="tab-btn active" data-tab="rw-mobile">Mobile (CBM)</button><button class="tab-btn" data-tab="rw-pc">PC (CBPC)</button></div><div id="rw-mobile" class="tab-panel active"></div><div id="rw-pc" class="tab-panel"></div></div></details><details class="info-panel" id="how"><summary><h3>How to Join</h3><span class="toggle">+</span></summary><div class="panel-body"><div class="steps"><div class="step"><b>Step 1</b>Clear a ranked dungeon from F to S solo.</div><div class="step"><b>Step 2</b>Record your run and post the clip publicly on Facebook, YouTube, or TikTok.</div><div class="step"><b>Step 3</b>Pre-register your nation and submit your public clip link via Google Form.</div><div class="step"><b>Step 4</b>After verification, your rank, time, and nation points are counted.</div></div><div class="unlock">Unlock rule: clear a higher rank and you automatically claim rewards from every rank below it too.</div><div class="cta-row"><a class="cta" href="https://forms.gle/ps65eZMkcCt1PqQw9" target="_blank" rel="noopener">Submit Your Clear</a></div></div></details></div></section>
+<section class="section" id="dungeons"><div class="wrap"><div class="section-head"><div class="section-kicker">Ranked dungeon list</div><h2>Ranks & Dungeons</h2><p>Each platform has its own ranked dungeon path. Scroll sideways on mobile to inspect all ranks.</p></div><div class="tabs"><button class="tab-btn active" data-tab="dg-mobile">Mobile (CBM)</button><button class="tab-btn" data-tab="dg-pc">PC (CBPC)</button></div><div id="dg-mobile" class="tab-panel active"><p class="platform-note">Entry tickets for every Mobile dungeon are handed out free.</p><div class="dungeon-track" id="dg-mobile-track"></div></div><div id="dg-pc" class="tab-panel"><p class="platform-note">S and A rank dungeons are the real gauntlet. Expect to need a strong build and gear for solo clear.</p><div class="dungeon-track" id="dg-pc-track"></div></div></div></section>
+<section class="section" id="leaderboard"><div class="wrap"><div class="section-head"><div class="section-kicker">Leaderboard preview</div><h2>Fastest Clear by Rank</h2><p>Each platform shows the current fastest verified clear for every dungeon rank from S to F. Current names are sample preview entries.</p></div><div class="leader-grid"><div class="leader-card"><div class="leader-title">Mobile (CBM)</div><table class="rank-leader-table"><thead><tr><th>Rank</th><th>Avatar</th><th>In-Game Name</th><th>Time Beat</th></tr></thead><tbody id="lb-mobile-body"></tbody></table></div><div class="leader-card"><div class="leader-title">PC (CBPC)</div><table class="rank-leader-table"><thead><tr><th>Rank</th><th>Avatar</th><th>In-Game Name</th><th>Time Beat</th></tr></thead><tbody id="lb-pc-body"></tbody></table></div></div><p class="sample-note">Sample entries only for preview. Real standings go live July 15 and update daily through the event.</p></div></section>
+<div class="bottom-nav"><a class="cta secondary" href="index.html">Back to Main Page</a><a class="cta" href="https://forms.gle/ps65eZMkcCt1PqQw9" target="_blank" rel="noopener">Submit Your Clear Now</a></div>
+</main><footer class="footer">CABAL PRIDE - Dungeon Pride</footer>
+<script>
+var GFORM_LINK = 'https://forms.gle/ps65eZMkcCt1PqQw9';
+document.querySelectorAll('a[href="https://forms.gle/ps65eZMkcCt1PqQw9"]').forEach(function(a){a.href=GFORM_LINK;});
+var CDN='https://d8j0ntlcm91z4.cloudfront.net/user_3DJL9VyAJBYs6DZeeNQYyq0Wtka/';
+var RANK_PTS={S:250,A:160,B:120,C:80,D:60,E:40,F:20};
+var DUNGEONS={mobile:[{r:'S',n:'Tower of Undead B3F',cp:'938,000',e:'Epaulet of Undead B3F (Free)',lv:'155',img:'hf_20260706_110753_d746bd1a-f8f5-4c0d-ba09-9da4ea050565'},{r:'A',n:'Illusion Castle Radiant Hall (Apocrypha)',cp:'713,000',e:'Apocalypse of Other Dimension (Free)',lv:'190',img:'hf_20260706_110756_e2e1e8cc-acd4-49d0-bd38-fcb4fd0bddaf'},{r:'B',n:'Devil Tower',cp:'653,000',e:"Devil's Key (Free)",lv:'180',img:'hf_20260706_110803_316002b7-c766-4728-9de3-de6ebb4178d9'},{r:'C',n:'Maquinas Outpost',cp:'407,000',e:'Hacked Code Disk (Free)',lv:'145',img:'hf_20260706_110805_959f905c-5f0f-49f2-b7ee-a161e2b15d0e'},{r:'D',n:'Forgotten Temple B2F',cp:'374,000',e:'Muster Card (Free)',lv:'125',img:'hf_20260706_110824_98fe112b-448e-4f21-8230-f4a35b961e4a'},{r:'E',n:'Forbidden Island',cp:'245,000',e:'Lost Island Compass (Free)',lv:'125',img:'hf_20260706_110826_120f2e7a-8486-4869-8128-239f26a6f6bf'},{r:'F',n:'Tower of Undead B1F',cp:'180,000',e:'Epaulet of Undead (Free)',lv:'85',img:'hf_20260706_110842_2147b406-0ec9-488a-8609-546910010f28'}],pc:[{r:'S',n:'Mirage Island',cp:'1,102,000',e:'2,000,000 Alz + 3 Divine Stone',lv:'190 - Grade 11',img:'hf_20260706_110844_af0fc115-7c10-425e-a938-bb3aeafe9fad'},{r:'A',n:'Tower of the Dead B3F',cp:'799,000',e:'1,500,000 Alz + 2 Chaos Core',lv:'155 - Grade 11',img:'hf_20260706_110847_2e63df41-3042-41d3-96ba-6ced835687d3'},{r:'B',n:'Pandamonium',cp:'585,000',e:'2,000,000 Alz + 1 Chaos Core',lv:'190 - Grade 11',img:'hf_20260706_110849_e294f84f-d9ff-4f8e-9f93-02b9df5ab2c5'},{r:'C',n:'Panic Cave (Awakened)',cp:'392,000',e:'400 FG',lv:'150 - Grade 11',img:'hf_20260706_110906_62dfce9b-d738-413b-a600-a3721fd9df22'},{r:'D',n:'Illusion Castle Radiant Hall',cp:'304,000',e:'200 FG',lv:'130 - Grade 11',img:'hf_20260706_110910_51525676-4189-4644-8744-a80ef375c3e5'},{r:'E',n:"Siena's Crest B2F",cp:'275,000',e:'300 FG',lv:'135 - Grade 11',img:'hf_20260706_110912_d7030a5c-3a05-496b-a84f-a26a478a4ac5'},{r:'F',n:'Tower of the Undead B2F',cp:'240,000',e:'300 FG',lv:'105 - Grade 11',img:'hf_20260706_110915_3ba6f148-5c3c-4752-9121-55d7655bc24d'}]};
+var REWARDS={mobile:[['F','20 pts',['HP Potion (Lv.3) x300','MP Potion (Lv.3) x300',"GM's Blessing (Lv.2) Holy Water x10",'Fury Potion (Lv.2) x20','Community Box [SS1] x1']],['E','40 pts',['Odd Circle x10','Holy Water of Fighter / Sage x10','Blessing Bead - AXP (100%, 2H)','Milestone Egg x1']],['D','60 pts',["GM's Blessing (Lv.3) Holy Water x10",'Blessing Bead - WEXP (100%, 1 Day)','Heroic / Extreme Holy Water x10','Fury Potion (Lv.3) x30','Community Box [SS1] x3']],['C','80 pts',['Campfire x10 / Campfire Powder (Red) x10','Blessing Bead - EXP (200%, 1 Day)','Milestone Egg x3','Frontier Stone (1 Day)']],['B','120 pts',["GM's Blessing (Lv.4) Holy Water x10",'Blessing Bead - AXP (200%, 1 Day)','Fury Potion (Lv.4) x50','Reflex / Evasion Potion (Lv.3) x10','Community Box [SS1] x5']],['A','160 pts',['Blessing Bead - WEXP (200%, 1 Day)','Luminous: Selena x100','Gale Elixir (Lv.3) x10','Milestone Egg x5','Inexhaustible HP/MP Potion (Lv.4)']],['S','250 pts',["GM's Blessing (Lv.4) Holy Water x20",'Transformation Kit x1','Typhoon Elixir (Lv.3) x10','Blessing Bead - Superior (3 Day) / Box Drop Rate 200% / EXP 1000%']]],pc:[['F','20 pts',["GM's Blessing (Lv.2) Holy Water x5",'Holy Water of Critical Strike / Fighter / Sage x5','Special Coupon x200']],['E','40 pts',["GM's Blessing (Lv.2) Holy Water x5",'Holy Water bundle x5','Special Coupon x300']],['D','60 pts',["Minesta's Chaos Amber Charm +8 (3 Days)","GM's Blessing (Lv.2) Holy Water x10",'Special Coupon x500']],['C','80 pts',['Ring of Luck +4 C+8 (3 Days)','Critical Ring +4 C+8 (3 Days)',"GM's Blessing (Lv.3) Holy Water x5","Yul's Exchange Ticket x20"]],['B','120 pts',['Raid Energy Capsule 50/100 x2','Merit Medal x5',"GM's Blessing (Lv.3) Holy Water x10","Yul's Exchange Ticket x30"]],['A','160 pts',['Happy Birthday Ring (3 Days)','Bracelet of Agent Yul (3 Days)','Universal Attack/Defense/Buff UP (Lv.1) x10','Merit Medal Support Order - Gold Insignia x3']],['S','250 pts',['Ring of Agent Yul +8 (3 Days)',"GM's Blessing (Lv.4) Holy Water x5",'Universal Attack/Defense/Buff UP (Lv.2) x10','Soulstone Reset Scroll x3']]]};
+var BONUS={mobile:{fast:['[Costume] Chinese Black Gala Dress','Luminous: Selena x500','Transformation Kit x3','Honor Medal Reset Scroll x2','Point Sand (30,000p) x1'],nation:'Winning nation gets GM Blessing Lv.4 x10, Fury Potion Lv.4 x30, Critical Ring +4, Ring of Luck +4. Other nation receives consolation bundle with Lv.3 versions, Critical Ring +3, Ring of Luck +3.'},pc:{fast:['Force Gem Package x20,000','Blessing Bead - Platinum Wing (15 Days)','Blessing Bead - Silver Wing (15 Days)','Blessing Bead - Superior (15 Days)','Blessing Bead - Plus (15 Days)','Honor Medal Reset Scroll x3','AP Saver x2',"Yul's Exchange Ticket x50"],nation:'Winning nation gets Blessing Bead EXP/AXP UP 1000% x3, Merit Medal x10, Support Order Gold x5, Universal UP Lv.2 x15. Other nation receives a consolation bundle.'}};
+var LEADERBOARD={mobile:[{rank:'S',ign:'ShadowReaper',time:'04:12'},{rank:'A',ign:'FrostQueen',time:'04:27'},{rank:'B',ign:'NightFang',time:'04:35'},{rank:'C',ign:'SkyWarden',time:'04:41'},{rank:'D',ign:'CrimsonBlade',time:'04:48'},{rank:'E',ign:'LunarWisp',time:'04:55'},{rank:'F',ign:'IronVow',time:'05:02'}],pc:[{rank:'S',ign:'Bloodfang',time:'03:58'},{rank:'A',ign:'Winterlace',time:'04:10'},{rank:'B',ign:'Duskrender',time:'04:19'},{rank:'C',ign:'Glacialis',time:'04:26'},{rank:'D',ign:'Ravenmourn',time:'04:33'},{rank:'E',ign:'Starfrost',time:'04:40'},{rank:'F',ign:'Ashborn',time:'04:47'}]};
+function renderDungeons(list,id){document.getElementById(id).innerHTML=list.map(function(d){return '<article class="dungeon-card '+(d.r==='S'?'s-rank':'')+'"><div class="dungeon-img" style="background-image:url('+CDN+d.img+'.png)"><span class="rank-pill">'+d.r+'</span><span class="pts-badge">'+RANK_PTS[d.r]+' pts</span></div><div class="dungeon-body"><h4>'+d.n+'</h4><div class="meta"><span>CP '+d.cp+'</span><span>Entry: '+d.e+'</span><span>Lv. '+d.lv+'</span></div></div></article>';}).join('');}
+function renderRewards(list,bonus,id){var html='<div class="reward-grid">'+list.map(function(r){return '<article class="reward-card"><div class="reward-head"><span class="rank-pill">'+r[0]+'</span><span class="pts">'+r[1]+'</span></div><ul>'+r[2].map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></article>';}).join('')+'</div><div class="bonus-grid"><article class="bonus-card"><h4>Fastest Clear Top 5 - Rank S only</h4><ul>'+bonus.fast.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></article><article class="bonus-card"><h4>Nation Reward</h4><p>'+bonus.nation+'</p></article></div>';document.getElementById(id).innerHTML=html;}
+function renderLb(list,id){document.getElementById(id).innerHTML=list.map(function(e){return '<tr><td><span class="rank-pill">'+e.rank+'</span></td><td><span class="avatar-placeholder">Avatar</span></td><td class="ign-cell">'+e.ign+'</td><td class="time-cell">'+e.time+'</td></tr>';}).join('');}
+renderDungeons(DUNGEONS.mobile,'dg-mobile-track');renderDungeons(DUNGEONS.pc,'dg-pc-track');renderRewards(REWARDS.mobile,BONUS.mobile,'rw-mobile');renderRewards(REWARDS.pc,BONUS.pc,'rw-pc');renderLb(LEADERBOARD.mobile,'lb-mobile-body');renderLb(LEADERBOARD.pc,'lb-pc-body');
+document.querySelectorAll('.tabs').forEach(function(group){var buttons=group.querySelectorAll('.tab-btn');buttons.forEach(function(btn){btn.addEventListener('click',function(){buttons.forEach(function(b){b.classList.remove('active')});btn.classList.add('active');buttons.forEach(function(b){var el=document.getElementById(b.dataset.tab);if(el)el.classList.remove('active')});var active=document.getElementById(btn.dataset.tab);if(active)active.classList.add('active')})})});
+</script>
+
+<!-- === V29 DUNGEON PRIDE REVISION === -->
+<style id="v29-dungeon-pride-revision-style">
+  .brand img{width:92px!important;max-width:22vw!important;object-fit:contain}.brand span{font-size:clamp(.78rem,1.5vw,1rem)!important;letter-spacing:.1em!important}.hero-logo{width:min(390px,68vw)!important}.hero{background:linear-gradient(180deg,rgba(3,3,18,.08),rgba(3,3,18,.88)),url('Dungeon_Pride-HTML-Cover.png') center top/cover no-repeat!important}.reward-showcase{display:grid;grid-template-columns:minmax(220px,.78fr) 1.22fr;gap:18px;align-items:start;margin-bottom:18px}.reward-image-card{min-height:260px;border:1px solid rgba(90,184,255,.38);border-radius:16px;background:rgba(10,31,86,.52);overflow:hidden;display:grid;place-items:center}.reward-image-card img{width:100%;height:100%;min-height:260px;object-fit:cover}.reward-image-card.pc{border-color:rgba(39,210,127,.38);background:rgba(6,68,38,.48)}.how-image-link{display:block;border:1px solid rgba(240,208,96,.35);border-radius:16px;overflow:hidden;background:rgba(3,3,18,.66);box-shadow:0 20px 46px rgba(0,0,0,.34)}.how-image-link img{width:100%;height:auto}.dungeon-img{height:148px!important;background-size:cover!important;background-position:center!important}.rank-icon{position:absolute;left:10px;top:10px;width:46px;height:46px;border-radius:50%;object-fit:contain;background:rgba(3,3,18,.78);border:1px solid rgba(240,208,96,.55);padding:3px;box-shadow:0 0 18px rgba(240,208,96,.18)}.dungeon-img .rank-pill{left:62px!important}.leader-toolbar{display:grid;grid-template-columns:1.1fr repeat(4,minmax(130px,.7fr));gap:10px;margin:0 0 16px;padding:14px;border:1px solid rgba(240,208,96,.18);border-radius:16px;background:rgba(8,8,28,.72);backdrop-filter:blur(10px)}.leader-toolbar input,.leader-toolbar select{min-height:42px;width:100%;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(3,3,18,.82);color:#fff7d6;padding:0 12px;font-weight:800}.leader-toolbar input::placeholder{color:#9f99ca}.leader-grid{grid-template-columns:1fr!important}.leader-card{overflow:hidden}.leader-scroll{overflow-x:auto}.rank-leader-table{min-width:900px}.rank-leader-table th,.rank-leader-table td{vertical-align:middle}.rank-icon-cell img{width:42px;height:42px;object-fit:contain}.avatar-placeholder{width:48px!important;height:48px!important;font-size:.52rem!important}.class-tag,.region-tag{display:inline-flex;align-items:center;min-height:26px;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:3px 9px;font-size:.72rem;font-weight:900;color:#efeaff;background:rgba(255,255,255,.06);white-space:nowrap}.leader-count{margin:12px 0 0;text-align:center;color:#aaa3d8;font-weight:800}.empty-row{text-align:center;color:#aaa3d8!important;padding:22px!important}.bottom-nav .cta[href="https://forms.gle/ps65eZMkcCt1PqQw9"]{display:none!important}@media(max-width:900px){.reward-showcase{grid-template-columns:1fr}.leader-toolbar{grid-template-columns:1fr 1fr}.leader-toolbar input{grid-column:1/-1}.brand img{width:82px!important}.hero-logo{width:min(310px,78vw)!important}}@media(max-width:560px){.leader-toolbar{grid-template-columns:1fr}.reward-image-card,.reward-image-card img{min-height:190px}.rank-leader-table{min-width:820px}.hero{padding-top:28px!important}.title{font-size:clamp(2.65rem,15vw,4rem)!important}}
+</style>
+<script id="v29-dungeon-pride-revision-script">
+(function(){
+  var FORM='https://forms.gle/ps65eZMkcCt1PqQw9';
+  var dungeonImages={"mobile":{"S":"dungeon-mobile-s.png","A":"dungeon-mobile-a.png","B":"dungeon-mobile-b.png","C":"dungeon-mobile-c.png","D":"dungeon-mobile-d.png","E":"dungeon-mobile-e.png","F":"dungeon-mobile-f.png"},"pc":{"S":"dungeon-pc-s.png","A":"dungeon-pc-a.png","B":"dungeon-pc-b.png","C":"dungeon-pc-c.png","D":"dungeon-pc-d.png","E":"dungeon-pc-e.png","F":"dungeon-pc-f.png"}};
+  var rankImages={"S":"rank-s.png","A":"rank-a.png","B":"rank-b.png","C":"rank-c.png","D":"rank-d.png","E":"rank-e.png","F":"rank-f.png"};
+  var classes=['Blader','Force Gunner','Force Shielder','Force Blader','Dark Mage','Wizard','Force Archer','Gladiator','Warrior'];
+  var regions=['PH','ID'];
+  var nations=['Procyon','Capella'];
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function normalizeClass(v){return String(v||'').replace('Bladder','Blader').replace('Warior','Warrior');}
+  function setupBrand(){var brand=document.querySelector('.brand');if(brand){brand.innerHTML='<img src="Combo-Logo-Horizontal-White.png" alt="Combo Interactive"><span>Combo Interactive</span>';brand.removeAttribute('href');brand.setAttribute('aria-label','Combo Interactive');}document.querySelectorAll('a[href="https://forms.gle/ps65eZMkcCt1PqQw9"], .cta').forEach(function(a){if(/Register|Submit/.test(a.textContent||'')){a.href=FORM;a.target='_blank';a.rel='noopener';}});}
+  function setupRewards(){var mobile=document.getElementById('rw-mobile'),pc=document.getElementById('rw-pc');if(mobile&&!mobile.querySelector('.reward-showcase'))mobile.insertAdjacentHTML('afterbegin','<div class="reward-showcase"><div class="reward-image-card"><img src="CBM-Reward.png" alt="CABAL Mobile Dungeon Pride rewards"></div><div class="reward-copy"><h3>CBM Reward Preview</h3><p>Rank rewards below apply based on verified clear rank. Clear a higher rank to claim the lower rank rewards too.</p></div></div>');if(pc&&!pc.querySelector('.reward-showcase'))pc.insertAdjacentHTML('afterbegin','<div class="reward-showcase"><div class="reward-image-card pc"><img src="CBPC-Reward.png" alt="CABAL PC Dungeon Pride rewards"></div><div class="reward-copy"><h3>CBPC Reward Preview</h3><p>Rank rewards below apply based on verified clear rank. Clear a higher rank to claim the lower rank rewards too.</p></div></div>');}
+  function setupHow(){var body=document.querySelector('#how .panel-body');if(body)body.innerHTML='<a class="how-image-link" href="'+FORM+'" target="_blank" rel="noopener" aria-label="Open Dungeon Pride registration form"><img src="HOW_TO_JOIN.png" alt="How to join Dungeon Pride"></a><div class="cta-row"><a class="cta" href="'+FORM+'" target="_blank" rel="noopener">Submit Your Clear</a></div>';}
+  function enhanceDungeons(){['mobile','pc'].forEach(function(platform){(window.DUNGEONS&&DUNGEONS[platform]||[]).forEach(function(d){d.imageUrl=dungeonImages[platform][d.r]||d.imageUrl;d.rankIcon=rankImages[d.r]||d.rankIcon;});});if(typeof window.renderDungeons==='function'){renderDungeons(DUNGEONS.mobile,'dg-mobile-track');renderDungeons(DUNGEONS.pc,'dg-pc-track');}}
+  window.renderDungeons=function(list,id){var el=document.getElementById(id);if(!el)return;el.innerHTML=list.map(function(d){var bg=d.imageUrl||((window.CDN||'')+d.img+'.png');var icon=d.rankIcon||rankImages[d.r]||'';return '<article class="dungeon-card '+(d.r==='S'?'s-rank':'')+'"><div class="dungeon-img" style="background-image:url(&quot;'+esc(bg)+'&quot;)">'+(icon?'<img class="rank-icon" src="'+esc(icon)+'" alt="Rank '+esc(d.r)+' icon">':'')+'<span class="rank-pill">'+esc(d.r)+'</span><span class="pts-badge">'+esc((RANK_PTS&&RANK_PTS[d.r])||'')+' pts</span></div><div class="dungeon-body"><h4>'+esc(d.n)+'</h4><div class="meta"><span>CP '+esc(d.cp)+'</span><span>Entry: '+esc(d.e)+'</span><span>Lv. '+esc(d.lv)+'</span></div></div></article>';}).join('');};
+  function seedLeaderboard(list,platform){return list.map(function(e,i){return Object.assign({platform:platform,cls:classes[i%classes.length],region:regions[i%2],nation:nations[i%2]},e);});}
+  window.ALL_LEADERS=[].concat(seedLeaderboard((window.LEADERBOARD&&LEADERBOARD.mobile)||[],'Mobile (CBM)'),seedLeaderboard((window.LEADERBOARD&&LEADERBOARD.pc)||[],'PC (CBPC)'));
+  function setupLeaderboard(){var section=document.getElementById('leaderboard');if(!section)return;var head=section.querySelector('.section-head');if(head)head.innerHTML='<div class="section-kicker">Leaderboard Preview</div><h2>Fastest Clear by Rank</h2><p>Search and filter verified clears by class, region, nation, platform, and rank. The board is sorted by dungeon rank first, then fastest clear time.</p>';var old=section.querySelector('.leader-grid');if(old)old.outerHTML='<div class="leader-toolbar" aria-label="Fastest clear filters"><input id="leader-search" type="search" placeholder="Search IGN, class, nation, region"><select id="filter-rank"><option selected>S</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select><select id="filter-class"><option value="">All Classes</option>'+classes.map(function(c){return '<option>'+c+'</option>';}).join('')+'</select><select id="filter-region"><option value="">All Regions</option><option>PH</option><option>ID</option></select><select id="filter-nation"><option value="">All Nations</option><option>Procyon</option><option>Capella</option></select></div><div class="leader-grid"><div class="leader-card"><div class="leader-title">Fastest Verified Clears</div><div class="leader-scroll"><table class="rank-leader-table"><thead><tr><th>Rank</th><th>Rank</th><th>Avatar</th><th>In-Game Name</th><th>Class</th><th>Region</th><th>Nation</th><th>Time Beat</th></tr></thead><tbody id="lb-all-body"></tbody></table></div></div></div><p class="leader-count" id="leader-count"></p>';['leader-search','filter-rank','filter-class','filter-region','filter-nation'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('input',renderFilteredLeaderboard);});renderFilteredLeaderboard();}
+  function rankWeight(r){return {S:0,A:1,B:2,C:3,D:4,E:5,F:6}[r]??9;}
+  function timeValue(t){var p=String(t||'99:99').split(':').map(Number);return (p[0]||99)*60+(p[1]||99);}
+  function renderFilteredLeaderboard(){var body=document.getElementById('lb-all-body');if(!body)return;var q=(document.getElementById('leader-search')||{}).value||'';q=q.toLowerCase();var fr=(document.getElementById('filter-rank')||{}).value||'',fc=(document.getElementById('filter-class')||{}).value||'',fg=(document.getElementById('filter-region')||{}).value||'',fn=(document.getElementById('filter-nation')||{}).value||'';var rows=(window.ALL_LEADERS||[]).filter(function(e){var hay=[e.ign,e.cls,e.region,e.nation,e.platform,e.rank].join(' ').toLowerCase();return (!q||hay.indexOf(q)>-1)&&(!fr||e.rank===fr)&&(!fc||normalizeClass(e.cls)===fc)&&(!fg||e.region===fg)&&(!fn||e.nation===fn);}).sort(function(a,b){return rankWeight(a.rank)-rankWeight(b.rank)||timeValue(a.time)-timeValue(b.time);});body.innerHTML=rows.length?rows.map(function(e){var icon=rankImages[e.rank]||'';return '<tr><td><span class="rank-pill">'+esc(e.rank)+'</span></td><td class="rank-icon-cell">'+(icon?'<img src="'+esc(icon)+'" alt="Rank '+esc(e.rank)+' icon">':'')+'</td><td><span class="avatar-placeholder">Avatar</span></td><td class="ign-cell">'+esc(e.ign)+'</td><td><span class="class-tag">'+esc(normalizeClass(e.cls))+'</span></td><td><span class="region-tag">'+esc(e.region)+'</span></td><td><span class="nation-tag '+String(e.nation).toLowerCase()+'">'+esc(e.nation)+'</span></td><td class="time-cell">'+esc(e.time)+'</td></tr>';}).join(''):'<tr><td class="empty-row" colspan="8">No fastest clear entries match this filter.</td></tr>';var count=document.getElementById('leader-count');if(count)count.textContent=rows.length+' fastest clear entr'+(rows.length===1?'y':'ies')+' shown';}
+  function run(){setupBrand();setupRewards();setupHow();enhanceDungeons();setupLeaderboard();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+})();
+</script>
+
+
+<!-- === V30 DUNGEON BRAND + COVER FIX === -->
+<style id="v30-dungeon-brand-cover-fix">
+  .hero{background:linear-gradient(180deg,rgba(3,3,18,.08),rgba(3,3,18,.88)),url('Dungeon_Pride-HTML-Cover.png') center top/cover no-repeat!important}
+  .brand{min-width:54px!important;gap:0!important}
+  .brand .combo-flag{width:52px!important;height:64px!important;max-width:none!important;object-fit:contain!important;filter:drop-shadow(0 10px 20px rgba(0,0,0,.62))!important}
+  .brand span.combo-label{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
+  @media(max-width:560px){.brand .combo-flag{width:46px!important;height:58px!important}}
+</style>
+<script id="v30-dungeon-brand-cover-fix-script">
+(function(){
+  function applyComboFlag(){
+    var brand=document.querySelector('.brand');
+    if(!brand)return;
+    brand.innerHTML='<img class="combo-flag" src="Combo Logo.png" alt="Combo Interactive"><span class="combo-label">Combo Interactive</span>';
+    brand.removeAttribute('href');
+    brand.setAttribute('aria-label','Combo Interactive');
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applyComboFlag);else applyComboFlag();
+  window.addEventListener('load',applyComboFlag,{once:true});
+})();
+</script>
+
+
+<!-- === V31 MOBILE CARD LEADERBOARD + LOCAL ASSETS === -->
+<style id="v31-mobile-card-leaderboard">
+  @media(max-width:760px){
+    #leaderboard .leader-scroll{overflow:visible!important;}
+    #leaderboard .rank-leader-table{display:block!important;min-width:0!important;width:100%!important;}
+    #leaderboard .rank-leader-table thead{display:none!important;}
+    #leaderboard .rank-leader-table tbody{display:grid!important;gap:12px!important;}
+    #leaderboard .rank-leader-table tr{display:grid!important;grid-template-columns:58px 58px minmax(0,1fr) auto!important;gap:10px!important;align-items:center!important;padding:12px!important;border:1px solid rgba(90,184,255,.24)!important;border-radius:14px!important;background:linear-gradient(135deg,rgba(13,15,42,.86),rgba(5,7,22,.94))!important;}
+    #leaderboard .rank-leader-table td{display:block!important;border:0!important;padding:0!important;font-size:.86rem!important;}
+    #leaderboard .rank-icon-cell img{width:46px!important;height:46px!important;}
+    #leaderboard .avatar-placeholder{width:46px!important;height:46px!important;}
+    #leaderboard .ign-cell{font-size:.96rem!important;line-height:1.1!important;}
+    #leaderboard .class-tag,#leaderboard .region-tag,#leaderboard .nation-tag{display:none!important;}
+    #leaderboard .time-cell{justify-self:end!important;font-size:1rem!important;}
+  }
+</style>
+<script id="v31-mobile-card-leaderboard-script">
+(function(){
+  var localRank={S:'rank-s.png',A:'rank-a.png',B:'rank-b.png',C:'rank-c.png',D:'rank-d.png',E:'rank-e.png',F:'rank-f.png'};
+  var localDungeon={mobile:{S:'dungeon-mobile-s.png',A:'dungeon-mobile-a.png',B:'dungeon-mobile-b.png',C:'dungeon-mobile-c.png',D:'dungeon-mobile-d.png',E:'dungeon-mobile-e.png',F:'dungeon-mobile-f.png'},pc:{S:'dungeon-pc-s.png',A:'dungeon-pc-a.png',B:'dungeon-pc-b.png',C:'dungeon-pc-c.png',D:'dungeon-pc-d.png',E:'dungeon-pc-e.png',F:'dungeon-pc-f.png'}};
+  function applyLocalAssets(){['mobile','pc'].forEach(function(platform){((window.DUNGEONS&&DUNGEONS[platform])||[]).forEach(function(d){d.imageUrl=localDungeon[platform][d.r]||d.imageUrl;d.rankIcon=localRank[d.r]||d.rankIcon;});});if(typeof window.renderDungeons==='function'&&window.DUNGEONS){renderDungeons(DUNGEONS.mobile,'dg-mobile-track');renderDungeons(DUNGEONS.pc,'dg-pc-track');}}
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function rankWeight(r){return {S:0,A:1,B:2,C:3,D:4,E:5,F:6}[r]??9;}
+  function timeValue(t){var p=String(t||'99:99').split(':').map(Number);return (p[0]||99)*60+(p[1]||99);}
+  function normalizeClass(v){return String(v||'').replace('Bladder','Blader').replace('Warior','Warrior');}
+  function renderBoard(){var body=document.getElementById('lb-all-body');if(!body)return;var q=(document.getElementById('leader-search')||{}).value||'';q=q.toLowerCase();var fr=(document.getElementById('filter-rank')||{}).value||'',fc=(document.getElementById('filter-class')||{}).value||'',fg=(document.getElementById('filter-region')||{}).value||'',fn=(document.getElementById('filter-nation')||{}).value||'';var rows=(window.ALL_LEADERS||[]).filter(function(e){var hay=[e.ign,e.cls,e.region,e.nation,e.platform,e.rank].join(' ').toLowerCase();return (!q||hay.indexOf(q)>-1)&&(!fr||e.rank===fr)&&(!fc||normalizeClass(e.cls)===fc)&&(!fg||e.region===fg)&&(!fn||e.nation===fn);}).sort(function(a,b){return rankWeight(a.rank)-rankWeight(b.rank)||timeValue(a.time)-timeValue(b.time);});body.innerHTML=rows.length?rows.map(function(e){var icon=localRank[e.rank]||'';return '<tr><td><span class="rank-pill">'+esc(e.rank)+'</span></td><td class="rank-icon-cell">'+(icon?'<img src="'+esc(icon)+'" alt="Rank '+esc(e.rank)+' icon">':'')+'</td><td><span class="avatar-placeholder">Avatar</span></td><td class="ign-cell">'+esc(e.ign)+'</td><td><span class="class-tag">'+esc(normalizeClass(e.cls))+'</span></td><td><span class="region-tag">'+esc(e.region)+'</span></td><td><span class="nation-tag '+String(e.nation).toLowerCase()+'">'+esc(e.nation)+'</span></td><td class="time-cell">'+esc(e.time)+'</td></tr>';}).join(''):'<tr><td class="empty-row" colspan="8">No fastest clear entries match this filter.</td></tr>';var count=document.getElementById('leader-count');if(count)count.textContent=rows.length+' fastest clear entr'+(rows.length===1?'y':'ies')+' shown';}
+  function run(){applyLocalAssets();['leader-search','filter-rank','filter-class','filter-region','filter-nation'].forEach(function(id){var el=document.getElementById(id);if(el&&!el.dataset.v31){el.dataset.v31='1';el.addEventListener('input',renderBoard);el.addEventListener('change',renderBoard);}});renderBoard();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();window.addEventListener('load',run,{once:true});
+})();
+</script>
+
+<!-- === V32 FASTEST CLEAR BOARD CLEANUP === -->
+<style id="v32-fastest-clear-board-cleanup">
+  #leaderboard .leader-grid{grid-template-columns:1fr!important;}
+  #leaderboard .leader-card{border-color:rgba(240,208,96,.28)!important;background:linear-gradient(180deg,rgba(12,12,36,.82),rgba(4,5,18,.94))!important;}
+  #leaderboard .rank-leader-table{min-width:0!important;width:100%!important;}
+  #leaderboard .rank-leader-table th,
+  #leaderboard .rank-leader-table td{padding:12px 14px!important;}
+  #leaderboard .rank-leader-table th:nth-child(1),
+  #leaderboard .rank-leader-table td:nth-child(1){width:140px!important;text-align:center!important;}
+  #leaderboard .rank-leader-table th:nth-child(2),
+  #leaderboard .rank-leader-table td:nth-child(2){width:120px!important;text-align:center!important;}
+  #leaderboard .rank-leader-table th:nth-child(4),
+  #leaderboard .rank-leader-table td:nth-child(4){width:130px!important;text-align:right!important;}
+  #leaderboard .clean-rank{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:Cinzel,serif;font-weight:900;color:#fff4b8;}
+  #leaderboard .clean-rank img{width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(240,208,96,.2));}
+  #leaderboard .rank-leader-table .avatar-placeholder{width:52px!important;height:52px!important;}
+  #leaderboard .rank-leader-table .ign-cell{font-size:1rem!important;color:#fff!important;font-weight:1000!important;}
+  #leaderboard .rank-leader-table .time-cell{font-size:1.05rem!important;color:#fff0a0!important;font-weight:1000!important;}
+  @media(max-width:760px){
+    #leaderboard .leader-grid{display:grid!important;gap:12px!important;}
+    #leaderboard .leader-card{border-radius:16px!important;overflow:visible!important;}
+    #leaderboard .rank-leader-table{display:block!important;}
+    #leaderboard .rank-leader-table thead{display:none!important;}
+    #leaderboard .rank-leader-table tbody{display:grid!important;gap:12px!important;}
+    #leaderboard .rank-leader-table tr{display:grid!important;grid-template-columns:70px 54px minmax(0,1fr) auto!important;gap:10px!important;align-items:center!important;padding:12px!important;border:1px solid rgba(90,184,255,.24)!important;border-radius:14px!important;background:linear-gradient(135deg,rgba(13,15,42,.9),rgba(5,7,22,.96))!important;}
+    #leaderboard .rank-leader-table td{display:block!important;border:0!important;padding:0!important;width:auto!important;}
+    #leaderboard .rank-leader-table .avatar-placeholder{width:46px!important;height:46px!important;}
+    #leaderboard .rank-leader-table .ign-cell{font-size:.96rem!important;line-height:1.12!important;}
+    #leaderboard .rank-leader-table .time-cell{justify-self:end!important;font-size:1rem!important;}
+  }
+</style>
+<script id="v32-fastest-clear-board-cleanup-script">
+(function(){
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function rankWeight(r){return {S:0,A:1,B:2,C:3,D:4,E:5,F:6}[r] ?? 9;}
+  function timeValue(t){var p=String(t||'99:99').split(':').map(Number);return (p[0]||99)*60+(p[1]||99);}
+  function setupBoard(){
+    var section=document.getElementById('leaderboard');
+    if(!section)return;
+    var old=section.querySelector('.leader-grid');
+    if(old){
+      old.outerHTML='<div class="leader-grid"><div class="leader-card"><div class="leader-title">Fastest Clear by Rank</div><div class="leader-scroll"><table class="rank-leader-table"><thead><tr><th>Rank</th><th>In-game Avatar</th><th>In-Game Name</th><th>Time Beat</th></tr></thead><tbody id="lb-all-body"></tbody></table></div></div></div><p class="leader-count" id="leader-count"></p>';
+    }
+    ['leader-search','filter-rank','filter-class','filter-region','filter-nation'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el&&!el.dataset.v32){el.dataset.v32='1';el.addEventListener('input',renderCleanBoard);el.addEventListener('change',renderCleanBoard);}
+    });
+    renderCleanBoard();
+  }
+  window.renderCleanBoard=function(){
+    var body=document.getElementById('lb-all-body');
+    if(!body)return;
+    var q=(document.getElementById('leader-search')||{}).value||'';
+    q=q.toLowerCase();
+    var fr=(document.getElementById('filter-rank')||{}).value||'';
+    var fc=(document.getElementById('filter-class')||{}).value||'';
+    var fg=(document.getElementById('filter-region')||{}).value||'';
+    var fn=(document.getElementById('filter-nation')||{}).value||'';
+    var rows=(window.ALL_LEADERS||[]).filter(function(e){
+      var cls=String(e.cls||'').replace('Bladder','Blader').replace('Warior','Warrior');
+      var hay=[e.ign,cls,e.region,e.nation,e.platform,e.rank].join(' ').toLowerCase();
+      return (!q||hay.indexOf(q)>-1)&&(!fr||e.rank===fr)&&(!fc||cls===fc)&&(!fg||e.region===fg)&&(!fn||e.nation===fn);
+    }).sort(function(a,b){return rankWeight(a.rank)-rankWeight(b.rank)||timeValue(a.time)-timeValue(b.time);});
+    body.innerHTML=rows.length?rows.map(function(e){
+      var icon={S:'rank-s.png',A:'rank-a.png',B:'rank-b.png',C:'rank-c.png',D:'rank-d.png',E:'rank-e.png',F:'rank-f.png'}[e.rank]||'';
+      return '<tr><td><span class="clean-rank">'+(icon?'<img src="'+esc(icon)+'" alt="Rank '+esc(e.rank)+' icon">':'')+'<span>'+esc(e.rank)+'</span></span></td><td><span class="avatar-placeholder">Avatar</span></td><td class="ign-cell">'+esc(e.ign)+'</td><td class="time-cell">'+esc(e.time)+'</td></tr>';
+    }).join(''):'<tr><td class="empty-row" colspan="4">No fastest clear entries match this filter.</td></tr>';
+    var count=document.getElementById('leader-count');
+    if(count)count.textContent=rows.length+' fastest clear entr'+(rows.length===1?'y':'ies')+' shown';
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setupBoard);else setupBoard();
+  window.addEventListener('load',setupBoard,{once:true});
+})();
+</script>
+
+<!-- === V33 PLATFORM-SWITCH LEADERBOARD === -->
+<style id="v33-platform-switch-leaderboard">
+  #leaderboard .leader-platform-switch{
+    width:min(480px,100%);
+    margin:0 auto 18px;
+    padding:8px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    border:1px solid rgba(240,208,96,.2);
+    border-radius:999px;
+    background:rgba(5,5,20,.78);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+    backdrop-filter:blur(12px);
+  }
+  #leaderboard .platform-choice{
+    min-height:46px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:999px;
+    background:rgba(255,255,255,.055);
+    color:#d8d2ff;
+    font-weight:1000;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:background .22s ease,border-color .22s ease,color .22s ease,transform .22s ease;
+  }
+  #leaderboard .platform-choice:hover{transform:translateY(-1px);}
+  #leaderboard[data-platform="mobile"] .platform-choice[data-platform="mobile"]{
+    border-color:rgba(90,184,255,.78);
+    background:linear-gradient(180deg,rgba(90,184,255,.22),rgba(12,78,209,.13));
+    color:#bfe8ff;
+    box-shadow:0 0 24px rgba(90,184,255,.16);
+  }
+  #leaderboard[data-platform="pc"] .platform-choice[data-platform="pc"]{
+    border-color:rgba(39,210,127,.78);
+    background:linear-gradient(180deg,rgba(39,210,127,.2),rgba(7,92,49,.13));
+    color:#bdf8d6;
+    box-shadow:0 0 24px rgba(39,210,127,.14);
+  }
+  #leaderboard .leader-card{
+    transition:border-color .25s ease,background .25s ease,box-shadow .25s ease;
+  }
+  #leaderboard[data-platform="mobile"] .leader-card{
+    border-color:rgba(90,184,255,.5)!important;
+    background:linear-gradient(180deg,rgba(9,29,72,.86),rgba(4,6,22,.96))!important;
+    box-shadow:0 22px 54px rgba(12,78,209,.12);
+  }
+  #leaderboard[data-platform="pc"] .leader-card{
+    border-color:rgba(39,210,127,.48)!important;
+    background:linear-gradient(180deg,rgba(7,58,38,.84),rgba(4,13,18,.96))!important;
+    box-shadow:0 22px 54px rgba(39,210,127,.1);
+  }
+  #leaderboard[data-platform="mobile"] .leader-title{color:#bfe8ff;}
+  #leaderboard[data-platform="pc"] .leader-title{color:#bdf8d6;}
+  #leaderboard .leader-toolbar{
+    grid-template-columns:1.2fr repeat(4,minmax(120px,.7fr))!important;
+    align-items:center;
+  }
+  #leaderboard .leader-toolbar select#filter-rank{border-color:rgba(240,208,96,.46);}
+  #leaderboard[data-platform="mobile"] .clean-rank img{filter:drop-shadow(0 0 16px rgba(90,184,255,.32));}
+  #leaderboard[data-platform="pc"] .clean-rank img{filter:drop-shadow(0 0 16px rgba(39,210,127,.3));}
+  #leaderboard .clean-rank span{display:none!important;}
+  #leaderboard .class-avatar{
+    width:52px;
+    height:52px;
+    margin:0 auto;
+    border-radius:50%;
+    display:inline-grid;
+    place-items:center;
+    overflow:hidden;
+    background:rgba(3,3,18,.74);
+    border:1px solid rgba(90,184,255,.58);
+    box-shadow:0 0 0 3px rgba(90,184,255,.1),0 0 22px rgba(90,184,255,.22);
+  }
+  #leaderboard .class-avatar.pc{
+    border-color:rgba(39,210,127,.58);
+    box-shadow:0 0 0 3px rgba(39,210,127,.1),0 0 22px rgba(39,210,127,.2);
+  }
+  #leaderboard .class-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .dungeon-img .rank-pill{display:none!important;}
+  #leaderboard[data-platform="mobile"] .rank-leader-table tr:hover{background:rgba(90,184,255,.06);}
+  #leaderboard[data-platform="pc"] .rank-leader-table tr:hover{background:rgba(39,210,127,.055);}
+  @media(max-width:900px){
+    #leaderboard .leader-platform-switch{max-width:520px;}
+    #leaderboard .leader-toolbar{grid-template-columns:1fr 1fr!important;}
+    #leaderboard .leader-toolbar input{grid-column:1/-1;}
+  }
+  @media(max-width:560px){
+    #leaderboard .leader-platform-switch{border-radius:20px;}
+    #leaderboard .platform-choice{min-height:42px;font-size:.78rem;letter-spacing:.04em;}
+    #leaderboard .leader-toolbar{grid-template-columns:1fr!important;}
+    #leaderboard .rank-leader-table tr{
+      grid-template-columns:58px 50px minmax(0,1fr) auto!important;
+      gap:8px!important;
+    }
+    #leaderboard .class-avatar{width:46px;height:46px;}
+  }
+</style>
+<script id="v33-platform-switch-leaderboard">
+(function(){
+  var platformState='mobile';
+  var rankIcons={S:'rank-s.png',A:'rank-a.png',B:'rank-b.png',C:'rank-c.png',D:'rank-d.png',E:'rank-e.png',F:'rank-f.png'};
+  var classAvatars={
+    mobile:{
+      'Blader':'CBM-Blader.png',
+      'Dark Mage':'CBM-Dark Mage.png',
+      'Force Archer':'CBM-Force Archer.png',
+      'Force Blader':'CBM-Force Blader.png',
+      'Force Gunner':'CBM-Force Gunner.png',
+      'Force Shielder':'CBM-Force Shield.png',
+      'Force Shield':'CBM-Force Shield.png',
+      'Gladiator':'CBM-Gladiator.png',
+      'Warrior':'CBM-Warrior.png',
+      'Wizard':'CBM-Wizard.png'
+    },
+    pc:{
+      'Blader':'CBPC-Blader.png',
+      'Dark Mage':'CBPC-Dark Mage.png',
+      'Force Archer':'CBPC-Force Archer.png',
+      'Force Blader':'CBPC-Force Blader.png',
+      'Force Gunner':'CBPC-Force Gunner.png',
+      'Force Shielder':'CBPC-Force Shielder.png',
+      'Force Shield':'CBPC-Force Shielder.png',
+      'Gladiator':'CBPC-Gladiator.png',
+      'Warrior':'CBPC-Warrior.png',
+      'Wizard':'CBPC-Wizard.png'
+    }
+  };
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function normalizeClass(v){return String(v||'').replace('Bladder','Blader').replace('Warior','Warrior');}
+  function platformKey(v){return String(v||'').toLowerCase().indexOf('pc')>-1?'pc':'mobile';}
+  function avatarFor(entry){
+    var cls=normalizeClass(entry&&entry.cls);
+    var key=platformKey(entry&&entry.platform);
+    var src=(classAvatars[key]&&classAvatars[key][cls])||'';
+    if(!src)return '<span class="avatar-placeholder">Avatar</span>';
+    return '<span class="class-avatar '+key+'"><img src="'+esc(src)+'" alt="'+esc((key==='pc'?'CBPC':'CBM')+' '+cls+' class avatar')+'"></span>';
+  }
+  function timeValue(t){var p=String(t||'99:99').split(':').map(Number);return (p[0]||99)*60+(p[1]||99);}
+  function setupPlatformLeaderboard(){
+    var section=document.getElementById('leaderboard');
+    if(!section)return;
+    section.dataset.platform=platformState;
+    section.querySelectorAll('.leader-platform-switch').forEach(function(el){el.remove();});
+    var oldToolbar=section.querySelector('.leader-toolbar');
+    if(oldToolbar)oldToolbar.remove();
+    var oldGrid=section.querySelector('.leader-grid');
+    section.querySelectorAll('.leader-count').forEach(function(el){el.remove();});
+    if(oldGrid){
+      oldGrid.outerHTML='<div class="leader-platform-switch" aria-label="Choose game version"><button class="platform-choice" type="button" data-platform="mobile">Mobile (CBM)</button><button class="platform-choice" type="button" data-platform="pc">PC (CBPC)</button></div><div class="leader-toolbar" aria-label="Fastest clear filters"><input id="leader-search" type="search" placeholder="Search IGN, class, nation, region"><select id="filter-rank" aria-label="Dungeon rank"><option selected>S</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select><select id="filter-class" aria-label="Class filter"><option value="">All Classes</option><option>Blader</option><option>Force Gunner</option><option>Force Shielder</option><option>Force Blader</option><option>Dark Mage</option><option>Wizard</option><option>Force Archer</option><option>Gladiator</option><option>Warrior</option></select><select id="filter-region" aria-label="Region filter"><option value="">All Regions</option><option>PH</option><option>ID</option></select><select id="filter-nation" aria-label="Nation filter"><option value="">All Nations</option><option>Procyon</option><option>Capella</option></select></div><div class="leader-grid"><div class="leader-card"><div class="leader-title" id="platform-leader-title">Mobile (CBM) - Fastest Rank S Clear</div><div class="leader-scroll"><table class="rank-leader-table"><thead><tr><th>Rank</th><th>In-game Avatar</th><th>In-Game Name</th><th>Time Beat</th></tr></thead><tbody id="lb-all-body"></tbody></table></div></div></div><p class="leader-count" id="leader-count"></p>';
+    }
+    section.querySelectorAll('.platform-choice').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        platformState=btn.dataset.platform||'mobile';
+        section.dataset.platform=platformState;
+        renderPlatformLeaderboard();
+      });
+    });
+    ['leader-search','filter-rank','filter-class','filter-region','filter-nation'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el&&!el.dataset.v33){el.dataset.v33='1';el.addEventListener('input',renderPlatformLeaderboard);el.addEventListener('change',renderPlatformLeaderboard);}
+    });
+    renderPlatformLeaderboard();
+  }
+  window.renderPlatformLeaderboard=function(){
+    var section=document.getElementById('leaderboard');
+    var body=document.getElementById('lb-all-body');
+    if(!section||!body)return;
+    section.dataset.platform=platformState;
+    var q=(document.getElementById('leader-search')||{}).value||'';
+    q=q.toLowerCase();
+    var fr=(document.getElementById('filter-rank')||{}).value||'S';
+    var fc=(document.getElementById('filter-class')||{}).value||'';
+    var fg=(document.getElementById('filter-region')||{}).value||'';
+    var fn=(document.getElementById('filter-nation')||{}).value||'';
+    var platformLabel=platformState==='pc'?'PC (CBPC)':'Mobile (CBM)';
+    var rows=(window.ALL_LEADERS||[]).filter(function(e){
+      var cls=normalizeClass(e.cls);
+      var isPlatform=String(e.platform||'').toLowerCase().indexOf(platformState==='pc'?'pc':'mobile')>-1;
+      var hay=[e.ign,cls,e.region,e.nation,e.platform,e.rank].join(' ').toLowerCase();
+      return isPlatform&&(!q||hay.indexOf(q)>-1)&&(!fr||e.rank===fr)&&(!fc||cls===fc)&&(!fg||e.region===fg)&&(!fn||e.nation===fn);
+    }).sort(function(a,b){return timeValue(a.time)-timeValue(b.time);});
+    body.innerHTML=rows.length?rows.map(function(e){
+      var icon=rankIcons[e.rank]||'';
+      return '<tr><td><span class="clean-rank">'+(icon?'<img src="'+esc(icon)+'" alt="Rank '+esc(e.rank)+' icon">':'')+'</span></td><td>'+avatarFor(e)+'</td><td class="ign-cell">'+esc(e.ign)+'</td><td class="time-cell">'+esc(e.time)+'</td></tr>';
+    }).join(''):'<tr><td class="empty-row" colspan="4">No '+esc(platformLabel)+' Rank '+esc(fr)+' clears match this filter.</td></tr>';
+    var title=document.getElementById('platform-leader-title');
+    if(title)title.textContent=platformLabel+' - Fastest Rank '+fr+' Clear';
+    var counts=section.querySelectorAll('.leader-count');
+    counts.forEach(function(el,i){if(i>0)el.remove();});
+    var count=document.getElementById('leader-count')||section.querySelector('.leader-count');
+    if(count)count.textContent=rows.length+' '+platformLabel+' Rank '+fr+' entr'+(rows.length===1?'y':'ies')+' shown';
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setupPlatformLeaderboard);else setupPlatformLeaderboard();
+  window.addEventListener('load',setupPlatformLeaderboard,{once:true});
+})();
+</script>
+
+<!-- === V34 LEADERBOARD DUPLICATE CLEANUP === -->
+<script id="v34-leaderboard-duplicate-cleanup">
+(function(){
+  function cleanupLeaderboardChrome(){
+    var section=document.getElementById('leaderboard');
+    if(!section)return;
+    var switches=section.querySelectorAll('.leader-platform-switch');
+    switches.forEach(function(el,i){if(i>0)el.remove();});
+    var counts=section.querySelectorAll('.leader-count');
+    counts.forEach(function(el,i){if(i>0)el.remove();});
+    var notes=section.querySelectorAll('.sample-note');
+    notes.forEach(function(el,i){if(i>0)el.remove();});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',cleanupLeaderboardChrome);else cleanupLeaderboardChrome();
+  window.addEventListener('load',function(){cleanupLeaderboardChrome();setTimeout(cleanupLeaderboardChrome,60);setTimeout(cleanupLeaderboardChrome,300);},{once:true});
+  var section=document.getElementById('leaderboard');
+  if(section&&window.MutationObserver){
+    var busy=false;
+    new MutationObserver(function(){
+      if(busy)return;
+      busy=true;
+      requestAnimationFrame(function(){cleanupLeaderboardChrome();busy=false;});
+    }).observe(section,{childList:true,subtree:true});
+  }
+})();
+</script>
+
+<!-- === V35 POLISH: class-avatar leaderboard cards === -->
+<style id="v35-polish-leaderboard-cards">
+  #leaderboard .leader-scroll{overflow-x:visible!important;}
+  #leaderboard .rank-leader-table{table-layout:fixed!important;}
+  #leaderboard .rank-leader-table th:nth-child(1),
+  #leaderboard .rank-leader-table td:nth-child(1){width:90px!important;text-align:center!important;}
+  #leaderboard .rank-leader-table th:nth-child(2),
+  #leaderboard .rank-leader-table td:nth-child(2){width:118px!important;text-align:center!important;}
+  #leaderboard .rank-leader-table th:nth-child(4),
+  #leaderboard .rank-leader-table td:nth-child(4){width:140px!important;text-align:right!important;}
+  #leaderboard .class-avatar{width:58px!important;height:58px!important;}
+  #leaderboard .platform-choice:focus-visible,
+  #leaderboard .leader-toolbar input:focus-visible,
+  #leaderboard .leader-toolbar select:focus-visible{
+    outline:2px solid rgba(240,208,96,.86)!important;
+    outline-offset:3px!important;
+  }
+  #leaderboard .leader-count{
+    margin-top:14px!important;
+    color:#d6d0ff!important;
+    font-size:.92rem!important;
+  }
+  @media(max-width:760px){
+    #leaderboard .leader-card{padding:12px!important;}
+    #leaderboard .leader-title{
+      padding:0 0 12px!important;
+      border-bottom:0!important;
+      text-align:center!important;
+      font-size:1rem!important;
+    }
+    #leaderboard .rank-leader-table,
+    #leaderboard .rank-leader-table tbody{display:grid!important;width:100%!important;min-width:0!important;}
+    #leaderboard .rank-leader-table tbody{gap:12px!important;}
+    #leaderboard .rank-leader-table tr{
+      display:grid!important;
+      grid-template-columns:54px 64px minmax(0,1fr) auto!important;
+      gap:10px!important;
+      align-items:center!important;
+      width:100%!important;
+      padding:12px!important;
+      border-radius:15px!important;
+      border:1px solid rgba(90,184,255,.28)!important;
+      background:linear-gradient(135deg,rgba(8,19,48,.9),rgba(4,6,22,.96))!important;
+    }
+    #leaderboard[data-platform="pc"] .rank-leader-table tr{
+      border-color:rgba(39,210,127,.28)!important;
+      background:linear-gradient(135deg,rgba(8,43,29,.9),rgba(4,13,18,.96))!important;
+    }
+    #leaderboard .rank-leader-table td{
+      display:block!important;
+      width:auto!important;
+      border:0!important;
+      padding:0!important;
+    }
+    #leaderboard .clean-rank img{width:44px!important;height:44px!important;}
+    #leaderboard .class-avatar{width:54px!important;height:54px!important;}
+    #leaderboard .ign-cell{
+      font-size:1rem!important;
+      line-height:1.1!important;
+      overflow-wrap:anywhere!important;
+    }
+    #leaderboard .time-cell{
+      justify-self:end!important;
+      font-size:1.05rem!important;
+      white-space:nowrap!important;
+    }
+  }
+  @media(max-width:420px){
+    #leaderboard .rank-leader-table tr{
+      grid-template-columns:46px 52px minmax(0,1fr)!important;
+    }
+    #leaderboard .time-cell{
+      grid-column:2 / -1!important;
+      justify-self:start!important;
+      padding-top:2px!important;
+    }
+    #leaderboard .clean-rank img{width:38px!important;height:38px!important;}
+    #leaderboard .class-avatar{width:48px!important;height:48px!important;}
+  }
+</style>
+
+<!-- === SHARED ACTIVE PHASE LOCK GUARD === -->
+<style id="shared-phase-lock-guard">
+  a.is-phase-locked{cursor:pointer;opacity:.72}.phase-lock-modal{position:fixed;inset:0;z-index:10050;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(2,3,12,.78);backdrop-filter:blur(8px)}.phase-lock-modal.open{display:flex}.phase-lock-box{width:min(460px,92vw);border:1px solid rgba(240,208,96,.42);border-radius:18px;background:linear-gradient(145deg,rgba(18,15,43,.98),rgba(5,8,24,.98));box-shadow:0 24px 80px rgba(0,0,0,.62),0 0 34px rgba(240,208,96,.13);padding:26px;text-align:center;color:#f8f0d8}.phase-lock-box h2{margin:8px 0 10px;font-family:Cinzel,serif;font-size:clamp(1.5rem,6vw,2.2rem);color:#f6d75c}.phase-lock-box p{margin:0 0 16px;color:#c9c3e9;line-height:1.5}.phase-lock-kicker{display:inline-flex;padding:6px 12px;border-radius:999px;border:1px solid rgba(240,208,96,.36);color:#f6d75c;font-size:.72rem;font-weight:1000;letter-spacing:.14em;text-transform:uppercase}.phase-lock-count{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}.phase-lock-count span{display:grid;gap:2px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.055);padding:10px 6px;font-weight:1000;color:#fff}.phase-lock-count small{font-size:.62rem;color:#9d98cc;letter-spacing:.12em;text-transform:uppercase}.phase-lock-close{min-height:42px;padding:10px 18px;border:1px solid rgba(240,208,96,.45);border-radius:999px;background:rgba(240,208,96,.14);color:#f6d75c;font-weight:1000;text-transform:uppercase;letter-spacing:.08em;cursor:pointer}
+</style>
+<script id="shared-phase-lock-guard-script">
+(function(){var locked={'phase-3.html':{phase:'Phase 3',name:'Grinding Pride',startLabel:'25 Jul',start:'2026-07-25T00:00:00+07:00'}};function key(h){return String(h||'').split('#')[0].split('?')[0].replace(/^.*\//,'');}function meta(h){return locked[key(h)]||null;}function modal(){var m=document.getElementById('phase-lock-modal');if(m)return m;m=document.createElement('div');m.id='phase-lock-modal';m.className='phase-lock-modal';m.innerHTML='<div class="phase-lock-box" role="dialog" aria-modal="true" aria-labelledby="phase-lock-title"><span class="phase-lock-kicker">Upcoming activity</span><h2 id="phase-lock-title">Grinding Pride</h2><p id="phase-lock-copy">This phase has not started yet.</p><div class="phase-lock-count"><span><b id="phase-lock-days">--</b><small>Days</small></span><span><b id="phase-lock-hours">--</b><small>Hours</small></span><span><b id="phase-lock-mins">--</b><small>Mins</small></span></div><button class="phase-lock-close" type="button">Back to campaign</button></div>';document.body.appendChild(m);m.addEventListener('click',function(e){if(e.target===m||e.target.closest('.phase-lock-close'))m.classList.remove('open');});document.addEventListener('keydown',function(e){if(e.key==='Escape')m.classList.remove('open');});return m;}function countdown(x){var diff=Math.max(0,new Date(x.start).getTime()-Date.now()),mins=Math.floor(diff/60000),d=Math.floor(mins/1440),h=Math.floor((mins%1440)/60),mm=mins%60;['days','hours','mins'].forEach(function(id,i){var el=document.getElementById('phase-lock-'+id);if(el)el.textContent=[d,h,mm][i];});}function show(x){var m=modal(),t=document.getElementById('phase-lock-title'),c=document.getElementById('phase-lock-copy');if(t)t.textContent=x.name;if(c)c.textContent=x.phase+' - '+x.name+' starts on '+x.startLabel+'. Please come back when the phase opens.';countdown(x);m.classList.add('open');}function mark(){document.querySelectorAll('a[href]').forEach(function(a){if(meta(a.getAttribute('href'))){a.dataset.phaseLocked='1';a.classList.add('is-phase-locked');a.setAttribute('aria-label','Grinding Pride is upcoming');}});}document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-phase-locked="1"],[data-locked-phase],.phase-card.is-locked');if(!a)return;e.preventDefault();e.stopPropagation();show(meta(a.getAttribute('href'))||locked['phase-3.html']);},true);if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mark);else mark();window.addEventListener('load',mark);if(meta(location.pathname)){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){show(meta(location.pathname));});else show(meta(location.pathname));}})();
+</script>
+
+</body>
+</html>
+
+
