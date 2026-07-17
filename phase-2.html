@@ -16,7 +16,7 @@
 </head>
 <body>
 <nav class="topbar" id="site-nav"><a class="brand" href="index.html"><img src="cabal-pride-logo.png" alt="CABAL PRIDE"><span>CABAL PRIDE</span></a><div class="phase-nav"><a href="phase-1.html">Guild Pride</a><a class="active" href="phase-2.html" aria-current="true">Dungeon Pride</a><a href="phase-3.html">Grinding Pride</a></div></nav>
-<header class="hero"><div class="wrap hero-shell"><img class="hero-logo" src="cabal-pride-logo.png" alt="CABAL PRIDE logo"><div class="eyebrow">Phase 2 - Opens July 15 - Closes July 24</div><h1 class="title">Dungeon Pride</h1><div class="subtitle">Conquer ranked dungeons. Climb from F to S. Earn your rank.</div><p class="hero-copy">Clear one ranked dungeon solo, post your proof publicly, and submit it. The highest rank you clear earns that rank's rewards plus every reward below it. Every verified clear also adds points to your nation.</p><div class="cta-row"><a class="cta" href="https://forms.gle/ps65eZMkcCt1PqQw9" target="_blank" rel="noopener">Register Now</a><a class="cta secondary" href="#dungeons">View Dungeon List</a></div><div class="nation-score" aria-label="Sample nation score"><div class="score-grid"><div class="nation"><strong>812</strong><span>Procyon</span></div><div class="vs">VS</div><div class="nation capella"><strong>634</strong><span>Capella</span></div></div><div class="score-bar"><i></i><i></i></div><div class="score-labels"><span>Procyon 56%</span><span>Capella 44%</span></div></div></div></header>
+<header class="hero"><div class="wrap hero-shell"><img class="hero-logo" src="cabal-pride-logo.png" alt="CABAL PRIDE logo"><div class="eyebrow">Phase 2 - Opens July 15 - Closes July 24</div><h1 class="title">Dungeon Pride</h1><div class="subtitle">Conquer ranked dungeons. Climb from F to S. Earn your rank.</div><p class="hero-copy">Clear one ranked dungeon solo, post your proof publicly, and submit it. The highest rank you clear earns that rank's rewards plus every reward below it. Every verified clear also adds points to your nation.</p><div class="cta-row"><a class="cta" href="https://forms.gle/ps65eZMkcCt1PqQw9" target="_blank" rel="noopener">Register Now</a><a class="cta secondary" href="#dungeons">View Dungeon List</a></div><div class="nation-score" aria-label="Dungeon Pride nation score from Google Sheets"><div class="score-grid"><div class="nation"><strong>630</strong><span>Procyon</span></div><div class="vs">VS</div><div class="nation capella"><strong>710</strong><span>Capella</span></div></div><div class="score-bar"><i style="width:47%"></i><i style="width:53%"></i></div><div class="score-labels"><span>Procyon 47%</span><span>Capella 53%</span></div></div></div></header>
 <main>
 <section class="section"><div class="wrap accordion"><details class="info-panel" id="rewards"><summary><h3>Rewards</h3><span class="toggle">+</span></summary><div class="panel-body"><div class="section-head"><div class="section-kicker">Rank reward logic</div><h2>Clear Higher, Claim More</h2><p>Clearing a rank gives you that rank's rewards plus every rank below it. Clear S and you claim the full F to S reward set.</p></div><div class="tabs"><button class="tab-btn active" data-tab="rw-mobile">Mobile (CBM)</button><button class="tab-btn" data-tab="rw-pc">PC (CBPC)</button></div><div id="rw-mobile" class="tab-panel active"></div><div id="rw-pc" class="tab-panel"></div></div></details><details class="info-panel" id="how"><summary><h3>How to Join</h3><span class="toggle">+</span></summary><div class="panel-body"><div class="steps"><div class="step"><b>Step 1</b>Clear a ranked dungeon from F to S solo.</div><div class="step"><b>Step 2</b>Record your run and post the clip publicly on Facebook, YouTube, or TikTok.</div><div class="step"><b>Step 3</b>Pre-register your nation and submit your public clip link via Google Form.</div><div class="step"><b>Step 4</b>After verification, your rank, time, and nation points are counted.</div></div><div class="unlock">Unlock rule: clear a higher rank and you automatically claim rewards from every rank below it too.</div><div class="cta-row"><a class="cta" href="https://forms.gle/ps65eZMkcCt1PqQw9" target="_blank" rel="noopener">Submit Your Clear</a></div></div></details></div></section>
 <section class="section" id="dungeons"><div class="wrap"><div class="section-head"><div class="section-kicker">Ranked dungeon list</div><h2>Ranks & Dungeons</h2><p>Each platform has its own ranked dungeon path. Scroll sideways on mobile to inspect all ranks.</p></div><div class="tabs"><button class="tab-btn active" data-tab="dg-mobile">Mobile (CBM)</button><button class="tab-btn" data-tab="dg-pc">PC (CBPC)</button></div><div id="dg-mobile" class="tab-panel active"><p class="platform-note">Entry tickets for every Mobile dungeon are handed out free.</p><div class="dungeon-track" id="dg-mobile-track"></div></div><div id="dg-pc" class="tab-panel"><p class="platform-note">S and A rank dungeons are the real gauntlet. Expect to need a strong build and gear for solo clear.</p><div class="dungeon-track" id="dg-pc-track"></div></div></div></section>
@@ -1367,6 +1367,188 @@ document.querySelectorAll('.tabs').forEach(function(group){var buttons=group.que
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensureOfficialButton);
   else ensureOfficialButton();
+})();
+</script>
+<script id="v40-phase2-sheet-nation-score">
+(function(){
+  var SHEET_ID='1JqHItiPR19qyFj71VRp7IxTfTWv7ztScPgIpRe_746w';
+  var SHEET_NAME='Phase 2 Leaderboard';
+  var RANK_POINTS=window.RANK_PTS||{S:250,A:160,B:120,C:80,D:60,E:40,F:20};
+  function clean(v){return String(v==null?'':v).trim();}
+  function key(v){return clean(v).toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');}
+  function norm(v){return clean(v).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
+  function pick(row,names){
+    for(var i=0;i<names.length;i++){
+      var k=key(names[i]);
+      if(row[k]!=null&&clean(row[k])!=='')return row[k];
+    }
+    return '';
+  }
+  function normalizeRank(v){
+    var r=clean(v).toUpperCase().match(/[SABCDEF]/);
+    return r?r[0]:'';
+  }
+  function platformKey(v){
+    v=norm(v);
+    if(v.indexOf('pc')>-1||v.indexOf('cbpc')>-1)return 'pc';
+    return 'mobile';
+  }
+  function platformLabel(v){return platformKey(v)==='pc'?'PC (CBPC)':'Mobile (CBM)';}
+  function normalizeClass(v){
+    return clean(v).replace(/Bladder/gi,'Blader').replace(/Warior/gi,'Warrior').replace(/Dark Make/gi,'Dark Mage').replace(/Force Shield\b/gi,'Force Shielder').replace(/\s+/g,' ').trim();
+  }
+  function normalizeNation(v){
+    v=norm(v);
+    if(v.indexOf('capella')>-1)return 'Capella';
+    if(v.indexOf('procyon')>-1)return 'Procyon';
+    return '';
+  }
+  function numberValue(v){
+    var n=Number(clean(v).replace(/,/g,'').replace(/[^\d.-]/g,''));
+    return Number.isFinite(n)?n:0;
+  }
+  function rowPoints(row,rank){
+    var explicit=numberValue(pick(row,['nation_points','nation point','points','score','rank_points','rank point','dungeon_points','dungeon point']));
+    if(explicit>0)return explicit;
+    return Number(RANK_POINTS[rank]||0);
+  }
+  function statusAllowed(row){
+    var status=norm(pick(row,['status','entry_status','verification','verified']));
+    return !/(reject|rejected|hidden|draft|invalid|disqualified)/.test(status);
+  }
+  function timeValue(t){
+    var value=clean(t);
+    if(!value)return 999999;
+    var parts=value.split(':').map(function(x){return Number(clean(x));});
+    if(parts.length===3)return (parts[0]||0)*3600+(parts[1]||0)*60+(parts[2]||0);
+    if(parts.length===2)return (parts[0]||0)*60+(parts[1]||0);
+    var numeric=numberValue(value);
+    return numeric>0?numeric:999999;
+  }
+  function rankWeight(r){return {S:0,A:1,B:2,C:3,D:4,E:5,F:6}[normalizeRank(r)]??9;}
+  function sheetMatrix(range){
+    return new Promise(function(resolve,reject){
+      var cb='__phase2ScoreSheet'+Date.now()+Math.floor(Math.random()*10000);
+      var done=false,script,timer=setTimeout(function(){cleanup();reject(new Error('Sheet timeout'));},10000);
+      function cleanup(){done=true;clearTimeout(timer);delete window[cb];if(script&&script.parentNode)script.parentNode.removeChild(script);}
+      window[cb]=function(res){
+        if(done)return;cleanup();
+        if(!res||res.status==='error')return reject(new Error('Sheet response error'));
+        var heads=((res.table&&res.table.cols)||[]).map(function(col){return col.label||col.id||'';});
+        var rows=(res.table&&res.table.rows)||[];
+        resolve([heads].concat(rows.map(function(r){return (r.c||[]).map(function(c){return c?(c.f||c.v||''):'';});})));
+      };
+      script=document.createElement('script');
+      script.src='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?sheet='+encodeURIComponent(SHEET_NAME)+'&range='+encodeURIComponent(range)+'&tqx=responseHandler:'+cb+'&cacheBust='+Date.now();
+      script.onerror=function(){cleanup();reject(new Error('Sheet script failed'));};
+      document.head.appendChild(script);
+    });
+  }
+  function headerScore(row){
+    var h=(row||[]).map(key);
+    return ['rank','dungeon_rank','platform','game_version','ign','in_game_name','player_name','class','character_class','region','nation','time_beat','clear_time','points','score'].reduce(function(s,w){return s+(h.indexOf(w)>-1?1:0);},0);
+  }
+  function objectsFromMatrix(matrix){
+    var start=0,best=-1;
+    for(var i=0;i<matrix.length;i++){
+      var score=headerScore(matrix[i]);
+      if(score>best){best=score;start=i;}
+    }
+    if(best<2)start=0;
+    var heads=(matrix[start]||[]).map(function(h,i){return key(h||('col_'+i));});
+    return matrix.slice(start+1).filter(function(row){return (row||[]).some(function(v){return clean(v)!=='';});}).map(function(row){
+      var obj={};heads.forEach(function(h,i){obj[h]=row[i]||'';});return obj;
+    });
+  }
+  function classAvatarFor(entry){
+    var prefix=platformKey(entry&&entry.platform)==='pc'?'CBPC':'CBM';
+    var map={
+      'blader':'Blader',
+      'force gunner':'Force Gunner',
+      'force shielder':prefix==='CBPC'?'Force Shielder':'Force Shield',
+      'force shield':prefix==='CBPC'?'Force Shielder':'Force Shield',
+      'gladiator':'Gladiator',
+      'warrior':'Warrior',
+      'wizard':'Wizard',
+      'dark mage':'Dark Mage',
+      'force archer':'Force Archer',
+      'force blader':'Force Blader'
+    };
+    var file=map[norm(normalizeClass(entry&&entry.cls))];
+    return file?prefix+'-'+file+'.png':'';
+  }
+  function mapEntry(row){
+    var rank=normalizeRank(pick(row,['rank','dungeon_rank','dungeon rank','top_rank','top rank']));
+    var nation=normalizeNation(pick(row,['nation','faction']));
+    var platform=platformLabel(pick(row,['platform','game_version','game version','version','platform_name','platform name']));
+    var entry={
+      platform:platform,
+      rank:rank,
+      ign:pick(row,['ign','in_game_name','in-game name','player_name','player name','name']),
+      cls:normalizeClass(pick(row,['class','character_class','character class','job'])),
+      region:clean(pick(row,['region','country','server_region','server region'])).toUpperCase(),
+      nation:nation,
+      time:pick(row,['time_beat','time beat','clear_time','clear time','time']),
+      avatarUrl:pick(row,['avatar_url','avatar url','in_game_avatar_url','in-game avatar url','image_url','image url'])
+    };
+    entry.points=rowPoints(row,rank);
+    entry.avatarUrl=entry.avatarUrl||classAvatarFor(entry);
+    return entry;
+  }
+  function updateNationScore(entries){
+    var totals={Procyon:0,Capella:0};
+    entries.forEach(function(e){
+      if(e.nation==='Procyon'||e.nation==='Capella')totals[e.nation]+=Number(e.points||0);
+    });
+    var total=totals.Procyon+totals.Capella;
+    var proPct=total?Math.round((totals.Procyon/total)*100):0;
+    var capPct=total?100-proPct:0;
+    var box=document.querySelector('.nation-score');
+    if(!box)return;
+    var pro=box.querySelector('.nation:not(.capella) strong');
+    var cap=box.querySelector('.nation.capella strong');
+    var bars=box.querySelectorAll('.score-bar i');
+    var labels=box.querySelectorAll('.score-labels span');
+    if(pro)pro.textContent=String(totals.Procyon);
+    if(cap)cap.textContent=String(totals.Capella);
+    if(bars[0])bars[0].style.width=proPct+'%';
+    if(bars[1])bars[1].style.width=capPct+'%';
+    if(labels[0])labels[0].textContent='Procyon '+proPct+'%';
+    if(labels[1])labels[1].textContent='Capella '+capPct+'%';
+    box.setAttribute('aria-label','Dungeon Pride nation score from Google Sheets: Procyon '+totals.Procyon+', Capella '+totals.Capella);
+    window.__phase2NationScore={procyon:totals.Procyon,capella:totals.Capella,procyonPercent:proPct,capellaPercent:capPct,updatedAt:Date.now()};
+  }
+  function refreshFromSheet(){
+    Promise.allSettled(['A1:Z1000','A4:Z1000'].map(sheetMatrix)).then(function(results){
+      var entries=[],seen={};
+      results.forEach(function(result){
+        if(result.status!=='fulfilled')return;
+        objectsFromMatrix(result.value).forEach(function(row){
+          if(!statusAllowed(row))return;
+          var entry=mapEntry(row);
+          if(!entry.rank||!entry.ign)return;
+          var id=[entry.platform,entry.rank,entry.ign,entry.cls,entry.region,entry.nation,entry.time].map(norm).join('|');
+          if(seen[id])return;
+          seen[id]=1;
+          entries.push(entry);
+        });
+      });
+      entries.sort(function(a,b){return rankWeight(a.rank)-rankWeight(b.rank)||timeValue(a.time)-timeValue(b.time)||clean(a.ign).localeCompare(clean(b.ign));});
+      if(entries.length){
+        window.ALL_LEADERS=entries;
+        window.__phase2SheetLoadedAt=Date.now();
+        updateNationScore(entries);
+        if(typeof window.renderPlatformLeaderboard==='function')window.renderPlatformLeaderboard();
+        else if(typeof window.renderPhase2Leaderboard==='function')window.renderPhase2Leaderboard();
+      }else{
+        updateNationScore([]);
+      }
+    }).catch(function(){});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',refreshFromSheet);
+  else refreshFromSheet();
+  window.addEventListener('load',function(){setTimeout(refreshFromSheet,450);},{once:true});
+  setInterval(refreshFromSheet,60000);
 })();
 </script>
 </body>
