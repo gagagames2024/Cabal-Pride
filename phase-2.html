@@ -54,8 +54,8 @@ document.querySelectorAll('.tabs').forEach(function(group){var buttons=group.que
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function normalizeClass(v){return String(v||'').replace('Bladder','Blader').replace('Warior','Warrior');}
   function setupBrand(){var brand=document.querySelector('.brand');if(brand){brand.innerHTML='<img src="Combo-Logo-Horizontal-White.png" alt="Combo Interactive"><span>Combo Interactive</span>';brand.removeAttribute('href');brand.setAttribute('aria-label','Combo Interactive');}document.querySelectorAll('a[href="https://forms.gle/ps65eZMkcCt1PqQw9"], .cta').forEach(function(a){if(/Register|Submit/.test(a.textContent||'')){a.href=FORM;a.target='_blank';a.rel='noopener';}});}
-  function setupRewards(){var mobile=document.getElementById('rw-mobile'),pc=document.getElementById('rw-pc');if(mobile&&!mobile.querySelector('.reward-showcase'))mobile.insertAdjacentHTML('afterbegin','<div class="reward-showcase"><div class="reward-image-card"><img src="CBM-Reward.png" alt="CABAL Mobile Dungeon Pride rewards"></div><div class="reward-copy"><h3>CBM Reward Preview</h3><p>Rank rewards below apply based on verified clear rank. Clear a higher rank to claim the lower rank rewards too.</p></div></div>');if(pc&&!pc.querySelector('.reward-showcase'))pc.insertAdjacentHTML('afterbegin','<div class="reward-showcase"><div class="reward-image-card pc"><img src="CBPC-Reward.png" alt="CABAL PC Dungeon Pride rewards"></div><div class="reward-copy"><h3>CBPC Reward Preview</h3><p>Rank rewards below apply based on verified clear rank. Clear a higher rank to claim the lower rank rewards too.</p></div></div>');}
-  function setupHow(){var body=document.querySelector('#how .panel-body');if(body)body.innerHTML='<a class="how-image-link" href="'+FORM+'" target="_blank" rel="noopener" aria-label="Open Dungeon Pride registration form"><img src="HOW_TO_JOIN.png" alt="How to join Dungeon Pride"></a><div class="cta-row"><a class="cta" href="'+FORM+'" target="_blank" rel="noopener">Submit Your Clear</a></div>';}
+  function setupRewards(){var mobile=document.getElementById('rw-mobile'),pc=document.getElementById('rw-pc');if(mobile&&!mobile.querySelector('.reward-showcase'))mobile.insertAdjacentHTML('afterbegin','<div class="reward-showcase"><div class="reward-image-card"><img src="CBM-Dungeon_Pride-Reward.png" alt="CABAL Mobile Dungeon Pride rewards"></div><div class="reward-copy"><h3>CBM Reward Preview</h3><p>Rank rewards below apply based on verified clear rank. Clear a higher rank to claim the lower rank rewards too.</p></div></div>');if(pc&&!pc.querySelector('.reward-showcase'))pc.insertAdjacentHTML('afterbegin','<div class="reward-showcase"><div class="reward-image-card pc"><img src="CBPC-Dungeon_Pride-Reward.png" alt="CABAL PC Dungeon Pride rewards"></div><div class="reward-copy"><h3>CBPC Reward Preview</h3><p>Rank rewards below apply based on verified clear rank. Clear a higher rank to claim the lower rank rewards too.</p></div></div>');}
+  function setupHow(){var body=document.querySelector('#how .panel-body');if(body)body.innerHTML='<a class="how-image-link" href="'+FORM+'" target="_blank" rel="noopener" aria-label="Open Dungeon Pride registration form"><img src="CBM-How_To_Join_Banner.png" alt="How to join Dungeon Pride"></a><div class="cta-row"><a class="cta" href="'+FORM+'" target="_blank" rel="noopener">Submit Your Clear</a></div>';}
   function enhanceDungeons(){['mobile','pc'].forEach(function(platform){(window.DUNGEONS&&DUNGEONS[platform]||[]).forEach(function(d){d.imageUrl=dungeonImages[platform][d.r]||d.imageUrl;d.rankIcon=rankImages[d.r]||d.rankIcon;});});if(typeof window.renderDungeons==='function'){renderDungeons(DUNGEONS.mobile,'dg-mobile-track');renderDungeons(DUNGEONS.pc,'dg-pc-track');}}
   window.renderDungeons=function(list,id){var el=document.getElementById(id);if(!el)return;el.innerHTML=list.map(function(d){var bg=d.imageUrl||((window.CDN||'')+d.img+'.png');var icon=d.rankIcon||rankImages[d.r]||'';return '<article class="dungeon-card '+(d.r==='S'?'s-rank':'')+'"><div class="dungeon-img" style="background-image:url(&quot;'+esc(bg)+'&quot;)">'+(icon?'<img class="rank-icon" src="'+esc(icon)+'" alt="Rank '+esc(d.r)+' icon">':'')+'<span class="rank-pill">'+esc(d.r)+'</span><span class="pts-badge">'+esc((RANK_PTS&&RANK_PTS[d.r])||'')+' pts</span></div><div class="dungeon-body"><h4>'+esc(d.n)+'</h4><div class="meta"><span>CP '+esc(d.cp)+'</span><span>Entry: '+esc(d.e)+'</span><span>Lv. '+esc(d.lv)+'</span></div></div></article>';}).join('');};
   function seedLeaderboard(list,platform){return list.map(function(e,i){return Object.assign({platform:platform,cls:classes[i%classes.length],region:regions[i%2],nation:nations[i%2]},e);});}
@@ -1137,6 +1137,112 @@ document.querySelectorAll('.tabs').forEach(function(group){var buttons=group.que
   window.addEventListener('load',normalizeHeader,{once:true});
 })();
 </script>
+<style id="v42-final-text-alignment-guard">
+  *,*::before,*::after{box-sizing:border-box}
+  body{overflow-x:hidden}
+  .topbar,#site-nav{align-items:center}
+  .brand{min-width:0}
+  .brand span{overflow-wrap:anywhere}
+  .phase-nav,.phase-header-links{min-width:0}
+  .phase-nav a,.phase-header-links a{text-align:center;line-height:1}
+  .wrap,.hero-shell,.nation-score,.accordion,.info-panel,.leader-card,#leaderboard{max-width:100%}
+  .hero,.section-head,.platform-note,.sample-note,.footer{text-align:center}
+  .hero-logo{display:block;margin-left:auto!important;margin-right:auto!important}
+  .subtitle,.hero-copy,.section-head p{max-width:840px;text-align:center;text-wrap:pretty}
+  .cta-row{align-items:center;justify-content:center}
+  .nation-score{margin-left:auto;margin-right:auto}
+  .score-grid{align-items:center}
+  .nation{text-align:center}
+  .info-panel summary{align-items:center;text-align:left}
+  .info-panel h3{line-height:1.15;text-wrap:balance}
+  .steps,.reward-grid,.bonus-grid{align-items:stretch}
+  .step,.reward-card,.bonus-card{text-align:left;overflow-wrap:anywhere}
+  .tabs,.leader-platform-switch{justify-content:center;align-items:center}
+  .tab-btn,.platform-choice{text-align:center;line-height:1}
+  .dungeon-track{align-items:stretch}
+  .dungeon-card{min-width:0}
+  .dungeon-body h4{text-wrap:balance;line-height:1.16}
+  #leaderboard .leader-toolbar{align-items:center}
+  #leaderboard .leader-toolbar input,
+  #leaderboard .leader-toolbar select{min-width:0}
+  #leaderboard .leader-card{overflow:hidden}
+  #leaderboard .leader-title{text-align:left;line-height:1.2;text-wrap:balance}
+  #leaderboard .leader-scroll{width:100%;overflow-x:auto}
+  #leaderboard .rank-leader-table{table-layout:fixed;width:100%;min-width:860px}
+  #leaderboard .rank-leader-table th,
+  #leaderboard .rank-leader-table td{vertical-align:middle;line-height:1.18}
+  #leaderboard .rank-leader-table th{text-align:center}
+  #leaderboard .rank-leader-table th:nth-child(1),
+  #leaderboard .rank-leader-table td:nth-child(1){width:70px!important;text-align:center!important}
+  #leaderboard .rank-leader-table th:nth-child(2),
+  #leaderboard .rank-leader-table td:nth-child(2){width:94px!important;text-align:center!important}
+  #leaderboard .rank-leader-table th:nth-child(3),
+  #leaderboard .rank-leader-table td:nth-child(3){width:auto!important;text-align:left!important}
+  #leaderboard .rank-leader-table th:nth-child(4),
+  #leaderboard .rank-leader-table td:nth-child(4),
+  #leaderboard .rank-leader-table th:nth-child(5),
+  #leaderboard .rank-leader-table td:nth-child(5),
+  #leaderboard .rank-leader-table th:nth-child(6),
+  #leaderboard .rank-leader-table td:nth-child(6){width:116px!important;text-align:center!important}
+  #leaderboard .rank-leader-table th:nth-child(7),
+  #leaderboard .rank-leader-table td:nth-child(7){width:104px!important;text-align:right!important}
+  #leaderboard .ign-cell{white-space:normal!important;overflow-wrap:anywhere}
+  #leaderboard .clean-rank{margin-inline:auto}
+  #leaderboard .sheet-avatar{margin-inline:auto}
+  #leaderboard .class-tag,
+  #leaderboard .region-tag,
+  #leaderboard .nation-tag{max-width:100%;justify-content:center;text-align:center;white-space:normal;line-height:1.08}
+  #leaderboard .time-cell{white-space:nowrap;text-align:right}
+  #leaderboard .empty-row{text-align:center!important}
+  #leaderboard .leader-count{text-align:center}
+  .bottom-nav{text-align:center}
+  @media(max-width:920px){
+    .topbar,#site-nav{height:auto;min-height:var(--nav-h);flex-direction:column;justify-content:center;gap:8px}
+    .brand{justify-content:center}
+    .phase-nav,.phase-header-links{width:100%;justify-content:flex-start!important;overflow-x:auto;scroll-snap-type:x proximity}
+    .phase-nav a,.phase-header-links a{flex:0 0 auto;scroll-snap-align:center}
+    .leader-grid{grid-template-columns:1fr!important}
+    #leaderboard .leader-toolbar{grid-template-columns:1fr 1fr!important}
+  }
+  @media(max-width:700px){
+    .wrap{width:min(100% - 22px,1180px)!important}
+    .hero{padding-left:0!important;padding-right:0!important}
+    .title{font-size:clamp(2.45rem,15vw,4.6rem)!important}
+    .subtitle,.hero-copy{font-size:.94rem!important;line-height:1.48!important}
+    .score-grid{grid-template-columns:1fr!important}
+    .nation-score{border-radius:14px!important}
+    .steps,.reward-grid,.bonus-grid{grid-template-columns:1fr!important}
+    .dungeon-track{display:flex!important;overflow-x:auto!important;scroll-snap-type:x mandatory}
+    .dungeon-card{flex:0 0 min(310px,86vw)!important;scroll-snap-align:center}
+    #leaderboard .leader-platform-switch{display:grid!important;grid-template-columns:1fr 1fr;width:100%;gap:8px}
+    #leaderboard .leader-toolbar{grid-template-columns:1fr!important;gap:10px!important}
+    #leaderboard .leader-card{border-radius:14px!important}
+    #leaderboard .leader-scroll{overflow:visible}
+    #leaderboard .rank-leader-table{min-width:0!important}
+    #leaderboard .rank-leader-table thead{display:none!important}
+    #leaderboard .rank-leader-table,
+    #leaderboard .rank-leader-table tbody{display:block;width:100%}
+    #leaderboard .rank-leader-table tr{display:grid!important;grid-template-columns:54px 64px minmax(0,1fr);gap:10px 12px;margin:12px;padding:12px;border:1px solid rgba(90,184,255,.28);border-radius:14px;background:rgba(3,7,22,.72)}
+    #leaderboard[data-platform="pc"] .rank-leader-table tr{border-color:rgba(39,210,127,.3)}
+    #leaderboard .rank-leader-table td{display:flex!important;align-items:center!important;border:0!important;padding:0!important;text-align:left!important}
+    #leaderboard .rank-leader-table td:nth-child(1){grid-column:1;grid-row:1 / span 2;justify-content:center!important}
+    #leaderboard .rank-leader-table td:nth-child(2){grid-column:2;grid-row:1 / span 2;justify-content:center!important}
+    #leaderboard .rank-leader-table td:nth-child(3){grid-column:3;grid-row:1;font-size:1rem!important}
+    #leaderboard .rank-leader-table td:nth-child(4){grid-column:3;grid-row:2}
+    #leaderboard .rank-leader-table td:nth-child(5){grid-column:2 / 4;grid-row:3}
+    #leaderboard .rank-leader-table td:nth-child(6){grid-column:2 / 4;grid-row:4}
+    #leaderboard .rank-leader-table td:nth-child(7){grid-column:2 / 4;grid-row:5;justify-content:space-between!important;text-align:left!important}
+    #leaderboard .rank-leader-table td:nth-child(5)::before{content:"Region";margin-right:10px;color:#9f9ae6;font-size:.62rem;font-weight:1000;letter-spacing:.12em;text-transform:uppercase}
+    #leaderboard .rank-leader-table td:nth-child(6)::before{content:"Nation";margin-right:10px;color:#9f9ae6;font-size:.62rem;font-weight:1000;letter-spacing:.12em;text-transform:uppercase}
+    #leaderboard .rank-leader-table td:nth-child(7)::before{content:"Time Beat";margin-right:10px;color:#9f9ae6;font-size:.62rem;font-weight:1000;letter-spacing:.12em;text-transform:uppercase}
+    #leaderboard .time-cell{text-align:left!important}
+  }
+  @media(max-width:430px){
+    #leaderboard .rank-leader-table tr{grid-template-columns:46px 54px minmax(0,1fr);gap:9px}
+    #leaderboard .sheet-avatar{width:48px!important;height:48px!important}
+    #leaderboard .class-tag,#leaderboard .region-tag,#leaderboard .nation-tag{font-size:.66rem!important}
+  }
+</style>
 </body>
 </html>
 
