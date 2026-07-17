@@ -338,7 +338,7 @@ body::after{background:
 .road-line{height:5px!important;margin-top:16px!important;background:rgba(255,255,255,.10)!important;}
 .road-line.done{background:linear-gradient(90deg,#ffd433,#f0d060,rgba(240,208,96,.28))!important;}
 .spotlight-row{width:min(1180px,96%)!important;grid-template-columns:minmax(320px,.92fr) minmax(0,1.55fr)!important;margin:14px auto 16px!important;gap:14px!important;}
-.spotlight{position:relative;min-height:180px;padding:24px 24px 24px 260px!important;background:linear-gradient(90deg,rgba(5,6,22,.20),rgba(5,6,22,.88) 46%,rgba(5,6,22,.96)),url('Cover.png')!important;background-size:cover!important;background-position:left center!important;border-radius:0!important;border-color:rgba(240,208,96,.32)!important;}
+.spotlight{position:relative;min-height:180px;padding:24px 24px 24px 260px!important;background:linear-gradient(90deg,rgba(5,6,22,.20),rgba(5,6,22,.88) 46%,rgba(5,6,22,.96)),url('Dungeon_Pride-Cover.png')!important;background-size:cover!important;background-position:left center!important;border-radius:0!important;border-color:rgba(240,208,96,.32)!important;}
 .spot-title{font-size:clamp(1.8rem,3vw,2.8rem)!important;}
 .spot-desc{font-size:.86rem!important;max-width:420px!important;color:#eee9ff!important;}
 .hall{border-radius:0!important;padding:18px 20px 20px!important;background:linear-gradient(180deg,rgba(8,9,30,.78),rgba(5,6,22,.92))!important;}
@@ -730,7 +730,7 @@ body::after{background:
     return '<span class="phase-icon-badge grinding" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.6l4.2 4.2L12 20.4 7.8 7.8 12 3.6z" stroke="#dcb4ff" stroke-width="1.6"/><path d="M12 3.6v16.8" stroke="#fff" stroke-width="1.3" opacity=".8"/><path d="M7.8 7.8h8.4" stroke="#a868ff" stroke-width="1.3"/><path d="M9.5 12h5" stroke="#fff1cc" stroke-width="1.3" opacity=".7"/></svg></span>';
   }
   function cleanPhaseDate(phase){return String((phase&&phase.name)||'').replace(/^P\d+\s*\|\s*/,'').trim();}
-  function coverFor(phase){var k=phaseKey(phase);if(k==='dungeon') return 'dungeon-pride-phase-cover.png'; if(k==='grinding') return 'grinding-pride-phase-cover.png'; return ''}
+  function coverFor(phase){var k=phaseKey(phase);if(k==='guild') return 'Guild_Pride-Cover.png'; if(k==='dungeon') return 'Dungeon_Pride-Cover.png'; if(k==='grinding') return 'Grinding_Pride-Cover.png'; return ''}
   function activePhaseProgress(){return getPhaseProgress((CONFIG&&CONFIG.phases)||[]);}
   window.renderHub = function(){
     var phases=(CONFIG&&CONFIG.phases)||[];
@@ -823,7 +823,7 @@ body::after{background:
     if(kind==='dungeon') return '<span class="phase-icon-badge dungeon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 14" stroke="#d7ebff" stroke-width="1.6" stroke-linecap="round"/><path d="M16 5L8 19" stroke="#6ac5ff" stroke-width="1.6" stroke-linecap="round"/><path d="M6.3 5.6l3 1" stroke="#d7ebff" stroke-width="1.4" stroke-linecap="round"/><path d="M14.7 5.6l3-1" stroke="#6ac5ff" stroke-width="1.4" stroke-linecap="round"/><path d="M7.3 18.3l-1.6 1.2" stroke="#d7ebff" stroke-width="1.4" stroke-linecap="round"/><path d="M16.7 18.3l1.6 1.2" stroke="#6ac5ff" stroke-width="1.4" stroke-linecap="round"/></svg></span>';
     return '<span class="phase-icon-badge grinding" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.6l4.2 4.2L12 20.4 7.8 7.8 12 3.6z" stroke="#dcb4ff" stroke-width="1.6"/><path d="M12 3.6v16.8" stroke="#fff" stroke-width="1.3" opacity=".8"/><path d="M7.8 7.8h8.4" stroke="#a868ff" stroke-width="1.3"/><path d="M9.5 12h5" stroke="#fff1cc" stroke-width="1.3" opacity=".7"/></svg></span>';
   }
-  function coverFor(phase){var k=phaseKey(phase);if(k==='guild') return 'Guild-Pride-Card-Cover.png'; if(k==='dungeon') return 'dungeon-pride-phase-cover.png'; return 'grinding-pride-phase-cover.png';}
+  function coverFor(phase){var k=phaseKey(phase);if(k==='guild') return 'Guild_Pride-Cover.png'; if(k==='dungeon') return 'Dungeon_Pride-Cover.png'; return 'Grinding_Pride-Cover.png';}
   function cleanDate(phase){return String((phase&&phase.name)||'').replace(/^P\d+\s*\|\s*/,'').trim();}
   function activeProgress(){return getPhaseProgress((CONFIG&&CONFIG.phases)||[]);}
   function showLockedMsg(){
@@ -2869,7 +2869,7 @@ body{
 <style id="v29-single-phase-source-rank-hall">
   .spotlight-row{grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr)!important;align-items:stretch!important;gap:16px!important;}
   .spotlight{min-height:290px!important;padding:0!important;overflow:hidden!important;background:#050814!important;border-color:rgba(240,208,96,.32)!important;}
-  .spotlight::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,3,18,.06),rgba(3,3,18,.82)),var(--phase-cover, url('dungeon-pride-phase-cover.png')) center top/cover no-repeat;filter:saturate(1.08);}
+  .spotlight::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,3,18,.06),rgba(3,3,18,.82)),var(--phase-cover, url('Dungeon_Pride-Cover.png')) center top/cover no-repeat;filter:saturate(1.08);}
   .spotlight>*{position:relative;z-index:1}.spotlight .spot-content{position:absolute;inset:auto 18px 18px;display:grid;gap:8px;text-align:left;}
   .spot-title{font-size:clamp(1.65rem,3.4vw,2.6rem)!important}.spot-desc{max-width:520px!important}.spot-cta{width:max-content!important;}
   .hall{padding:20px 18px!important;}
@@ -2888,9 +2888,9 @@ body{
 <script id="v29-single-phase-source-rank-hall-script">
 (function(){
   var PHASES=[
-    {id:1,name:'3 - 14 Jul',phaseName:'Guild Pride',status:'DONE',desc:'Guild lore submissions and manual score tracking.',url:'phase-1.html',cover:'Cover.png'},
-    {id:2,name:'15 - 24 Jul',phaseName:'Dungeon Pride',status:'ACTIVE',desc:'Fastest clear ranking by dungeon rank, player, nation, and time.',url:'phase-2.html',cover:'Dungeon_Pride-HTML-Cover.png'},
-    {id:3,name:'25 Jul - 5 Aug',phaseName:'Grinding Pride',status:'UPCOMING',desc:'Grinding score challenge and final rankings.',url:'phase-3.html',cover:'grinding-pride-phase-cover.png'}
+    {id:1,name:'3 - 14 Jul',phaseName:'Guild Pride',status:'DONE',desc:'Guild lore submissions and manual score tracking.',url:'phase-1.html',cover:'Guild_Pride-Cover.png'},
+    {id:2,name:'15 - 24 Jul',phaseName:'Dungeon Pride',status:'ACTIVE',desc:'Fastest clear ranking by dungeon rank, player, nation, and time.',url:'phase-2.html',cover:'Dungeon_Pride-Cover.png'},
+    {id:3,name:'25 Jul - 5 Aug',phaseName:'Grinding Pride',status:'UPCOMING',desc:'Grinding score challenge and final rankings.',url:'phase-3.html',cover:'Grinding_Pride-Cover.png'}
   ];
   var RANK_LEADERS=[
     {rank:'S',avatar:'rank-s.png',player:'Bloodfang',time:'03:58'},
